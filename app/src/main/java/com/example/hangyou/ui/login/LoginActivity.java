@@ -10,7 +10,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hangyou.DataBaseHelper;
-import com.example.hangyou.MainActivity;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.group.GroupActivity;
 
