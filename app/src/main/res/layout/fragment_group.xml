@@ -230,6 +230,7 @@
         android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout_small_card"
         app:layout_constraintVertical_bias="1.0"
@@ -244,7 +245,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/yellow_1"
@@ -257,7 +258,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/yellow_1"
@@ -270,7 +271,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
@@ -286,7 +287,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
@@ -303,7 +304,7 @@
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
@@ -319,7 +320,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
@@ -331,16 +332,6 @@
 
                 <include layout="@layout/big_card" />
             </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="文本10" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="底部" />
         </LinearLayout>
 
     </ScrollView>

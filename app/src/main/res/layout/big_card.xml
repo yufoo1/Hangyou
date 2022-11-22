@@ -5,14 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/card_left_textview"
+    <LinearLayout
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:text="拼单"
-        android:textAlignment="center"
-        android:background="@color/red_4"/>
+        android:orientation="vertical"
+        android:background="@color/pink_4">
+
+        <TextView
+            android:id="@+id/card_left_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="学习"
+            android:textStyle="bold"
+            android:textColor="@color/gray_10"
+            android:textSize="22sp"
+            android:ems="1"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_weight="7"
@@ -25,19 +38,23 @@
             android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="hkhkhk"
+            android:text="111222333444555666777888999101010111111121212131313141414151515161616171717181818191919202020"
             android:textSize="14sp"
             android:textColor="@color/gray_13">
         </TextView>
 
         <ProgressBar
-            style="@style/ProgressBar"
             android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp">
-        </ProgressBar>
-
+            android:layout_margin="10dp"
+            android:minHeight="20dp"
+            android:max="8"
+            android:progress="3"
+            android:secondaryProgress="5"
+            android:progressDrawable="@drawable/progressbar_bg"
+            />
     </LinearLayout>
 </LinearLayout>
