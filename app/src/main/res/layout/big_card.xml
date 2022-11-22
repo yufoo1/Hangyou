@@ -38,10 +38,36 @@
             android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="111222333444555666777888999101010111111121212131313141414151515161616171717181818191919202020"
+            android:text="组局名称"
             android:textSize="14sp"
             android:textColor="@color/gray_13">
         </TextView>
+
+        <LinearLayout
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="组局发起人姓名"
+                android:textSize="10sp"
+                android:textColor="@color/purple_6"
+                android:gravity="center">
+            </TextView>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="组局日期"
+                android:textSize="10sp"
+                android:textColor="@color/gray_13"
+                android:gravity="center">
+            </TextView>
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -50,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="10dp"
-            android:minHeight="20dp"
+            android:minHeight="10dp"
             android:max="8"
             android:progress="3"
             android:secondaryProgress="5"

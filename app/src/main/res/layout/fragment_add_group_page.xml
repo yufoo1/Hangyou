@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="活动名称"
+            android:text="组局名称"
             android:textStyle="bold"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
@@ -29,7 +29,7 @@
             android:id="@+id/group_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请简要输入活动名称，如玩狼人杀......"
+            android:hint="请简要输入组局名称，如玩狼人杀......"
             android:inputType="text"
             android:singleLine="true">
         </EditText>
@@ -48,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="活动详细内容"
+            android:text="组局详细内容"
             android:textStyle="bold"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
@@ -59,7 +59,7 @@
             android:id="@+id/group_content_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入活动详细内容，如【考完期末考试的晚上】在【新北负一楼】玩狼人杀"
+            android:hint="请输入组局详细内容，如【考完期末考试的晚上】在【新北负一楼】玩狼人杀"
             android:inputType="textMultiLine"
             android:minLines="6">
         </EditText>
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="活动类型"
+            android:text="组局类型"
             android:textStyle="bold"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
@@ -119,7 +119,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="活动时间"
+            android:text="组局时间"
             android:textStyle="bold"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
