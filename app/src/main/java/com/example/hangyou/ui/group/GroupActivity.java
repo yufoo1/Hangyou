@@ -4,23 +4,21 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hangyou.databinding.FragmentGroupBinding;
 
 import com.example.hangyou.DataBaseHelper;
 import com.example.hangyou.R;
-import com.example.hangyou.ui.login.LoginActivity;
-
-import org.w3c.dom.Text;
+import com.example.hangyou.ui.home.HomePageActivity;
 
 public class GroupActivity extends AppCompatActivity{
     SQLiteDatabase database;
     FragmentGroupBinding binding;
+    GestureDetector gestureDetector;
 
     /* TODO list declare */
     @Override
@@ -45,7 +43,8 @@ public class GroupActivity extends AppCompatActivity{
 
     private void jumpToCreateBureau() {
         Intent intent = new Intent();
-        intent.setClass(GroupActivity.this, CreateBureauActivity.class);
+//        intent.setClass(GroupActivity.this, CreateBureauActivity.class);
+        intent.setClass(GroupActivity.this, HomePageActivity.class);
         startActivity(intent);
     }
 

@@ -7,6 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <com.example.hangyou.ui.home.CircleImageView
+            android:layout_marginTop="20dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -18,7 +19,7 @@
             android:textColor="#171A1A"
             android:textSize="20sp"
             android:gravity="center"
-            android:text="yufoo1">
+            android:id="@+id/home_page_username">
         </TextView>
         <TextView
             android:layout_width="match_parent"
@@ -26,7 +27,7 @@
             android:textSize="15sp"
             android:gravity="center"
             android:textColor="#A0ACAA"
-            android:text="Don't like prime numbers">
+            android:id="@+id/home_page_description">
         </TextView>
 
         <LinearLayout
@@ -44,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:text="1024">
+                    android:id="@+id/home_page_followers">
                 </TextView>
                 <TextView
                     android:layout_width="wrap_content"
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="20sp"
-                    android:text="2048">
+                    android:id="@+id/home_page_following">
                 </TextView>
                 <TextView
                     android:layout_width="wrap_content"

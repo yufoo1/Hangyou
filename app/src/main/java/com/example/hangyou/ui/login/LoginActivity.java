@@ -1,6 +1,8 @@
 package com.example.hangyou.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -34,6 +36,10 @@ public class LoginActivity extends AppCompatActivity{
         Cursor cursor = database.rawQuery("select * from user where account=? and password=?", new String[]{account, password});
         if (cursor.moveToFirst()) {
             System.out.println("登录成功");
+            SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("account", account);
+            editor.apply();
             Intent intent = new Intent();
             intent.setClass(LoginActivity.this, GroupActivity.class);
             startActivity(intent);
@@ -44,11 +50,9 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void register(){
-        EditText et_account = findViewById(R.id.account);
-        String account = et_account.getText().toString();
-        EditText et_password = findViewById(R.id.password);
-        String password = et_password.getText().toString();
-        database.execSQL("insert into user(account, password) values (?, ?)", new Object[]{account, password});
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     public void initClickListener() {
