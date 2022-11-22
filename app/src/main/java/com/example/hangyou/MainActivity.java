@@ -1,6 +1,7 @@
 package com.example.hangyou;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,6 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        DataBaseHelper helper=new DataBaseHelper(MainActivity.this);
+        database = helper.getWritableDatabase();
+        database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text, username text, description text)");
+        database.execSQL("create table if not exists follow(id integer primary key autoincrement, followerAccount text, followingAccount text)");
+        database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupNmae text, groupType text, groupInitiator text, groupDate text, groupPeopleNum int, groupMaleExpectedNum int)");
         new Handler().postDelayed(() -> {
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, LoginActivity.class);

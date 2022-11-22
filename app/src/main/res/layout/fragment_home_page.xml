@@ -92,6 +92,7 @@
             android:bottomRightRadius="30dp"
             android:topLeftRadius="30dp"
             android:topRightRadius="30dp"
+            android:id="@+id/home_page_update"
             android:text="个人信息编辑">
         </TextView>
         <LinearLayout
@@ -235,7 +236,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

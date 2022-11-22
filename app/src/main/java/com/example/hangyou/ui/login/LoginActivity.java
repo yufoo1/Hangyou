@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity{
         initClickListener();
         DataBaseHelper helper=new DataBaseHelper(LoginActivity.this);
         database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text)");
+        database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text, username text, description text)");
     }
 
     public void login() {

@@ -29,7 +29,6 @@ public class GroupActivity extends AppCompatActivity{
         DataBaseHelper helper=new DataBaseHelper(GroupActivity.this);
         binding =FragmentGroupBinding.inflate(getLayoutInflater());
         database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupNmae text, groupType text, groupInitiator text, groupDate text, groupPeopleNum int, groupMaleExpectedNum int)");
         showTotalUser();
     }
 
