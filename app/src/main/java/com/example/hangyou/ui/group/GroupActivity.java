@@ -1,16 +1,22 @@
 package com.example.hangyou.ui.group;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hangyou.databinding.FragmentGroupBinding;
 
 import com.example.hangyou.DataBaseHelper;
 import com.example.hangyou.R;
+import com.example.hangyou.ui.login.LoginActivity;
+
+import org.w3c.dom.Text;
 
 public class GroupActivity extends AppCompatActivity{
     SQLiteDatabase database;
@@ -24,11 +30,9 @@ public class GroupActivity extends AppCompatActivity{
         initClickListener();
         DataBaseHelper helper=new DataBaseHelper(GroupActivity.this);
         binding =FragmentGroupBinding.inflate(getLayoutInflater());
-        GroupViewModel groupViewModel = new GroupViewModel(new ObservableField<>(Integer.valueOf("1")));
-        binding.setGroupViewModel(groupViewModel);
-        System.out.println("hello" + groupViewModel.getTotalUser());
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupNmae text, groupType text, groupInitiator text, groupDate text, groupPeopleNum int, groupMaleExpectedNum int)");
+        showTotalUser();
     }
 
     private void retMyInBureau() {
@@ -58,7 +62,18 @@ public class GroupActivity extends AppCompatActivity{
         findViewById(R.id.imageButton_guide).setOnClickListener(v -> jumpToGuide());
     }
 
-    private int getUserTotal() {
-        return 0;
+    private void showTotalUser() {
+        TextView textTotalPeople = findViewById(R.id.text_total_people);
+        Cursor cursor = database.rawQuery("select * from user", new String[]{});
+        cursor.moveToFirst();
+        int cnt = 0;
+        if (cursor.moveToFirst()) {
+            cnt++;
+            while(cursor.moveToNext()) {
+                cnt++;
+            }
+        }
+        cursor.close();
+        textTotalPeople.setText(String.valueOf(cnt));
     }
 }
