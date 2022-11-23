@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,10 @@ import com.example.hangyou.databinding.FragmentGroupBinding;
 import com.example.hangyou.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.home.HomePageActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class GroupActivity extends AppCompatActivity{
     SQLiteDatabase database;
@@ -29,6 +35,7 @@ public class GroupActivity extends AppCompatActivity{
         binding =FragmentGroupBinding.inflate(getLayoutInflater());
         database = helper.getWritableDatabase();
         showTotalUser();
+        showGroupCards();
     }
 
     private void retMyInBureau() {
@@ -72,5 +79,40 @@ public class GroupActivity extends AppCompatActivity{
         }
         cursor.close();
         textTotalPeople.setText(String.valueOf(cnt));
+    }
+
+    private void showGroupCards() {
+        List<HashMap<String, Object>> data = new ArrayList<>();
+        Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
+        HashMap<String, Object> item;
+        if(cursor.moveToFirst()) {
+            item = new HashMap<>();
+            item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
+            item.put("groupType", cursor.getString(cursor.getColumnIndex("groupType")));
+            item.put("groupInitiator", cursor.getString(cursor.getColumnIndex("groupInitiator")));
+            String groupYear = cursor.getString(cursor.getColumnIndex("groupYear"));
+            String groupMonth = cursor.getString(cursor.getColumnIndex("groupMonth"));
+            String groupDay = cursor.getString(cursor.getColumnIndex("groupDay"));
+            String groupDate = groupYear + "-" + groupMonth + "-" + groupDay;
+            item.put("groupDate", groupDate);
+            data.add(item);
+            while(cursor.moveToNext()) {
+                item = new HashMap<>();
+                item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
+                item.put("groupType", cursor.getString(cursor.getColumnIndex("groupType")));
+                item.put("groupInitiator", cursor.getString(cursor.getColumnIndex("groupInitiator")));
+                groupYear = cursor.getString(cursor.getColumnIndex("groupYear"));
+                groupMonth = cursor.getString(cursor.getColumnIndex("groupMonth"));
+                groupDay = cursor.getString(cursor.getColumnIndex("groupDay"));
+                groupDate = groupYear + "-" + groupMonth + "-" + groupDay;
+                item.put("groupDate", groupDate);
+                data.add(item);
+            }
+        }
+        cursor.close();
+        SimpleAdapter adapter = new SimpleAdapter(GroupActivity.this, data, R.layout.big_card, new String[]{"groupName", "groupType", "groupInitiator", "groupDate"}, new int[]{R.id.big_card_groupName, R.id.big_card_groupType, R.id.big_card_groupInitiator, R.id.big_card_groupDate});
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

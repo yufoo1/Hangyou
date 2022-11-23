@@ -12,11 +12,10 @@
         android:background="@color/pink_4">
 
         <TextView
-            android:id="@+id/card_left_textview"
+            android:id="@+id/big_card_groupType"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:text="学习"
             android:textStyle="bold"
             android:textColor="@color/gray_10"
             android:textSize="22sp"
@@ -41,6 +40,15 @@
             android:textSize="14sp"
             android:textColor="@color/gray_13">
         </TextView>
+        <TextView
+            android:padding="10dp"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/big_card_groupName"
+            android:textSize="14sp"
+            android:textColor="@color/gray_13">
+        </TextView>
         <LinearLayout
             android:layout_weight="2"
             android:layout_width="match_parent"
@@ -55,12 +63,30 @@
                 android:textColor="@color/purple_6"
                 android:gravity="center">
             </TextView>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="10sp"
+                android:textColor="@color/purple_6"
+                android:id="@+id/big_card_groupInitiator"
+                android:gravity="center">
+            </TextView>
 
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="组局日期"
+                android:textSize="10sp"
+                android:textColor="@color/gray_13"
+                android:gravity="center">
+            </TextView>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/big_card_groupDate"
                 android:textSize="10sp"
                 android:textColor="@color/gray_13"
                 android:gravity="center">
