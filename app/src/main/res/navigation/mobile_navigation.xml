@@ -7,9 +7,8 @@
 
     <fragment
         android:id="@+id/navigation_group"
-        android:name="com.example.hangyou.ui.group.GroupActivity"
-        android:label="@string/title_group"
-        tools:layout="@layout/fragment_group" />
+        android:name="com.example.hangyou.ui.group.GroupActivity">
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_tree_hole"
@@ -19,7 +18,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.hangyou.ui.home.HomePageFragment"
+        android:name="com.example.hangyou.ui.home.HomePageActivity"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home_page" />
     <fragment

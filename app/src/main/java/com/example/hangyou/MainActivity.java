@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.hangyou.databinding.ActivityMainBinding;
-import com.example.hangyou.ui.group.GroupActivity;
 import com.example.hangyou.ui.login.LoginActivity;
+
+import com.example.hangyou.ui.Connection;
+import com.example.hangyou.ui.home.FriendListItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
