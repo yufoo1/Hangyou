@@ -18,7 +18,6 @@ import com.example.hangyou.ui.home.HomePageActivity;
 public class GroupActivity extends AppCompatActivity{
     SQLiteDatabase database;
     FragmentGroupBinding binding;
-    GestureDetector gestureDetector;
 
     /* TODO list declare */
     @Override
@@ -42,8 +41,8 @@ public class GroupActivity extends AppCompatActivity{
 
     private void jumpToCreateBureau() {
         Intent intent = new Intent();
-//        intent.setClass(GroupActivity.this, CreateBureauActivity.class);
-        intent.setClass(GroupActivity.this, HomePageActivity.class);
+        intent.setClass(GroupActivity.this, AddGroupPageActivity.class);
+//        intent.setClass(GroupActivity.this, HomePageActivity.class);
         startActivity(intent);
     }
 
@@ -61,7 +60,7 @@ public class GroupActivity extends AppCompatActivity{
     }
 
     private void showTotalUser() {
-        TextView textTotalPeople = findViewById(R.id.text_total_people);
+        TextView textTotalPeople = findViewById(R.id.add_group_page_total_people);
         Cursor cursor = database.rawQuery("select * from user", new String[]{});
         cursor.moveToFirst();
         int cnt = 0;

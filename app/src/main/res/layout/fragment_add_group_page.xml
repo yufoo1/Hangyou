@@ -26,7 +26,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/group_name_input"
+            android:id="@+id/add_group_page_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请简要输入组局名称，如玩狼人杀......"
@@ -56,7 +56,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/group_content_input"
+            android:id="@+id/add_group_page_content_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入组局详细内容，如【考完期末考试的晚上】在【新北负一楼】玩狼人杀"
@@ -75,15 +75,26 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="组局类型"
-            android:textStyle="bold"
-            android:textColor="@color/gray_13"
-            android:textSize="18sp"
-            android:gravity="bottom">
-        </TextView>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="组局类型"
+                android:textStyle="bold"
+                android:textColor="@color/gray_13"
+                android:textSize="18sp"
+                android:gravity="bottom">
+            </TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_group_page_type">
+            </EditText>
+        </LinearLayout>
+
 
         <ListView
             android:id="@+id/group_type_card"
@@ -127,7 +138,7 @@
         </TextView>
 
         <DatePicker
-            android:id="@+id/date_picker"
+            android:id="@+id/add_group_page_date_picker"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:datePickerMode="spinner"
@@ -144,25 +155,39 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="总人数"
+            android:text="分别输入男生、女生人数"
             android:textStyle="bold"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
             android:gravity="bottom">
         </TextView>
 
-        <EditText
-            android:id="@+id/group_peopleNum_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入一个正整数"
-            android:inputType="number"
-            android:singleLine="true">
-        </EditText>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/add_group_page_male_expected_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true">
+            </EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":">
+            </TextView>
+            <EditText
+                android:id="@+id/add_group_page_female_expected_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true">
+            </EditText>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -175,7 +200,7 @@
         android:layout_marginTop="10dp">
 
         <Button
-            android:id="@+id/button_created"
+            android:id="@+id/add_group_page_button_created"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"

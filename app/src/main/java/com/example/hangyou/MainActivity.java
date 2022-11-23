@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         DataBaseHelper helper=new DataBaseHelper(MainActivity.this);
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text, username text, description text)");
-        database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupNmae text, groupType text, groupInitiator text, groupDate text, groupPeopleNum int, groupMaleExpectedNum int)");
         new Handler().postDelayed(() -> {
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, LoginActivity.class);

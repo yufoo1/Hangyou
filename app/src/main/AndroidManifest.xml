@@ -35,7 +35,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".ui.group.CreateBureauActivity"
+            android:name=".ui.group.AddGroupPageActivity"
             android:exported="true">
         </activity>
         <activity android:name=".ui.group.GuideActivity"
