@@ -82,35 +82,28 @@ public class GroupActivity extends AppCompatActivity{
     }
 
     private void showGroupCards() {
-        List<HashMap<String, Object>> data = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> data = new ArrayList<>();
         Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
         HashMap<String, Object> item;
-        if(cursor.moveToFirst()) {
+        while(cursor.moveToNext()) {
             item = new HashMap<>();
             item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
             item.put("groupType", cursor.getString(cursor.getColumnIndex("groupType")));
             item.put("groupInitiator", cursor.getString(cursor.getColumnIndex("groupInitiator")));
-            String groupYear = cursor.getString(cursor.getColumnIndex("groupYear"));
+            String  groupYear = cursor.getString(cursor.getColumnIndex("groupYear"));
             String groupMonth = cursor.getString(cursor.getColumnIndex("groupMonth"));
             String groupDay = cursor.getString(cursor.getColumnIndex("groupDay"));
             String groupDate = groupYear + "-" + groupMonth + "-" + groupDay;
             item.put("groupDate", groupDate);
+            item.put("groupMaleExpectedNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupMaleExpectedNum"))));
+            item.put("groupMaleNowNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupMaleNowNum"))));
+            item.put("groupFemaleExpectedNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleExpectedNum"))));
+            item.put("groupFemaleNowNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleNowNum"))));
+            item.put("groupDescription", cursor.getString(cursor.getColumnIndex("groupDescription")));
             data.add(item);
-            while(cursor.moveToNext()) {
-                item = new HashMap<>();
-                item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
-                item.put("groupType", cursor.getString(cursor.getColumnIndex("groupType")));
-                item.put("groupInitiator", cursor.getString(cursor.getColumnIndex("groupInitiator")));
-                groupYear = cursor.getString(cursor.getColumnIndex("groupYear"));
-                groupMonth = cursor.getString(cursor.getColumnIndex("groupMonth"));
-                groupDay = cursor.getString(cursor.getColumnIndex("groupDay"));
-                groupDate = groupYear + "-" + groupMonth + "-" + groupDay;
-                item.put("groupDate", groupDate);
-                data.add(item);
-            }
         }
         cursor.close();
-        SimpleAdapter adapter = new SimpleAdapter(GroupActivity.this, data, R.layout.big_card, new String[]{"groupName", "groupType", "groupInitiator", "groupDate"}, new int[]{R.id.big_card_groupName, R.id.big_card_groupType, R.id.big_card_groupInitiator, R.id.big_card_groupDate});
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
