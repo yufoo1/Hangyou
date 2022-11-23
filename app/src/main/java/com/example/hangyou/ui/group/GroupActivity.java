@@ -26,7 +26,7 @@ public class GroupActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_group);
         initClickListener();
-        DataBaseHelper helper=new DataBaseHelper(GroupActivity.this);
+        DataBaseHelper helper = new DataBaseHelper(GroupActivity.this);
         binding =FragmentGroupBinding.inflate(getLayoutInflater());
         database = helper.getWritableDatabase();
         showTotalUser();

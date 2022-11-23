@@ -23,6 +23,7 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_home_page);
         DataBaseHelper helper=new DataBaseHelper(HomePageActivity.this);
         database = helper.getWritableDatabase();
+        database.execSQL("create table if not exists follow(id integer primary key autoincrement, followerAccount text, followingAccount text)");
         initTextView();
         initClickListener();
     }
@@ -49,6 +50,7 @@ public class HomePageActivity extends AppCompatActivity {
                 cnt++;
             }
         }
+        cursor.close();
         followers.setText(String.valueOf(cnt));
         TextView following = findViewById(R.id.home_page_following);
         cursor = database.rawQuery("select * from follow where followingAccount=?", new String[]{account});
