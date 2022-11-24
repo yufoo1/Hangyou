@@ -82,6 +82,7 @@ public class GroupActivity extends AppCompatActivity{
         findViewById(R.id.button_my_created_bureau).setOnClickListener(v -> retMyCreatedBureau());
         findViewById(R.id.button_create_bureau).setOnClickListener(v -> jumpToCreateBureau());
         findViewById(R.id.imageButton_guide).setOnClickListener(v -> jumpToGuide());
+        findViewById(R.id.cardView_haveempty).setOnClickListener(v -> showHaveemptyGtoup());
         findViewById(R.id.cardView_study).setOnClickListener(v -> showStudyGroup());
         findViewById(R.id.cardView_sport).setOnClickListener(v -> showSportGroup());
         findViewById(R.id.cardView_eat).setOnClickListener(v -> showEatGroup());
@@ -99,6 +100,13 @@ public class GroupActivity extends AppCompatActivity{
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showHaveemptyGtoup() {
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();

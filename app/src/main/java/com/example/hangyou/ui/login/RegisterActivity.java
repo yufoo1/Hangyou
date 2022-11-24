@@ -19,7 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
         DataBaseHelper helper=new DataBaseHelper(RegisterActivity.this);
         initClickListener();
         database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text, username text, description text)");
+        database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text, username text, description text, phone text)");
     }
 
     private void register() {
@@ -29,8 +29,10 @@ public class RegisterActivity extends AppCompatActivity {
         String password = et_password.getText().toString();
         EditText et_username = findViewById(R.id.register_username);
         String username = et_username.getText().toString();
+        EditText et_phone = findViewById(R.id.register_phone);
+        String phone = et_phone.getText().toString();
         String description = "这个人很懒，什么都留下了";
-        database.execSQL("insert into user(account, password, username, description) values (?, ?, ?, ?)", new Object[]{account, password, username, description});
+        database.execSQL("insert into user(account, password, username, description, phone) values (?, ?, ?, ?, ?)", new Object[]{account, password, username, description, phone});
         Intent intent = new Intent();
         intent.setClass(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
