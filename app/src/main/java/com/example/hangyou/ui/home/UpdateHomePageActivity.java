@@ -35,6 +35,8 @@ public class UpdateHomePageActivity extends AppCompatActivity {
         et_update_username.setText(cursor.getString(cursor.getColumnIndex("username")));
         EditText et_update_phone = findViewById(R.id.update_home_page_phone);
         et_update_phone.setText(cursor.getString(cursor.getColumnIndex("phone")));
+        EditText et_update_description = findViewById(R.id.update_home_page_description);
+        et_update_description.setText(cursor.getString(cursor.getColumnIndex("description")));
     }
 
     private void initClickListener() {
@@ -47,8 +49,11 @@ public class UpdateHomePageActivity extends AppCompatActivity {
         String username = et_update_username.getText().toString();
         EditText et_update_phone = findViewById(R.id.update_home_page_phone);
         String phone = et_update_phone.getText().toString();
+        EditText et_update_description = findViewById(R.id.update_home_page_description);
+        String description = et_update_description.getText().toString();
+        System.out.println(description);
         String account = cursor.getString(cursor.getColumnIndex("account"));
-        database.execSQL("update user set username=?, phone=? where account=?", new String[]{username, phone, account});
+        database.execSQL("update user set username=?, phone=?, description=? where account=?", new String[]{username, phone, description, account});
         Intent intent = new Intent();
         intent.setClass(UpdateHomePageActivity.this, HomePageActivity.class);
         startActivity(intent);
