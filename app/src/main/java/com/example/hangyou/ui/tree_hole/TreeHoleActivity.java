@@ -24,6 +24,9 @@ public class TreeHoleActivity extends AppCompatActivity {
                 case R.id.tree_hole_group:
                     intent.setClass(this, GroupActivity.class);
                     break;
+                case R.id.tree_hole_tree_hole:
+                    intent.setClass(this, TreeHoleActivity.class);
+                    break;
                 case R.id.tree_hole_home_page:
                     intent.setClass(this, HomePageActivity.class);
                     break;

@@ -42,6 +42,9 @@ public class GroupActivity extends AppCompatActivity{
         mRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
             Intent intent = new Intent();
             switch (i) {
+                case R.id.group_group:
+                    intent.setClass(GroupActivity.this, GroupActivity.class);
+                    break;
                 case R.id.group_tree_hole:
                     intent.setClass(GroupActivity.this, TreeHoleActivity.class);
                     break;

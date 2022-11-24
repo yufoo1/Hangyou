@@ -185,7 +185,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:checked="true"
             android:drawableTop="@drawable/ic_home_black_24dp"
             android:gravity="center"
             android:paddingLeft="0dp"
@@ -198,6 +197,7 @@
             android:button="@null"
             android:drawableTop="@drawable/ic_home_black_24dp"
             android:gravity="center"
+            android:checked="true"
             android:paddingLeft="0dp"
             android:text="树洞" />
 

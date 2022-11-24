@@ -38,6 +38,9 @@ public class HomePageActivity extends AppCompatActivity {
                 case R.id.home_page_tree_hole:
                     intent.setClass(HomePageActivity.this, TreeHoleActivity.class);
                     break;
+                case R.id.home_page_home_page:
+                    intent.setClass(HomePageActivity.this, HomePageActivity.class);
+                    break;
             }
             startActivity(intent);
         });
