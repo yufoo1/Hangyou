@@ -34,6 +34,7 @@ public class GroupActivity extends AppCompatActivity{
         DataBaseHelper helper = new DataBaseHelper(GroupActivity.this);
         binding =FragmentGroupBinding.inflate(getLayoutInflater());
         database = helper.getWritableDatabase();
+        database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
         showTotalUser();
         showGroupCards();
     }
@@ -49,7 +50,6 @@ public class GroupActivity extends AppCompatActivity{
     private void jumpToCreateBureau() {
         Intent intent = new Intent();
         intent.setClass(GroupActivity.this, AddGroupPageActivity.class);
-//        intent.setClass(GroupActivity.this, HomePageActivity.class);
         startActivity(intent);
     }
 
