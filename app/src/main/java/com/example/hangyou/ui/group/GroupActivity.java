@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -21,11 +24,13 @@ import com.example.hangyou.ui.tree_hole.TreeHoleActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class GroupActivity extends AppCompatActivity{
     SQLiteDatabase database;
     FragmentGroupBinding binding;
     ArrayList<HashMap<String, Object>> data;
+
 
     /* TODO list declare */
     @Override
@@ -106,88 +111,173 @@ public class GroupActivity extends AppCompatActivity{
     }
 
     private void showHaveemptyGtoup() {
-        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
-        ListView groupCards = findViewById(R.id.group_cards);
-        groupCards.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+//        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
+//        ListView groupCards = findViewById(R.id.group_cards);
+//        groupCards.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+        showGroupCards();
     }
 
     private void showSportGroup() {
         ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        ArrayList<Integer> idLists = new ArrayList<>();
         data.forEach(i -> {
             if (i.get("groupType").equals("运动")) {
                 cdata.add(i);
+                idLists.add(Integer.parseInt(Objects.requireNonNull(i.get("id")).toString()));
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showEatGroup() {
         ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        ArrayList<Integer> idLists = new ArrayList<>();
         data.forEach(i -> {
             if (i.get("groupType").equals("聚餐")) {
                 cdata.add(i);
+                idLists.add(Integer.parseInt(Objects.requireNonNull(i.get("id")).toString()));
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showTravelGroup() {
         ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        ArrayList<Integer> idLists = new ArrayList<>();
         data.forEach(i -> {
             if (i.get("groupType").equals("旅行")) {
                 cdata.add(i);
+                idLists.add(Integer.parseInt(Objects.requireNonNull(i.get("id")).toString()));
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showBuyGroup() {
         ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        ArrayList<Integer> idLists = new ArrayList<>();
         data.forEach(i -> {
             if (i.get("groupType").equals("拼单")) {
                 cdata.add(i);
+                idLists.add(Integer.parseInt(Objects.requireNonNull(i.get("id")).toString()));
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showMovieGroup() {
         ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        ArrayList<Integer> idLists = new ArrayList<>();
         data.forEach(i -> {
             if (i.get("groupType").equals("电影")) {
                 cdata.add(i);
+                idLists.add(Integer.parseInt(Objects.requireNonNull(i.get("id")).toString()));
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showGameGroup() {
         ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        ArrayList<Integer> idLists = new ArrayList<>();
         data.forEach(i -> {
             if (i.get("groupType").equals("游戏")) {
                 cdata.add(i);
+                idLists.add(Integer.parseInt(Objects.requireNonNull(i.get("id")).toString()));
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showTotalUser() {
@@ -209,6 +299,7 @@ public class GroupActivity extends AppCompatActivity{
         data = new ArrayList<>();
         Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
         HashMap<String, Object> item;
+        ArrayList<Integer> idLists = new ArrayList<>();
         while(cursor.moveToNext()) {
             item = new HashMap<>();
             item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
@@ -224,6 +315,7 @@ public class GroupActivity extends AppCompatActivity{
             item.put("groupFemaleExpectedNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleExpectedNum"))));
             item.put("groupFemaleNowNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleNowNum"))));
             item.put("groupDescription", cursor.getString(cursor.getColumnIndex("groupDescription")));
+            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
             data.add(item);
         }
         cursor.close();
@@ -231,5 +323,17 @@ public class GroupActivity extends AppCompatActivity{
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

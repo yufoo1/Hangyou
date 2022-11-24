@@ -57,12 +57,8 @@ public class LoginActivity extends AppCompatActivity{
 
     public void initClickListener() {
         Button bt_login = findViewById(R.id.login);
-        bt_login.setOnClickListener(v -> {
-            login();
-        });
+        bt_login.setOnClickListener(v -> login());
         Button bt_register = findViewById(R.id.register);
-        bt_register.setOnClickListener(v -> {
-            register();
-        });
+        bt_register.setOnClickListener(v -> register());
     }
 }

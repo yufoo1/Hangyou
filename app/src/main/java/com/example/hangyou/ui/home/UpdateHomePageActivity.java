@@ -59,5 +59,4 @@ public class UpdateHomePageActivity extends AppCompatActivity {
         intent.setClass(this, HomePageActivity.class);
         startActivity(intent);
     }
-
 }
