@@ -14,8 +14,14 @@
         </EditText>
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="350dp"
             android:id="@+id/search_user_user_list">
         </ListView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_user_return"
+            android:text="返回">
+        </Button>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
