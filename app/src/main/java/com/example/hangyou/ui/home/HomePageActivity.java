@@ -92,6 +92,9 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void jumpToSearchUser() {
         Intent intent = new Intent();
+        Bundle receive = new Bundle();
+        receive.putString("type", "showAll");
+        intent.putExtras(receive);
         intent.setClass(HomePageActivity.this, SearchUserActivity.class);
         startActivity(intent);
     }

@@ -39,7 +39,7 @@ public class SearchUserActivity extends AppCompatActivity {
         Cursor cursor;
         SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String account = sp.getString("account", "defaultValue");
-        if(type.isEmpty()) {
+        if(type.equals("showAll")) {
             cursor = database.rawQuery("select * from user", new String[]{});
         } else if (type.equals("showFollowers")) {
             cursor = database.rawQuery("select user.* from user inner join follow on user.account=follow.followerAccount and user.account=?", new String[]{account});
