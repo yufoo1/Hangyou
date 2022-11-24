@@ -59,6 +59,10 @@
         <activity android:name=".ui.group.GroupCardDetailActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".ui.home.SearchUserActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

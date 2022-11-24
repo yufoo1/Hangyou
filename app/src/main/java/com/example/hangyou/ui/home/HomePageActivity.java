@@ -90,7 +90,14 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void jumpToSearchUser() {
+        Intent intent = new Intent();
+        intent.setClass(HomePageActivity.this, SearchUserActivity.class);
+        startActivity(intent);
+    }
+
     private void initClickListener() {
         findViewById(R.id.home_page_update).setOnClickListener(v -> jumpToUpdateHomePage());
+        findViewById(R.id.home_page_search_user).setOnClickListener(v -> jumpToSearchUser());
     }
 }
