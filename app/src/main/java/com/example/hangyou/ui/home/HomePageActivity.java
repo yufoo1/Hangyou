@@ -5,27 +5,42 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.http.SslCertificate;
 import android.os.Bundle;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hangyou.DataBaseHelper;
+import com.example.hangyou.MainActivity;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.group.GroupActivity;
 import com.example.hangyou.ui.group.GuideActivity;
+import com.example.hangyou.ui.tree_hole.TreeHoleActivity;
 
 public class HomePageActivity extends AppCompatActivity {
     SQLiteDatabase database;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home_page);
-        DataBaseHelper helper=new DataBaseHelper(HomePageActivity.this);
+        DataBaseHelper helper = new DataBaseHelper(HomePageActivity.this);
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists follow(id integer primary key autoincrement, followerAccount text, followingAccount text)");
         initTextView();
         initClickListener();
+        RadioGroup mRadioGroup=findViewById(R.id.home_page_tabs);
+        mRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            Intent intent = new Intent();
+            switch (i) {
+                case R.id.home_page_group:
+                    intent.setClass(HomePageActivity.this, GroupActivity.class);
+                    break;
+                case R.id.home_page_tree_hole:
+                    intent.setClass(HomePageActivity.this, TreeHoleActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        });
     }
 
     private void initTextView() {

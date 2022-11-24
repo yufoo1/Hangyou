@@ -52,6 +52,10 @@
             android:name=".ui.home.UpdateHomePageActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".ui.tree_hole.TreeHoleActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

@@ -4,18 +4,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hangyou.MainActivity;
 import com.example.hangyou.databinding.FragmentGroupBinding;
 
 import com.example.hangyou.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.home.HomePageActivity;
+import com.example.hangyou.ui.tree_hole.TreeHoleActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,19 @@ public class GroupActivity extends AppCompatActivity{
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
         showTotalUser();
         showGroupCards();
+        RadioGroup mRadioGroup=findViewById(R.id.group_tabs);
+        mRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            Intent intent = new Intent();
+            switch (i) {
+                case R.id.group_tree_hole:
+                    intent.setClass(GroupActivity.this, TreeHoleActivity.class);
+                    break;
+                case R.id.group_home_page:
+                    intent.setClass(GroupActivity.this, HomePageActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        });
     }
 
     private void retMyInBureau() {

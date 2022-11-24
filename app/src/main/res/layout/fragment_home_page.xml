@@ -237,5 +237,46 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+        <RadioGroup
+            android:id="@+id/home_page_tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/home_page_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:drawableTop="@drawable/ic_home_black_24dp"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="组局" />
+            <RadioButton
+                android:id="@+id/home_page_tree_hole"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/ic_home_black_24dp"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="树洞" />
+
+            <RadioButton
+                android:id="@+id/home_page_home_page"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/ic_home_black_24dp"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="主页" />
+        </RadioGroup>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
