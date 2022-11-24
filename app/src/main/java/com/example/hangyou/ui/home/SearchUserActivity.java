@@ -34,7 +34,20 @@ public class SearchUserActivity extends AppCompatActivity {
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text, username text, description text, phone text)");
         database.execSQL("create table if not exists follow(id integer primary key autoincrement, followerAccount text, followingAccount text)");
-        Cursor cursor = database.rawQuery("select * from user", new String[]{});
+        Bundle receiver = getIntent().getExtras();
+        String type = receiver.getString("type");
+        Cursor cursor;
+        SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
+        String account = sp.getString("account", "defaultValue");
+        if(type.isEmpty()) {
+            cursor = database.rawQuery("select * from user", new String[]{});
+        } else if (type.equals("showFollowers")) {
+            cursor = database.rawQuery("select user.* from user inner join follow on user.account=follow.followerAccount and user.account=?", new String[]{account});
+        } else if (type.equals("showFollowing")) {
+            cursor = database.rawQuery("select user.* from user inner join follow on user.account=follow.followingAccount and user.account=?", new String[]{account});
+        } else {
+            cursor = database.rawQuery("select * from user", new String[]{});
+        }
         while(cursor.moveToNext()) {
             HashMap<String, Object> item = new HashMap<>();
             item.put("username", cursor.getString(cursor.getColumnIndex("username")));

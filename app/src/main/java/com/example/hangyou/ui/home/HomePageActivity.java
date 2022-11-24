@@ -96,8 +96,28 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void jumpToShowFollowers() {
+        Intent intent = new Intent();
+        Bundle receive = new Bundle();
+        receive.putString("type", "showFollowers");
+        intent.putExtras(receive);
+        intent.setClass(this, SearchUserActivity.class);
+        startActivity(intent);
+    }
+
+    private void jumpToShowFollowings() {
+        Intent intent = new Intent();
+        Bundle receive = new Bundle();
+        receive.putString("type", "showFollowing");
+        intent.putExtras(receive);
+        intent.setClass(this, SearchUserActivity.class);
+        startActivity(intent);
+    }
+
     private void initClickListener() {
         findViewById(R.id.home_page_update).setOnClickListener(v -> jumpToUpdateHomePage());
         findViewById(R.id.home_page_search_user).setOnClickListener(v -> jumpToSearchUser());
+        findViewById(R.id.home_page_followers).setOnClickListener(v -> jumpToShowFollowers());
+        findViewById(R.id.home_page_following).setOnClickListener(v -> jumpToShowFollowings());
     }
 }
