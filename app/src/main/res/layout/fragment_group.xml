@@ -225,61 +225,54 @@
         </TableRow>
     </TableLayout>
 
-
-    <LinearLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/group_cards"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableLayout_small_card"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteX="0dp">
-        </ListView>
-        <RadioGroup
-            android:id="@+id/group_tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/group_cards"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout_small_card"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp">
+    </ListView>
+    <RadioGroup
+        android:id="@+id/group_tabs"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/group_group"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/ic_home_black_24dp"
-                android:gravity="center"
-                android:paddingLeft="0dp"
-                android:text="组局" />
-            <RadioButton
-                android:id="@+id/group_tree_hole"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/ic_home_black_24dp"
-                android:gravity="center"
-                android:paddingLeft="0dp"
-                android:text="树洞" />
-
-            <RadioButton
-                android:id="@+id/group_home_page"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/ic_home_black_24dp"
-                android:gravity="center"
-                android:paddingLeft="0dp"
-                android:text="主页" />
-        </RadioGroup>
-    </LinearLayout>
+        <RadioButton
+            android:id="@+id/group_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/ic_home_black_24dp"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:text="组局" />
+        <RadioButton
+            android:id="@+id/group_tree_hole"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/ic_home_black_24dp"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:text="树洞" />
+        <RadioButton
+            android:id="@+id/group_home_page"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/ic_home_black_24dp"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:text="主页" />
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,7 @@ import java.util.List;
 public class GroupActivity extends AppCompatActivity{
     SQLiteDatabase database;
     FragmentGroupBinding binding;
+    ArrayList<HashMap<String, Object>> data;
 
     /* TODO list declare */
     @Override
@@ -81,6 +82,104 @@ public class GroupActivity extends AppCompatActivity{
         findViewById(R.id.button_my_created_bureau).setOnClickListener(v -> retMyCreatedBureau());
         findViewById(R.id.button_create_bureau).setOnClickListener(v -> jumpToCreateBureau());
         findViewById(R.id.imageButton_guide).setOnClickListener(v -> jumpToGuide());
+        findViewById(R.id.cardView_study).setOnClickListener(v -> showStudyGroup());
+        findViewById(R.id.cardView_sport).setOnClickListener(v -> showSportGroup());
+        findViewById(R.id.cardView_eat).setOnClickListener(v -> showEatGroup());
+        findViewById(R.id.cardView_travel).setOnClickListener(v -> showTravelGroup());
+        findViewById(R.id.cardView_buy).setOnClickListener(v -> showBuyGroup());
+        findViewById(R.id.cardView_movie).setOnClickListener(v -> showMovieGroup());
+        findViewById(R.id.cardView_game).setOnClickListener(v -> showGameGroup());
+    }
+
+    private void showStudyGroup() {
+        ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        data.forEach(i -> {
+            if (i.get("groupType").equals("学习")) {
+                cdata.add(i);
+            }
+        });
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showSportGroup() {
+        ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        data.forEach(i -> {
+            if (i.get("groupType").equals("运动")) {
+                cdata.add(i);
+            }
+        });
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showEatGroup() {
+        ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        data.forEach(i -> {
+            if (i.get("groupType").equals("聚餐")) {
+                cdata.add(i);
+            }
+        });
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showTravelGroup() {
+        ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        data.forEach(i -> {
+            if (i.get("groupType").equals("旅行")) {
+                cdata.add(i);
+            }
+        });
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showBuyGroup() {
+        ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        data.forEach(i -> {
+            if (i.get("groupType").equals("拼单")) {
+                cdata.add(i);
+            }
+        });
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showMovieGroup() {
+        ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        data.forEach(i -> {
+            if (i.get("groupType").equals("电影")) {
+                cdata.add(i);
+            }
+        });
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showGameGroup() {
+        ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        data.forEach(i -> {
+            if (i.get("groupType").equals("游戏")) {
+                cdata.add(i);
+            }
+        });
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     private void showTotalUser() {
@@ -99,7 +198,7 @@ public class GroupActivity extends AppCompatActivity{
     }
 
     private void showGroupCards() {
-        ArrayList<HashMap<String, Object>> data = new ArrayList<>();
+        data = new ArrayList<>();
         Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
         HashMap<String, Object> item;
         while(cursor.moveToNext()) {
