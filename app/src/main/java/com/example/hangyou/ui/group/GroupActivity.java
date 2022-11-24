@@ -99,23 +99,53 @@ public class GroupActivity extends AppCompatActivity{
 
     private void showStudyGroup() {
         ArrayList<HashMap<String, Object>> cdata = new ArrayList<>();
+        ArrayList<Integer> idLists = new ArrayList<>();
         data.forEach(i -> {
             if (i.get("groupType").equals("学习")) {
                 cdata.add(i);
+                idLists.add(Integer.parseInt(Objects.requireNonNull(i.get("id")).toString()));
             }
         });
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, cdata);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showHaveemptyGtoup() {
-//        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
-//        ListView groupCards = findViewById(R.id.group_cards);
-//        groupCards.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-        showGroupCards();
+        Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
+        ArrayList<Integer> idLists = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+        }
+        GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
+        ListView groupCards = findViewById(R.id.group_cards);
+        groupCards.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle=new Bundle();
+                bundle.putInt("id", idLists.get(position));
+                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showSportGroup() {
@@ -298,8 +328,8 @@ public class GroupActivity extends AppCompatActivity{
     private void showGroupCards() {
         data = new ArrayList<>();
         Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
-        HashMap<String, Object> item;
         ArrayList<Integer> idLists = new ArrayList<>();
+        HashMap<String, Object> item;
         while(cursor.moveToNext()) {
             item = new HashMap<>();
             item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
@@ -315,6 +345,7 @@ public class GroupActivity extends AppCompatActivity{
             item.put("groupFemaleExpectedNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleExpectedNum"))));
             item.put("groupFemaleNowNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleNowNum"))));
             item.put("groupDescription", cursor.getString(cursor.getColumnIndex("groupDescription")));
+            item.put("id", cursor.getString(cursor.getColumnIndex("id")));
             idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
             data.add(item);
         }
