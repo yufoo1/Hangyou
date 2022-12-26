@@ -18,7 +18,7 @@ public class GroupCardDetailActivity extends AppCompatActivity {
     SQLiteDatabase database;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_group_card_detail);
+        setContentView(R.layout.fragment_group_detail);
         DataBaseHelper helper = new DataBaseHelper(GroupCardDetailActivity.this);
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
@@ -50,18 +50,20 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         String date = year + "-" + month + "-" + day;
         TextView tv_date = findViewById(R.id.group_card_detail_groupDate);
         tv_date.setText(date);
-        String maleExpectedNum = cursor.getString(cursor.getColumnIndex("groupMaleExpectedNum"));
-        TextView tv_male_expected_num = findViewById(R.id.group_card_detail_groupMaleExpectedNum);
-        tv_male_expected_num.setText(maleExpectedNum);
         String maleNowNum = cursor.getString(cursor.getColumnIndex("groupMaleNowNum"));
         TextView tv_male_now_num = findViewById(R.id.group_card_detail_groupMaleNowNum);
         tv_male_now_num.setText(maleNowNum);
-        String femaleExpectedNum = cursor.getString(cursor.getColumnIndex("groupFemaleExpectedNum"));
-        TextView tv_female_expected_num = findViewById(R.id.group_card_detail_groupFemaleExpectedNum);
-        tv_female_expected_num.setText(femaleExpectedNum);
+        String maleExpectedNum = cursor.getString(cursor.getColumnIndex("groupMaleExpectedNum"));
+        String maleRequiredNum = String.valueOf(Integer.parseInt(maleExpectedNum) - Integer.parseInt(maleNowNum));
+        TextView tv_male_required_num = findViewById(R.id.group_card_detail_groupMaleRequiredNum);
+        tv_male_required_num.setText(maleRequiredNum);
         String femaleNowNum = cursor.getString(cursor.getColumnIndex("groupFemaleNowNum"));
         TextView tv_female_now_num = findViewById(R.id.group_card_detail_groupFemaleNowNum);
         tv_female_now_num.setText(femaleNowNum);
+        String femaleExpectedNum = cursor.getString(cursor.getColumnIndex("groupFemaleExpectedNum"));
+        String femaleRequiredNum = String.valueOf(Integer.parseInt(femaleExpectedNum) - Integer.parseInt(femaleNowNum));
+        TextView tv_female_required_num = findViewById(R.id.group_card_detail_groupFemaleRequiredNum);
+        tv_female_required_num.setText(femaleRequiredNum);
     }
 
     private void jumpToGroup() {

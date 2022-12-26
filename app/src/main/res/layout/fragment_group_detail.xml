@@ -19,6 +19,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/group_card_detail_groupName"
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="bottom">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/group_card_detail_groupInitiator"
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="bottom">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:text="组局成员"
             android:textStyle="bold"
             android:textColor="@color/gray_13"
@@ -65,7 +84,7 @@
             </TextView>
 
             <TextView
-                android:id="@+id/now_boy_num"
+                android:id="@+id/group_card_detail_groupMaleNowNum"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
@@ -102,11 +121,10 @@
             </TextView>
 
             <TextView
-                android:id="@+id/now_girl_num"
+                android:id="@+id/group_card_detail_groupFemaleNowNum"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:text="3"
                 android:textStyle="bold"
                 android:textColor="@color/pink_6"
                 android:textSize="25sp"
@@ -156,11 +174,10 @@
             </TextView>
 
             <TextView
-                android:id="@+id/need_boy_num"
+                android:id="@+id/group_card_detail_groupMaleRequiredNum"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:text="3"
                 android:textStyle="bold"
                 android:textColor="@color/blue_6"
                 android:textSize="25sp"
@@ -193,11 +210,10 @@
             </TextView>
 
             <TextView
-                android:id="@+id/need_girl_num"
+                android:id="@+id/group_card_detail_groupFemaleRequiredNum"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:text="3"
                 android:textStyle="bold"
                 android:textColor="@color/pink_6"
                 android:textSize="25sp"
@@ -238,6 +254,7 @@
             android:textStyle="bold"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
+            android:id="@+id/group_card_detail_groupType"
             android:gravity="bottom">
         </TextView>
 
@@ -274,11 +291,10 @@
         </TextView>
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/group_card_detail_groupDescription"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="8dp"
-            android:text="安卓安卓fightingfightingfightingfightingfightingfightingfightingfighting"
             android:textColor="@color/gray_13"
             android:textSize="16sp"
             android:gravity="bottom"
@@ -309,11 +325,10 @@
         </TextView>
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/group_card_detail_groupDate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="8dp"
-            android:text="2022-12-24"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
             android:gravity="bottom"
@@ -377,7 +392,7 @@
             android:background="@drawable/button_red">
         </Button>
         <Button
-            android:id="@+id/add_group_page_button_return"
+            android:id="@+id/group_card_detail_return"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
