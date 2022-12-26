@@ -1,6 +1,8 @@
 package com.example.hangyou.ui.group;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hangyou.DataBaseHelper;
 import com.example.hangyou.R;
 
-import org.w3c.dom.Text;
-
 public class GroupCardDetailActivity extends AppCompatActivity {
     private int id;
     SQLiteDatabase database;
@@ -22,6 +22,7 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         DataBaseHelper helper = new DataBaseHelper(GroupCardDetailActivity.this);
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
+        database.execSQL("create table if not exists user_group_relation(id integer primary key autoincrement, userId integer, groupId integer)");
         Bundle receiver = getIntent().getExtras();
         id = receiver.getInt("id");
         initView();
@@ -35,9 +36,9 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         String name = cursor.getString(cursor.getColumnIndex("groupName"));
         TextView tv_groupName = findViewById(R.id.group_card_detail_groupName);
         tv_groupName.setText(name);
-        String type = cursor.getString(cursor.getColumnIndex("groupType"));
-        TextView tv_groupType = findViewById(R.id.group_card_detail_groupType);
-        tv_groupType.setText(type);
+//        String type = cursor.getString(cursor.getColumnIndex("groupType"));
+//        TextView tv_groupType = findViewById(R.id.group_card_detail_groupType);
+//        tv_groupType.setText(type);
         String description = cursor.getString(cursor.getColumnIndex("groupDescription"));
         TextView tv_groupDescription = findViewById(R.id.group_card_detail_groupDescription);
         tv_groupDescription.setText(description);
@@ -72,7 +73,20 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void addOrExitGroup() {
+        SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
+        String account = sp.getString("account", "defaultValue");
+        Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
+        cursor.moveToFirst();
+        String userId = cursor.getString(cursor.getColumnIndex("id"));
+        database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, id});
+        Intent intent = new Intent();
+        intent.setClass(this, GroupActivity.class);
+        startActivity(intent);
+    }
+
     private void initClickListener() {
         findViewById(R.id.group_card_detail_return).setOnClickListener(v -> jumpToGroup());
+        findViewById(R.id.group_card_detail_page_add_or_exit).setOnClickListener(v -> addOrExitGroup());
     }
 }

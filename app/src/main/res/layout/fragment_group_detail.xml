@@ -254,7 +254,6 @@
             android:textStyle="bold"
             android:textColor="@color/gray_13"
             android:textSize="18sp"
-            android:id="@+id/group_card_detail_groupType"
             android:gravity="bottom">
         </TextView>
 
@@ -380,7 +379,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/add_group_page_button_created"
+            android:id="@+id/group_card_detail_page_add_or_exit"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
