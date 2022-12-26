@@ -19,21 +19,23 @@
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_home_page.xml" value="0.264" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole.xml" value="0.1157548125633232" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/small_card_buy_layout.xml" value="0.25364583333333335" />
-        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/activity_main.xml" value="0.129981884057971" />
-        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/big_card.xml" value="0.264" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/big_card.xml" value="0.176" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_add_group_page.xml" value="0.2" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_friend_list_item.xml" value="0.176" />
-        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_group.xml" value="0.129981884057971" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_group.xml" value="0.176" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_group_card_detail.xml" value="0.2" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_group_list.xml" value="0.129981884057971" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_guide.xml" value="0.176" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_home_page.xml" value="0.129981884057971" />
-        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_login.xml" value="0.1033434650455927" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_login.xml" value="0.176" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_register.xml" value="0.1" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_search_user.xml" value="0.129981884057971" />
-        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole.xml" value="0.264" />
-        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_detail.xml" value="0.264" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole.xml" value="0.2" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_create.xml" value="0.1595744680851064" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_detail.xml" value="0.1" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/fragment_update_home_page.xml" value="0.129981884057971" />
+        <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/post_card.xml" value="0.4" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/small_card_buy_layout.xml" value="0.1" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/small_card_eat_layout.xml" value="0.1" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/small_card_game_layout.xml" value="0.1" />
