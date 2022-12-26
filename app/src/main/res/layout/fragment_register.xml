@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/register_account"
+            android:layout_margin="20dp"
             android:hint="请输入注册账号">
         </EditText>
         <EditText
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:hint="请输入密码"
             android:id="@+id/register_password"
+            android:layout_margin="20dp"
             android:password="true">
         </EditText>
         <EditText
@@ -34,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入用户名"
+            android:layout_margin="20dp"
             android:id="@+id/register_username">
         </EditText>
         <EditText
@@ -41,12 +44,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入手机号"
+            android:layout_margin="20dp"
             android:id="@+id/register_phone">
         </EditText>
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
             <RadioButton
                 android:layout_width="wrap_content"

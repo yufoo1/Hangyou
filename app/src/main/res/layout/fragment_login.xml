@@ -18,6 +18,7 @@
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:id="@+id/account"
             android:hint="请输入登录账号">
         </EditText>
@@ -25,6 +26,7 @@
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:hint="请输入密码"
             android:id="@+id/password"
             android:password="true">

@@ -90,26 +90,25 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/border">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="组局类型"
-                        android:textStyle="bold"
-                        android:textColor="@color/gray_13"
-                        android:textSize="18sp"
-                        android:gravity="bottom">
-                    </TextView>
+                    android:text="组局类型"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_13"
+                    android:textSize="18sp"
+                    android:gravity="bottom">
+                </TextView>
 
-                    <RadioGroup
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_group_page_type"
+                    android:orientation="horizontal">
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/add_group_page_type"
                         android:orientation="vertical">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -120,31 +119,34 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_0"
                                 android:checked="true"
-                                android:text="学习">
+                                android:text="学习"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                             <RadioButton
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_1"
-                                android:text="运动">
+                                android:text="运动"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                             <RadioButton
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_2"
-                                android:text="聚餐">
+                                android:text="聚餐"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                             <RadioButton
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_3"
-                                android:text="旅行">
+                                android:text="旅行"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                         </LinearLayout>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -154,32 +156,36 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_4"
-                                android:text="拼单">
+                                android:text="拼单"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                             <RadioButton
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_5"
-                                android:text="电影">
+                                android:text="电影"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                             <RadioButton
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_6"
-                                android:text="游戏">
+                                android:text="游戏"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                             <RadioButton
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/add_group_page_type_7"
-                                android:text="其他">
+                                android:text="其他"
+                                android:layoutDirection="ltr">
                             </RadioButton>
                         </LinearLayout>
-                    </RadioGroup>
-                </LinearLayout>
+                    </LinearLayout>
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout
