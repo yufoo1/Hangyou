@@ -7,272 +7,277 @@
     android:background="@color/purple_2"
     tools:context=".ui.group.GroupActivity">
     <LinearLayout
-        android:id="@+id/linearLayout_top_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/linearLayout_top_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="已组"
-            android:textStyle="bold"
-            android:textColor="@color/blue_10"
-            android:textSize="18sp"
-            android:gravity="bottom">
-        </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="已组"
+                android:textStyle="bold"
+                android:textColor="@color/blue_10"
+                android:textSize="18sp"
+                android:gravity="bottom">
+            </TextView>
 
-        <TextView
-            android:id="@+id/add_group_page_total_people"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:textStyle="bold"
-            android:textColor="@color/red_4"
-            android:textSize="30sp"
+            <TextView
+                android:id="@+id/add_group_page_total_people"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/red_4"
+                android:textSize="30sp"
+                android:gravity="bottom"
+                android:shadowColor="@color/gray_7"
+                android:shadowRadius="0.1"
+                android:shadowDx="5"
+                android:shadowDy="5">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:text="人"
+                android:textStyle="bold"
+                android:textColor="@color/blue_10"
+                android:textSize="18sp"
+                android:gravity="bottom">
+            </TextView>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton_guide"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_top_text"
+            android:layout_margin="10dp"
+            android:background="@mipmap/guide"
+            android:clickable="true">
+        </ImageButton>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_buttonPanel_1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toBottomOf="@id/imageButton_guide"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/button_my_in_bureau"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="我加入的组局"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_blue">
+            </Button>
+
+            <Button
+                android:id="@+id/button_my_created_bureau"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:text="我发起的组局"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_purple">
+            </Button>
+
+            <Button
+                android:id="@+id/button_create_bureau"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:text="立即创建组局"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_red">
+            </Button>
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayout_small_card"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_buttonPanel_1"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <TableRow>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_haveempty"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_haveempty_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_study"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_study_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_sport"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_sport_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_eat"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_eat_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+            </TableRow>
+
+            <TableRow>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_travel"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_travel_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_buy"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_buy_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_movie"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_movie_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_game"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_game_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+            </TableRow>
+        </TableLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/group_cards"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout_small_card"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp">
+        </ListView>
+        <RadioGroup
+            android:id="@+id/group_tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="bottom"
-            android:shadowColor="@color/gray_7"
-            android:shadowRadius="0.1"
-            android:shadowDx="5"
-            android:shadowDy="5">
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:text="人"
-            android:textStyle="bold"
-            android:textColor="@color/blue_10"
-            android:textSize="18sp"
-            android:gravity="bottom">
-        </TextView>
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+            <RadioButton
+                android:id="@+id/group_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:drawableTop="@drawable/ic_home_black_24dp"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="组局" />
+            <RadioButton
+                android:id="@+id/group_tree_hole"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/ic_home_black_24dp"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="树洞" />
+            <RadioButton
+                android:id="@+id/group_home_page"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/ic_home_black_24dp"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="主页" />
+        </RadioGroup>
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/imageButton_guide"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_top_text"
-        android:layout_margin="10dp"
-        android:background="@mipmap/guide"
-        android:clickable="true">
-    </ImageButton>
-
-    <LinearLayout
-        android:id="@+id/linearLayout_buttonPanel_1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@id/imageButton_guide"
-        android:layout_margin="10dp">
-
-        <Button
-            android:id="@+id/button_my_in_bureau"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="我加入的组局"
-            android:textStyle="bold"
-            android:textColor="@color/gray_1"
-            android:background="@drawable/button_blue">
-        </Button>
-
-        <Button
-            android:id="@+id/button_my_created_bureau"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:text="我发起的组局"
-            android:textStyle="bold"
-            android:textColor="@color/gray_1"
-            android:background="@drawable/button_purple">
-        </Button>
-
-        <Button
-            android:id="@+id/button_create_bureau"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:text="立即创建组局"
-            android:textStyle="bold"
-            android:textColor="@color/gray_1"
-            android:background="@drawable/button_red">
-        </Button>
-    </LinearLayout>
-
-    <TableLayout
-        android:id="@+id/tableLayout_small_card"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_buttonPanel_1"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
-
-        <TableRow>
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_haveempty"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_haveempty_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_study"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_study_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_sport"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_sport_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_eat"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_eat_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-        </TableRow>
-
-        <TableRow>
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_travel"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_travel_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_buy"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_buy_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_movie"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_movie_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView_game"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/yellow_1"
-                app:cardCornerRadius="5dp">
-                <include layout="@layout/small_card_game_layout"/>
-            </com.google.android.material.card.MaterialCardView>
-        </TableRow>
-    </TableLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/group_cards"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout_small_card"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="0dp">
-    </ListView>
-    <RadioGroup
-        android:id="@+id/group_tabs"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/group_group"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:checked="true"
-            android:drawableTop="@drawable/ic_home_black_24dp"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="组局" />
-        <RadioButton
-            android:id="@+id/group_tree_hole"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_home_black_24dp"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="树洞" />
-        <RadioButton
-            android:id="@+id/group_home_page"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_home_black_24dp"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="主页" />
-    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
