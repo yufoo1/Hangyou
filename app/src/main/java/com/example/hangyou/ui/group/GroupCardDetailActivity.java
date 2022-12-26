@@ -80,6 +80,9 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         cursor.moveToFirst();
         String userId = cursor.getString(cursor.getColumnIndex("id"));
         database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, id});
+        cursor = database.rawQuery("select * from user_group where id=?", new String[]{String.valueOf(id)});
+        cursor.moveToFirst();
+
         Intent intent = new Intent();
         intent.setClass(this, GroupActivity.class);
         startActivity(intent);

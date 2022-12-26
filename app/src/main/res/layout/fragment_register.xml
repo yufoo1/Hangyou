@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/purple_2">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -9,16 +10,19 @@
         <com.example.hangyou.ui.home.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:src="@drawable/app_icon">
         </com.example.hangyou.ui.home.CircleImageView>
         <EditText
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/register_account"
             android:hint="请输入注册账号">
         </EditText>
         <EditText
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入密码"
@@ -26,28 +30,73 @@
             android:password="true">
         </EditText>
         <EditText
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入用户名"
             android:id="@+id/register_username">
         </EditText>
         <EditText
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入手机号"
             android:id="@+id/register_phone">
         </EditText>
-        <Button
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="注册"
-            android:id="@+id/register_register">
-        </Button>
-        <Button
-            android:layout_width="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_gender_male"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checked="true"
+                android:text="男">
+            </RadioButton>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/register_gender_female"
+                android:text="女">
+            </RadioButton>
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="返回"
-            android:id="@+id/register_return">
-        </Button>
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/register_register"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:text="注册"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_red">
+            </Button>
+            <Button
+                android:id="@+id/register_return"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:text="返回"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_red">
+            </Button>
+        </LinearLayout>
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
