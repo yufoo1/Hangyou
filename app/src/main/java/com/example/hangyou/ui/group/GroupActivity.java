@@ -134,17 +134,13 @@ public class GroupActivity extends AppCompatActivity{
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Bundle bundle=new Bundle();
-                bundle.putInt("id", idLists.get(position));
-                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-            }
+        groupCards.setOnItemClickListener((parent, view, position, id) -> {
+            Bundle bundle=new Bundle();
+            bundle.putInt("id", idLists.get(position));
+            Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         });
     }
 

@@ -21,17 +21,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#171A1A"
+                android:textColor="@color/purple_7"
                 android:textSize="20sp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:id="@+id/home_page_username">
+                android:id="@+id/home_page_username"
+                android:shadowColor="@color/gray_7"
+                android:shadowRadius="0.1"
+                android:shadowDx="5"
+                android:shadowDy="5">
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:gravity="center"
-                android:textColor="#A0ACAA"
+                android:textColor="@color/gray_7"
                 android:id="@+id/home_page_description">
             </TextView>
 
@@ -46,17 +51,31 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/home_page_followers"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/red_4"
+                        android:textSize="30sp"
                         android:layout_gravity="center"
-                        android:id="@+id/home_page_followers">
+                        android:shadowColor="@color/gray_7"
+                        android:shadowRadius="0.1"
+                        android:shadowDx="5"
+                        android:shadowDy="5">
                     </TextView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="followers">
+                        android:textSize="15sp"
+                        android:textColor="@color/purple_7"
+                        android:text="followers"
+                        android:shadowColor="@color/gray_7"
+                        android:shadowRadius="0.1"
+                        android:shadowDx="3"
+                        android:shadowDy="3">
                     </TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -64,18 +83,33 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
+                        android:id="@+id/home_page_following"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/red_4"
+                        android:textSize="30sp"
                         android:layout_gravity="center"
-                        android:textSize="20sp"
-                        android:id="@+id/home_page_following">
+                        android:shadowColor="@color/gray_7"
+                        android:shadowRadius="0.1"
+                        android:shadowDx="5"
+                        android:shadowDy="5">
                     </TextView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="following">
+                        android:textSize="15sp"
+                        android:textColor="@color/purple_7"
+                        android:text="following"
+                        android:shadowColor="@color/gray_7"
+                        android:shadowRadius="0.1"
+                        android:shadowDx="3"
+                        android:shadowDy="3">
                     </TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -89,15 +123,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
-                android:textSize="18sp"
                 android:gravity="center"
-                android:background="#CBD5D5"
                 android:shape="rectangle"
                 android:bottomLeftRadius="30dp"
                 android:bottomRightRadius="30dp"
                 android:topLeftRadius="30dp"
                 android:topRightRadius="30dp"
                 android:id="@+id/home_page_update"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_red"
                 android:text="个人信息编辑">
             </TextView>
             <LinearLayout
@@ -134,18 +170,20 @@
                     </TextView>
                 </LinearLayout>
             </LinearLayout>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/home_page_search_user"
-                android:text="搜索用户">
-            </Button>
             <ListView
                 android:id="@+id/home_page_friend_list"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_marginTop="10dp">
             </ListView>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/home_page_search_user"
+                android:gravity="bottom"
+                android:height="0dp"
+                android:text="搜索用户">
+            </Button>
         </LinearLayout>
         <RadioGroup
             android:id="@+id/home_page_tabs"
