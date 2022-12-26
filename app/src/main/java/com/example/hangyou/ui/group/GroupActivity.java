@@ -322,7 +322,9 @@ public class GroupActivity extends AppCompatActivity{
         Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
         ArrayList<Integer> idLists = new ArrayList<>();
         HashMap<String, Object> item;
+        System.out.println("dsada");
         while(cursor.moveToNext()) {
+            System.out.println("gugugu");
             item = new HashMap<>();
             item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
             item.put("groupType", cursor.getString(cursor.getColumnIndex("groupType")));
