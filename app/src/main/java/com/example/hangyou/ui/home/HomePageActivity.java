@@ -6,16 +6,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hangyou.DataBaseHelper;
-import com.example.hangyou.MainActivity;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.group.GroupActivity;
-import com.example.hangyou.ui.group.GuideActivity;
 import com.example.hangyou.ui.tree_hole.TreeHoleActivity;
 
 public class HomePageActivity extends AppCompatActivity {
@@ -107,7 +104,7 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void jumoToTreeHole() {
+    private void jumpToTreeHole() {
         Intent intent = new Intent();
         intent.setClass(HomePageActivity.this, TreeHoleActivity.class);
         startActivity(intent);
@@ -119,6 +116,6 @@ public class HomePageActivity extends AppCompatActivity {
         findViewById(R.id.home_page_followers).setOnClickListener(v -> jumpToShowFollowers());
         findViewById(R.id.home_page_following).setOnClickListener(v -> jumpToShowFollowings());
         findViewById(R.id.home_page_group).setOnClickListener(v -> jumpToGroup());
-        findViewById(R.id.home_page_tree_hole).setOnClickListener(v -> jumoToTreeHole());
+        findViewById(R.id.home_page_tree_hole).setOnClickListener(v -> jumpToTreeHole());
     }
 }
