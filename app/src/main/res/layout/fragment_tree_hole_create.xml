@@ -82,8 +82,9 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:minLines="10"
-                    android:singleLine="false"/>
+                    android:minLines="5"
+                    android:singleLine="false"
+                    android:gravity="top"/>
 
             </LinearLayout>
             <LinearLayout
