@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hangyou.DataBaseHelper;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.group.GroupActivity;
 import com.example.hangyou.ui.tree_hole.TreeHoleActivity;

@@ -6,16 +6,12 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hangyou.DataBaseHelper;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
-import com.example.hangyou.ui.group.GroupActivity;
-import com.example.hangyou.ui.group.GuideActivity;
-import com.example.hangyou.ui.login.LoginActivity;
 
 public class UpdateHomePageActivity extends AppCompatActivity {
     SQLiteDatabase database;

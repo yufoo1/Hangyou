@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hangyou.DataBaseHelper;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.home.UpdateHomePageActivity;
+import com.example.hangyou.utils.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,13 +82,14 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         HashMap<String, Object> item;
         while(cursor.moveToNext()) {
             item = new HashMap<>();
+            System.out.println(cursor.getString(cursor.getColumnIndex("username")));
             item.put("username", cursor.getString(cursor.getColumnIndex("username")));
             item.put("id", cursor.getString(cursor.getColumnIndex("userId")));
             idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("userId"))));
             data.add(item);
         }
         GroupPeopleCardAdapter adapter = new GroupPeopleCardAdapter(GroupCardDetailActivity.this, data);
-        ListView groupPeople = findViewById(R.id.group_people_list);
+        HorizontalListView groupPeople = findViewById(R.id.group_people_list);
         groupPeople.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         groupPeople.setOnItemClickListener((parent, view, position, id) -> {

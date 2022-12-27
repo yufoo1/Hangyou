@@ -7,23 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Group;
 
-import com.example.hangyou.DataBaseHelper;
-import com.example.hangyou.MainActivity;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.group.GroupActivity;
-import com.example.hangyou.ui.group.GroupCardAdapter;
-import com.example.hangyou.ui.group.GroupCardDetailActivity;
-import com.example.hangyou.ui.group.GuideActivity;
 import com.example.hangyou.ui.home.HomePageActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class TreeHoleActivity extends AppCompatActivity {
     SQLiteDatabase database;

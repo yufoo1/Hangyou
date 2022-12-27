@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hangyou.DataBaseHelper;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
-import com.example.hangyou.ui.group.AddGroupPageActivity;
-import com.example.hangyou.ui.group.GroupActivity;
 
 public class TreeHolePostView extends AppCompatActivity {
     private int id;

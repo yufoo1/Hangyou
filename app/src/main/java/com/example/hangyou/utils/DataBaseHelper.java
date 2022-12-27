@@ -1,4 +1,4 @@
-package com.example.hangyou;
+package com.example.hangyou.utils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

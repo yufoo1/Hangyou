@@ -12,12 +12,8 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hangyou.DataBaseHelper;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
-import com.example.hangyou.ui.group.GroupActivity;
-import com.example.hangyou.ui.group.GroupCardAdapter;
-import com.example.hangyou.ui.group.GroupCardDetailActivity;
-import com.example.hangyou.ui.login.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.widget.EditText;
 
-import com.example.hangyou.DataBaseHelper;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 
 

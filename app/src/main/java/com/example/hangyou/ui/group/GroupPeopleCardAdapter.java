@@ -43,7 +43,7 @@ public class GroupPeopleCardAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(ctx).inflate(R.layout.group_user, parent, false);
-        TextView tv_username = convertView.findViewById(R.id.user_card_username);
+        TextView tv_username = convertView.findViewById(R.id.group_user_card_username);
         tv_username.setText(Objects.requireNonNull(data.get(position).get("username")).toString());
         return convertView;
     }
