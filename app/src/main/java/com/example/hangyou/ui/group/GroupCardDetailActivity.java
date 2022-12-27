@@ -9,8 +9,10 @@ import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +37,8 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
         database.execSQL("create table if not exists user_group_relation(id integer primary key autoincrement, userId integer, groupId integer)");
         database.execSQL("create table if not exists group_comment(id integer primary key autoincrement, groupId int, userId int, createdAt text, comment text)");
+        database.execSQL("create table if not exists group_money(id integer primary key autoincrement, groupId int, money int, createdAt text)");
+        database.execSQL("create table if not exists group_money_pay_relation(id integer primary key autoincrement, groupId int, userId int)");
         Bundle receiver = getIntent().getExtras();
         groupId = receiver.getInt("id");
         initView();
@@ -173,6 +177,49 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         } else {
             bt_add_or_exit.setText("入局");
             tv_status.setText("未加入");
+            findViewById(R.id.gather_money_other).setVisibility(View.GONE);
+        }
+        cursor = database.rawQuery("select * from user where account=?", new String[]{account});
+        cursor.moveToFirst();
+        String username = cursor.getString(cursor.getColumnIndex("username"));
+        cursor = database.rawQuery("select * from user_group where id=? and groupInitiator=?", new String[]{String.valueOf(groupId), username});
+        if(cursor.moveToFirst()) {
+            /* 局主 */
+            cursor = database.rawQuery("select * from group_money where groupId=?", new String[]{String.valueOf(groupId)});
+            if(cursor.moveToFirst()) {
+                findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.GONE);
+            } else {
+                findViewById(R.id.gather_money_other).setVisibility(View.GONE);
+                findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.VISIBLE);
+            }
+            findViewById(R.id.has_group_money_gather).setVisibility(View.GONE);
+        } else {
+            cursor = database.rawQuery("select * from group_money where groupId=?", new String[]{String.valueOf(groupId)});
+            if(cursor.moveToFirst()) {
+                TextView tv_money = findViewById(R.id.gather_money_money);
+                TextView tv_username = findViewById(R.id.gather_money_username);
+                TextView tv_createdAt = findViewById(R.id.gather_money_time);
+                cursor = database.rawQuery("select group_money.money as money, user.username as username, group_money.createdAt, user.id as userId from user, group_money, user_group where group_money.groupId=? and group_money.groupId=user_group.id and user_group.groupInitiator=user.username", new String[]{String.valueOf(groupId)});
+                cursor.moveToFirst();
+                tv_money.setText(cursor.getString(cursor.getColumnIndex("money")));
+                tv_username.setText(cursor.getString(cursor.getColumnIndex("username")));
+                tv_createdAt.setText(cursor.getString(cursor.getColumnIndex("createdAt")));
+                String userId = cursor.getString(cursor.getColumnIndex("userId"));
+                cursor = database.rawQuery("select * from group_money_pay_relation where groupId=? and userId=?", new String[]{String.valueOf(groupId), userId});
+                if(cursor.moveToFirst()) {
+                    /* 已支付 */
+                    TextView tv_confirm = findViewById(R.id.gather_money_confirm);
+                    tv_confirm.setText("请支付");
+                } else {
+                    TextView tv_confirm = findViewById(R.id.gather_money_confirm);
+                    tv_confirm.setText("您已支付");
+                }
+                findViewById(R.id.has_group_money_gather).setVisibility(View.GONE);
+            } else {
+                findViewById(R.id.has_group_money_gather).setVisibility(View.VISIBLE);
+            }
+            findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.GONE);
+
         }
     }
 
@@ -254,7 +301,17 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         if(bt_add_or_exit.getText().equals("入局")) {
             database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, groupId});
         } else {
-            database.execSQL("delete from user_group_relation where userId=? and groupId=?", new Object[]{userId, groupId});
+            cursor = database.rawQuery("select * from user where account=?", new String[]{account});
+            cursor.moveToFirst();
+            String username = cursor.getString(cursor.getColumnIndex("username"));
+            cursor = database.rawQuery("select * from user_group where id=? and groupInitiator=?", new String[]{String.valueOf(groupId), username});
+            if(cursor.moveToFirst()) {
+                /* 局主 */
+                Toast.makeText(this, "您作为局主不可以退出哦", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                database.execSQL("delete from user_group_relation where userId=? and groupId=?", new Object[]{userId, groupId});
+            }
         }
         if(gender.equals("男")) {
             cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='男' and user_group.id=?", new String[]{String.valueOf(groupId)});
@@ -286,9 +343,24 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void sendGatherMoneyRequest() {
+        EditText et_money = findViewById(R.id.group_card_detail_gather_money_money);
+        String money = et_money.toString();
+        if(money.equals("")) {
+            Toast.makeText(this, "请输入每个人需要支付的金额", Toast.LENGTH_SHORT).show();
+        } else {
+            database.execSQL("insert into group_money(groupId, money, createdAt) values(?, ?, datetime('now','localtime'))", new String[]{String.valueOf(groupId), money});
+            Toast.makeText(this, "成功发起群收款", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(this, GroupActivity.class);
+            startActivity(intent);
+        }
+    }
+
     private void initClickListener() {
         findViewById(R.id.group_card_detail_return).setOnClickListener(v -> jumpToGroup());
         findViewById(R.id.group_card_detail_page_add_or_exit).setOnClickListener(v -> addOrExitGroup());
         findViewById(R.id.group_card_detail_page_comment).setOnClickListener(v -> jumpToCommentEdit());
+        findViewById(R.id.group_card_detail_gather_money_request).setOnClickListener(v -> sendGatherMoneyRequest());
     }
 }
