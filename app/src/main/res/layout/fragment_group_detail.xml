@@ -81,7 +81,7 @@
 
                 <!-- 在ListView中可以让多个group_user水平排列吗？-->
                 <ListView
-                    android:id="@+id/people"
+                    android:id="@+id/group_people_list"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"

@@ -6,16 +6,22 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hangyou.DataBaseHelper;
 import com.example.hangyou.R;
+import com.example.hangyou.ui.home.UpdateHomePageActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GroupCardDetailActivity extends AppCompatActivity {
-    private int id;
+    private int groupId;
     SQLiteDatabase database;
+    ArrayList<HashMap<String, Object>> data;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_group_detail);
@@ -24,15 +30,16 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
         database.execSQL("create table if not exists user_group_relation(id integer primary key autoincrement, userId integer, groupId integer)");
         Bundle receiver = getIntent().getExtras();
-        id = receiver.getInt("id");
+        groupId = receiver.getInt("id");
         initView();
         initClickListener();
+        showGroupPeople();
     }
 
     private void initView() {
-        Cursor cursor = database.rawQuery("select * from user_group where id=?", new String[]{String.valueOf(id)});
+        Cursor cursor = database.rawQuery("select * from user_group where id=?", new String[]{String.valueOf(groupId)});
         cursor.moveToFirst();
-        System.out.println(id);
+        System.out.println(groupId);
         String name = cursor.getString(cursor.getColumnIndex("groupName"));
         TextView tv_groupName = findViewById(R.id.group_card_detail_groupName);
         tv_groupName.setText(name);
@@ -67,6 +74,32 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         tv_female_required_num.setText(femaleRequiredNum);
     }
 
+    private void showGroupPeople() {
+        data = new ArrayList<>();
+        Cursor cursor = database.rawQuery("select user.id as userId, user.username as username from user, user_group_relation, user_group where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=?", new String[]{String.valueOf(groupId)});
+        ArrayList<Integer> idLists = new ArrayList<>();
+        HashMap<String, Object> item;
+        while(cursor.moveToNext()) {
+            item = new HashMap<>();
+            item.put("username", cursor.getString(cursor.getColumnIndex("username")));
+            item.put("id", cursor.getString(cursor.getColumnIndex("userId")));
+            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("userId"))));
+            data.add(item);
+        }
+        GroupPeopleCardAdapter adapter = new GroupPeopleCardAdapter(GroupCardDetailActivity.this, data);
+        ListView groupPeople = findViewById(R.id.group_people_list);
+        groupPeople.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        groupPeople.setOnItemClickListener((parent, view, position, id) -> {
+            Bundle bundle=new Bundle();
+            bundle.putInt("id", idLists.get(position));
+            Intent intent =new Intent(this, UpdateHomePageActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        });
+    }
+
     private void jumpToGroup() {
         Intent intent = new Intent();
         intent.setClass(this, GroupActivity.class);
@@ -79,8 +112,8 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
         cursor.moveToFirst();
         String userId = cursor.getString(cursor.getColumnIndex("id"));
-        database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, id});
-        cursor = database.rawQuery("select * from user_group where id=?", new String[]{String.valueOf(id)});
+        database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, groupId});
+        cursor = database.rawQuery("select * from user_group where id=?", new String[]{String.valueOf(groupId)});
         cursor.moveToFirst();
 
         Intent intent = new Intent();

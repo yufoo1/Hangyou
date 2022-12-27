@@ -321,9 +321,7 @@ public class GroupActivity extends AppCompatActivity{
         Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
         ArrayList<Integer> idLists = new ArrayList<>();
         HashMap<String, Object> item;
-        System.out.println("dsada");
         while(cursor.moveToNext()) {
-            System.out.println("gugugu");
             item = new HashMap<>();
             item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
             item.put("groupType", cursor.getString(cursor.getColumnIndex("groupType")));
@@ -347,17 +345,13 @@ public class GroupActivity extends AppCompatActivity{
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        groupCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Bundle bundle=new Bundle();
-                bundle.putInt("id", idLists.get(position));
-                Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-            }
+        groupCards.setOnItemClickListener((parent, view, position, id) -> {
+            Bundle bundle=new Bundle();
+            bundle.putInt("id", idLists.get(position));
+            Intent intent =new Intent(GroupActivity.this, GroupCardDetailActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         });
     }
 }
