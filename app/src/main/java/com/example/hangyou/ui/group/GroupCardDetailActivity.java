@@ -240,8 +240,14 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void jumpToCommentEdit() {
+        GroupCommentDialog dialog = new GroupCommentDialog(this, androidx.appcompat.R.style.Base_Theme_AppCompat_Light);
+        dialog.show();
+    }
+
     private void initClickListener() {
         findViewById(R.id.group_card_detail_return).setOnClickListener(v -> jumpToGroup());
         findViewById(R.id.group_card_detail_page_add_or_exit).setOnClickListener(v -> addOrExitGroup());
+        findViewById(R.id.group_card_detail_page_comment).setOnClickListener(v -> jumpToCommentEdit());
     }
 }
