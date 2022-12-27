@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 
 import com.example.hangyou.DataBaseHelper;
 import com.example.hangyou.MainActivity;
@@ -31,32 +32,30 @@ public class TreeHoleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_tree_hole);
-        RadioGroup mRadioGroup=findViewById(R.id.tree_hole_tabs);
         initClickListener();
         DataBaseHelper helper = new DataBaseHelper(TreeHoleActivity.this);
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists post(id integer primary key autoincrement, postName text, postText text, createTime text, userId int ,FOREIGN KEY(userId) REFERENCES user(id) )");
         showPostCards();
-        mRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-            Intent intent = new Intent();
-            switch (i) {
-                case R.id.tree_hole_group:
-                    intent.setClass(this, GroupActivity.class);
-                    break;
-                case R.id.tree_hole_tree_hole:
-                    intent.setClass(this, TreeHoleActivity.class);
-                    break;
-                case R.id.tree_hole_home_page:
-                    intent.setClass(this, HomePageActivity.class);
-                    break;
-            }
-            startActivity(intent);
-        });
     }
 
 
     private void initClickListener() {
         findViewById(R.id.click_begin_post).setOnClickListener(v -> jumpToCreate());
+        findViewById(R.id.tree_hole_group).setOnClickListener(v -> jumpToGroup());
+        findViewById(R.id.tree_hole_home_page).setOnClickListener(v -> jumpToHomePage());
+    }
+
+    private void jumpToGroup() {
+        Intent intent = new Intent();
+        intent.setClass(TreeHoleActivity.this, GroupActivity.class);
+        startActivity(intent);
+    }
+
+    private void jumpToHomePage() {
+        Intent intent = new Intent();
+        intent.setClass(TreeHoleActivity.this, HomePageActivity.class);
+        startActivity(intent);
     }
 
     private void jumpToCreate() {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -44,22 +45,6 @@ public class GroupActivity extends AppCompatActivity{
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
         showTotalUser();
         showGroupCards();
-        RadioGroup mRadioGroup=findViewById(R.id.group_tabs);
-        mRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-            Intent intent = new Intent();
-            switch (i) {
-                case R.id.group_group:
-                    intent.setClass(GroupActivity.this, GroupActivity.class);
-                    break;
-                case R.id.group_tree_hole:
-                    intent.setClass(GroupActivity.this, TreeHoleActivity.class);
-                    break;
-                case R.id.group_home_page:
-                    intent.setClass(GroupActivity.this, HomePageActivity.class);
-                    break;
-            }
-            startActivity(intent);
-        });
     }
 
     private void retMyInBureau() {
@@ -82,6 +67,18 @@ public class GroupActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    private void jumpToTreeHole() {
+        Intent intent = new Intent();
+        intent.setClass(GroupActivity.this, TreeHoleActivity.class);
+        startActivity(intent);
+    }
+
+    private void jumpToHomePage() {
+        Intent intent = new Intent();
+        intent.setClass(GroupActivity.this, HomePageActivity.class);
+        startActivity(intent);
+    }
+
     private void initClickListener() {
         findViewById(R.id.button_my_in_bureau).setOnClickListener(v -> retMyInBureau());
         findViewById(R.id.button_my_created_bureau).setOnClickListener(v -> retMyCreatedBureau());
@@ -95,6 +92,8 @@ public class GroupActivity extends AppCompatActivity{
         findViewById(R.id.cardView_buy).setOnClickListener(v -> showBuyGroup());
         findViewById(R.id.cardView_movie).setOnClickListener(v -> showMovieGroup());
         findViewById(R.id.cardView_game).setOnClickListener(v -> showGameGroup());
+        findViewById(R.id.group_tree_hole).setOnClickListener(v -> jumpToTreeHole());
+        findViewById(R.id.group_home_page).setOnClickListener(v -> jumpToHomePage());
     }
 
     private void showStudyGroup() {

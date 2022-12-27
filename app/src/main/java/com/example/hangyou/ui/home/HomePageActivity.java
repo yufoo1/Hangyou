@@ -28,22 +28,6 @@ public class HomePageActivity extends AppCompatActivity {
         database.execSQL("create table if not exists follow(id integer primary key autoincrement, followerAccount text, followingAccount text)");
         initTextView();
         initClickListener();
-        RadioGroup mRadioGroup=findViewById(R.id.home_page_tabs);
-        mRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-            Intent intent = new Intent();
-            switch (i) {
-                case R.id.home_page_group:
-                    intent.setClass(HomePageActivity.this, GroupActivity.class);
-                    break;
-                case R.id.home_page_tree_hole:
-                    intent.setClass(HomePageActivity.this, TreeHoleActivity.class);
-                    break;
-                case R.id.home_page_home_page:
-                    intent.setClass(HomePageActivity.this, HomePageActivity.class);
-                    break;
-            }
-            startActivity(intent);
-        });
     }
 
     private void initTextView() {
@@ -117,10 +101,24 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void jumpToGroup() {
+        Intent intent = new Intent();
+        intent.setClass(HomePageActivity.this, GroupActivity.class);
+        startActivity(intent);
+    }
+
+    private void jumoToTreeHole() {
+        Intent intent = new Intent();
+        intent.setClass(HomePageActivity.this, TreeHoleActivity.class);
+        startActivity(intent);
+    }
+
     private void initClickListener() {
         findViewById(R.id.home_page_update).setOnClickListener(v -> jumpToUpdateHomePage());
         findViewById(R.id.home_page_search_user).setOnClickListener(v -> jumpToSearchUser());
         findViewById(R.id.home_page_followers).setOnClickListener(v -> jumpToShowFollowers());
         findViewById(R.id.home_page_following).setOnClickListener(v -> jumpToShowFollowings());
+        findViewById(R.id.home_page_group).setOnClickListener(v -> jumpToGroup());
+        findViewById(R.id.home_page_tree_hole).setOnClickListener(v -> jumoToTreeHole());
     }
 }
