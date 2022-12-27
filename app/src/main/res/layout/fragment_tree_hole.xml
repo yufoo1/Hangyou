@@ -14,36 +14,34 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scrollView">
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ListView
-                    android:id="@+id/post_cards"
-                    android:layout_width="409dp"
-                    android:layout_height="507dp" />
-
-                <LinearLayout
-                    android:layout_width="409dp"
-                    android:layout_height="120dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="149dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" />
 
                     <Button
                         android:id="@+id/click_begin_post"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:text="点击发帖" />
+                        android:background="@drawable/button_blue"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_1"
+                        android:layout_marginStart="5dp"
+                        android:text="点击发帖"
+                        android:layout_gravity="top|right"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"/>
 
-                </LinearLayout>
+                <ListView
+                    android:id="@+id/post_cards"
+                    android:layout_width="409dp"
+                    android:layout_height="507dp"
+                    android:layout_marginTop="80dp"/>
 
-            </LinearLayout>
+            </FrameLayout>
         </ScrollView>
         <LinearLayout
             android:layout_width="match_parent"
