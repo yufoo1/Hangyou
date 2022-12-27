@@ -4,7 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_2"
+    android:background="@drawable/cover"
     android:paddingTop="?attr/actionBarSize">
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,19 +12,6 @@
         android:gravity="center"
         android:layout_marginTop="250dp"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:textStyle="bold"
-            android:textColor="@color/gray_7"
-            android:textSize="30sp"
-            android:shadowColor="@color/blue_10"
-            android:shadowRadius="0.1"
-            android:text="So, where are you?"
-            android:shadowDx="5"
-            android:shadowDy="5">
-        </TextView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
