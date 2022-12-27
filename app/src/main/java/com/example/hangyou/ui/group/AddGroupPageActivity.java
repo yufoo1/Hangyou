@@ -26,6 +26,7 @@ public class AddGroupPageActivity extends AppCompatActivity {
         DataBaseHelper helper = new DataBaseHelper(AddGroupPageActivity.this);
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
+        database.execSQL("create table if not exists user_group_relation(id integer primary key autoincrement, userId integer, groupId integer)");
         initClickListener();
     }
 

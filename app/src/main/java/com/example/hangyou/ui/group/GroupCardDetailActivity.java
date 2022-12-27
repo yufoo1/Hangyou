@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.home.UpdateHomePageActivity;
 import com.example.hangyou.utils.HorizontalListView;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,9 +48,91 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         String name = cursor.getString(cursor.getColumnIndex("groupName"));
         TextView tv_groupName = findViewById(R.id.group_card_detail_groupName);
         tv_groupName.setText(name);
-//        String type = cursor.getString(cursor.getColumnIndex("groupType"));
-//        TextView tv_groupType = findViewById(R.id.group_card_detail_groupType);
-//        tv_groupType.setText(type);
+        String type = cursor.getString(cursor.getColumnIndex("groupType"));
+        TextView tv_groupType = findViewById(R.id.group_card_detail_groupType);
+        MaterialCardView mcv_study = findViewById(R.id.group_detail_study);
+        MaterialCardView mcv_sport = findViewById(R.id.group_detail_sport);
+        MaterialCardView mcv_eat = findViewById(R.id.group_detail_eat);
+        MaterialCardView mcv_travel = findViewById(R.id.group_detail_travel);
+        MaterialCardView mcv_buy = findViewById(R.id.group_detail_buy);
+        MaterialCardView mcv_movie = findViewById(R.id.group_detail_movie);
+        MaterialCardView mcv_game = findViewById(R.id.group_detail_game);
+        MaterialCardView mcv_other = findViewById(R.id.group_detail_other);
+        System.out.println("start");
+        if(type.equals("学习")) {
+            mcv_study.setVisibility(View.VISIBLE);
+            mcv_sport.setVisibility(View.GONE);
+            mcv_eat.setVisibility(View.GONE);
+            mcv_travel.setVisibility(View.GONE);
+            mcv_buy.setVisibility(View.GONE);
+            mcv_movie.setVisibility(View.GONE);
+            mcv_game.setVisibility(View.GONE);
+            mcv_other.setVisibility(View.GONE);
+        } else if(type.equals("运动")) {
+            mcv_study.setVisibility(View.GONE);
+            mcv_sport.setVisibility(View.VISIBLE);
+            mcv_eat.setVisibility(View.GONE);
+            mcv_travel.setVisibility(View.GONE);
+            mcv_buy.setVisibility(View.GONE);
+            mcv_movie.setVisibility(View.GONE);
+            mcv_game.setVisibility(View.GONE);
+            mcv_other.setVisibility(View.GONE);
+        } else if(type.equals("聚餐")) {
+            mcv_study.setVisibility(View.GONE);
+            mcv_sport.setVisibility(View.GONE);
+            mcv_eat.setVisibility(View.VISIBLE);
+            mcv_travel.setVisibility(View.GONE);
+            mcv_buy.setVisibility(View.GONE);
+            mcv_movie.setVisibility(View.GONE);
+            mcv_game.setVisibility(View.GONE);
+            mcv_other.setVisibility(View.GONE);
+        } else if(type.equals("旅行")) {
+            mcv_study.setVisibility(View.GONE);
+            mcv_sport.setVisibility(View.GONE);
+            mcv_eat.setVisibility(View.GONE);
+            mcv_travel.setVisibility(View.VISIBLE);
+            mcv_buy.setVisibility(View.GONE);
+            mcv_movie.setVisibility(View.GONE);
+            mcv_game.setVisibility(View.GONE);
+            mcv_other.setVisibility(View.GONE);
+        } else if(type.equals("拼单")) {
+            mcv_study.setVisibility(View.GONE);
+            mcv_sport.setVisibility(View.GONE);
+            mcv_eat.setVisibility(View.GONE);
+            mcv_travel.setVisibility(View.GONE);
+            mcv_buy.setVisibility(View.VISIBLE);
+            mcv_movie.setVisibility(View.GONE);
+            mcv_game.setVisibility(View.GONE);
+            mcv_other.setVisibility(View.GONE);
+        } else if(type.equals("电影")) {
+            mcv_study.setVisibility(View.GONE);
+            mcv_sport.setVisibility(View.GONE);
+            mcv_eat.setVisibility(View.GONE);
+            mcv_travel.setVisibility(View.GONE);
+            mcv_buy.setVisibility(View.GONE);
+            mcv_movie.setVisibility(View.VISIBLE);
+            mcv_game.setVisibility(View.GONE);
+            mcv_other.setVisibility(View.GONE);
+        } else if(type.equals("游戏")) {
+            System.out.println("lala");
+            mcv_study.setVisibility(View.GONE);
+            mcv_sport.setVisibility(View.GONE);
+            mcv_eat.setVisibility(View.GONE);
+            mcv_travel.setVisibility(View.GONE);
+            mcv_buy.setVisibility(View.GONE);
+            mcv_movie.setVisibility(View.GONE);
+            mcv_game.setVisibility(View.VISIBLE);
+            mcv_other.setVisibility(View.GONE);
+        } else {
+            mcv_study.setVisibility(View.GONE);
+            mcv_sport.setVisibility(View.GONE);
+            mcv_eat.setVisibility(View.GONE);
+            mcv_travel.setVisibility(View.GONE);
+            mcv_buy.setVisibility(View.GONE);
+            mcv_movie.setVisibility(View.GONE);
+            mcv_game.setVisibility(View.GONE);
+            mcv_other.setVisibility(View.VISIBLE);
+        }
         String description = cursor.getString(cursor.getColumnIndex("groupDescription"));
         TextView tv_groupDescription = findViewById(R.id.group_card_detail_groupDescription);
         tv_groupDescription.setText(description);
@@ -76,13 +161,16 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         TextView tv_female_required_num = findViewById(R.id.group_card_detail_groupFemaleRequiredNum);
         tv_female_required_num.setText(femaleRequiredNum);
         Button bt_add_or_exit = findViewById(R.id.group_card_detail_page_add_or_exit);
+        TextView tv_status = findViewById(R.id.group_detail_status);
         SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String account = sp.getString("account", "defaultValue");
         cursor = database.rawQuery("select * from user_group_relation, user where user_group_relation.groupId=? and user.id=user_group_relation.userId and user.account=?", new String[]{String.valueOf(groupId), account});
         if(cursor.moveToFirst()) {
             bt_add_or_exit.setText("退局");
+            tv_status.setText("已加入");
         } else {
             bt_add_or_exit.setText("入局");
+            tv_status.setText("未加入");
         }
     }
 
