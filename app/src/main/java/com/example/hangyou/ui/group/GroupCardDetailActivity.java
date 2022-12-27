@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -64,6 +65,7 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         tv_male_now_num.setText(maleNowNum);
         String maleExpectedNum = cursor.getString(cursor.getColumnIndex("groupMaleExpectedNum"));
         String maleRequiredNum = String.valueOf(Integer.parseInt(maleExpectedNum) - Integer.parseInt(maleNowNum));
+        System.out.println("expect male " + maleExpectedNum + " and now male " + maleNowNum);
         TextView tv_male_required_num = findViewById(R.id.group_card_detail_groupMaleRequiredNum);
         tv_male_required_num.setText(maleRequiredNum);
         String femaleNowNum = cursor.getString(cursor.getColumnIndex("groupFemaleNowNum"));
@@ -73,6 +75,15 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         String femaleRequiredNum = String.valueOf(Integer.parseInt(femaleExpectedNum) - Integer.parseInt(femaleNowNum));
         TextView tv_female_required_num = findViewById(R.id.group_card_detail_groupFemaleRequiredNum);
         tv_female_required_num.setText(femaleRequiredNum);
+        Button bt_add_or_exit = findViewById(R.id.group_card_detail_page_add_or_exit);
+        SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
+        String account = sp.getString("account", "defaultValue");
+        cursor = database.rawQuery("select * from user_group_relation, user where user_group_relation.groupId=? and user.id=user_group_relation.userId and user.account=?", new String[]{String.valueOf(groupId), account});
+        if(cursor.moveToFirst()) {
+            bt_add_or_exit.setText("退局");
+        } else {
+            bt_add_or_exit.setText("入局");
+        }
     }
 
     private void showGroupPeople() {
@@ -114,10 +125,29 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
         cursor.moveToFirst();
         String userId = cursor.getString(cursor.getColumnIndex("id"));
-        database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, groupId});
-        cursor = database.rawQuery("select * from user_group where id=?", new String[]{String.valueOf(groupId)});
-        cursor.moveToFirst();
-
+        String gender = cursor.getString(cursor.getColumnIndex("gender"));
+        Button bt_add_or_exit = findViewById(R.id.group_card_detail_page_add_or_exit);
+        if(bt_add_or_exit.getText().equals("入局")) {
+            database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, groupId});
+        } else {
+            database.execSQL("delete from user_group_relation where userId=? and groupId=?", new Object[]{userId, groupId});
+        }
+        if(gender.equals("男")) {
+            cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='男' and user_group.id=?", new String[]{String.valueOf(groupId)});
+            int cnt = 0;
+            while(cursor.moveToNext()) {
+                cnt++;
+            }
+            System.out.println("cnt is " + cnt);
+            database.execSQL("update user_group set groupMaleNowNum=? where id=?", new String[]{String.valueOf(cnt), String.valueOf(groupId)});
+        } else {
+            cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='女' and user_group.id=?", new String[]{String.valueOf(groupId)});
+            int cnt = 0;
+            while(cursor.moveToNext()) {
+                cnt++;
+            }
+            database.execSQL("update user_group set groupFemaleNowNum=? where id=?", new String[]{String.valueOf(cnt), String.valueOf(groupId)});
+        }
         Intent intent = new Intent();
         intent.setClass(this, GroupActivity.class);
         startActivity(intent);
