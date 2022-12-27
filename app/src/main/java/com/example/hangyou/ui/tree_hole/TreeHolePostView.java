@@ -27,7 +27,9 @@ public class TreeHolePostView extends AppCompatActivity {
         setContentView(R.layout.fragment_tree_hole_detail);
         DataBaseHelper helper = new DataBaseHelper(TreeHolePostView.this);
         database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists post(id integer primary key autoincrement, postName text, postText text, createTime text, userId int ,FOREIGN KEY(userId) REFERENCES user(id) )");
+        database.execSQL("create table if not exists post(id integer primary key autoincrement, postName text," +
+                " postText text, createTime text, userId int , likeNum int not null default 0,commentNum int not null default 0," +
+                " reportNum int not null default 0, FOREIGN KEY(userId) REFERENCES user(id) )");
         Bundle receiver = getIntent().getExtras();
         id = receiver.getInt("id");
         initView();

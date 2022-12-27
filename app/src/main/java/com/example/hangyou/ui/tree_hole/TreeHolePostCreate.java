@@ -22,7 +22,9 @@ public class TreeHolePostCreate extends AppCompatActivity {
         setContentView(R.layout.fragment_tree_hole_create);
         DataBaseHelper helper = new DataBaseHelper(TreeHolePostCreate.this);
         database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists post(id integer primary key autoincrement, postName text, postText text, createTime text, userId int ,FOREIGN KEY(userId) REFERENCES user(id) )");
+        database.execSQL("create table if not exists post(id integer primary key autoincrement, postName text," +
+                " postText text, createTime text, userId int , likeNum int not null default 0,commentNum int not null default 0," +
+                " reportNum int not null default 0, FOREIGN KEY(userId) REFERENCES user(id) )");
         initClickListener();
     }
 
@@ -50,7 +52,7 @@ public class TreeHolePostCreate extends AppCompatActivity {
         cursor.moveToFirst();
         String userId = cursor.getString(cursor.getColumnIndex("id"));
 
-        database.execSQL("insert into post(postName, postText, createTime, userId,likeNum,commentNum,reportNum) values (?, ?, datetime('now','localtime'), ?, 0, 0, 0)", new Object[]{postName, postText, userId});
+        database.execSQL("insert into post(postName, postText, createTime, userId, likeNum, commentNum,reportNum) values (?, ?, datetime('now','localtime'), ?, 0, 0, 0)", new Object[]{postName, postText, userId});
         System.out.println("帖子发布成功");
         Intent intent = new Intent();
         intent.setClass(TreeHolePostCreate.this, TreeHoleActivity.class);
