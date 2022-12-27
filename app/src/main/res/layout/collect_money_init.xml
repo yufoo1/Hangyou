@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent">
+            <com.example.hangyou.ui.home.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/head_portrait">
+            </com.example.hangyou.ui.home.CircleImageView>
+            <TextView
+                android:id="@+id/comment_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="用户名"
+                android:textColor="#171A1A"
+                android:textSize="15sp"
+                android:gravity="center">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/collect_money_time"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="right"
+                android:padding="8dp"
+                android:text="2022-12-27 12:10"
+                android:textColor="@color/gray_13"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/comment_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="发起了一笔局收款"
+                android:textColor="@color/gray_13"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="应收："
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/need_collect_money"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:text="123"
+            android:textStyle="bold"
+            android:textColor="@color/red_4"
+            android:textSize="30sp"
+            android:gravity="top"
+            android:shadowColor="@color/gray_7"
+            android:shadowRadius="0.1"
+            android:shadowDx="5"
+            android:shadowDy="5">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:text="元"
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="center">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:text="已收："
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/need_pay_money"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:text="123"
+            android:textStyle="bold"
+            android:textColor="@color/red_4"
+            android:textSize="30sp"
+            android:gravity="top"
+            android:shadowColor="@color/gray_7"
+            android:shadowRadius="0.1"
+            android:shadowDx="5"
+            android:shadowDy="5">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:text="元"
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="center">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="已支付："
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="center">
+        </TextView>
+
+        <com.example.hangyou.utils.HorizontalListView
+            android:id="@+id/pay_people_list"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp">
+        </com.example.hangyou.utils.HorizontalListView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="未支付："
+            android:textStyle="bold"
+            android:textColor="@color/gray_13"
+            android:textSize="18sp"
+            android:gravity="center">
+        </TextView>
+
+        <com.example.hangyou.utils.HorizontalListView
+            android:id="@+id/not_pay_people_list"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp">
+        </com.example.hangyou.utils.HorizontalListView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

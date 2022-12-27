@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--对按钮进行圆角化-->
+    <corners android:radius="10dp"/>
+    <!--设置按钮背景颜色
+    <solid android:color="@color/yellow_5"/>-->
+    <!--stroke是按钮边框的线条-->
+    <stroke
+        android:width="3dp"
+        android:color="@color/red_6"/>
+    <gradient
+        android:startColor="@color/red_4"
+        android:centerColor="@color/red_4"
+        android:endColor="@color/red_4"/>
+</shape>
