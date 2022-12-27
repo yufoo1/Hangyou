@@ -138,7 +138,6 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             while(cursor.moveToNext()) {
                 cnt++;
             }
-            System.out.println("cnt is " + cnt);
             database.execSQL("update user_group set groupMaleNowNum=? where id=?", new String[]{String.valueOf(cnt), String.valueOf(groupId)});
         } else {
             cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='女' and user_group.id=?", new String[]{String.valueOf(groupId)});

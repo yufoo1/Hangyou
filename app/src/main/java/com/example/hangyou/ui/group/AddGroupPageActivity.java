@@ -166,8 +166,29 @@ public class AddGroupPageActivity extends AppCompatActivity {
         Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
         cursor.moveToFirst();
         String groupInitiator = cursor.getString(cursor.getColumnIndex("username"));
+        String id = cursor.getString(cursor.getColumnIndex("id"));
+        String gender = cursor.getString(cursor.getColumnIndex("gender"));
         cursor.close();
         database.execSQL("insert into user_group(groupName, groupType, groupInitiator, groupDescription, groupYear, groupMonth, groupDay, groupMaleExpectedNum, groupMaleNowNum, groupFemaleExpectedNum, groupFemaleNowNum) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new Object[]{groupName, groupType, groupInitiator, groupDescription, groupYear, groupMonth, groupDay, groupMaleExpectedNum, 0, groupFemaleExpectedNum, 0});
+        cursor = database.rawQuery("select Max(id) as maxId from user_group", new String[]{});
+        cursor.moveToFirst();
+        String groupId = cursor.getString(cursor.getColumnIndex("maxId"));
+        database.execSQL("insert into user_group_relation(groupId, userId) values(?, ?)", new String[]{String.valueOf(groupId), String.valueOf(id)});
+        if(gender.equals("男")) {
+            cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='男' and user_group.id=?", new String[]{String.valueOf(groupId)});
+            int cnt = 0;
+            while(cursor.moveToNext()) {
+                cnt++;
+            }
+            database.execSQL("update user_group set groupMaleNowNum=? where id=?", new String[]{String.valueOf(cnt), String.valueOf(groupId)});
+        } else {
+            cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='女' and user_group.id=?", new String[]{String.valueOf(groupId)});
+            int cnt = 0;
+            while(cursor.moveToNext()) {
+                cnt++;
+            }
+            database.execSQL("update user_group set groupFemaleNowNum=? where id=?", new String[]{String.valueOf(cnt), String.valueOf(groupId)});
+        }
         System.out.println("新组添加成功");
         Intent intent = new Intent();
         intent.setClass(AddGroupPageActivity.this, GroupActivity.class);
