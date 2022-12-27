@@ -314,14 +314,111 @@
                 </TextView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView_haveempty"
-                    android:layout_width="80dp"
+                    android:id="@+id/group_detail_study"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_study_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/group_detail_sport"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_sport_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/group_detail_eat"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
                     android:clickable="true"
                     android:focusable="true"
                     app:cardBackgroundColor="@color/yellow_1"
                     app:cardCornerRadius="5dp">
                     <include layout="@layout/small_card_eat_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/group_detail_travel"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_travel_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/group_detail_buy"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_buy_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/group_detail_movie"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_movie_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/group_detail_game"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow_1"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_game_layout"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/group_detail_other"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/gray_4"
+                    app:cardCornerRadius="5dp">
+                    <include layout="@layout/small_card_other_layout"/>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
@@ -411,14 +508,13 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/status"
+                    android:id="@+id/group_detail_status"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="未加入"
                     android:textColor="@color/gray_13"
-                    android:textSize="18sp"></TextView>
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -489,7 +585,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
-                    android:text="加入"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/gray_1"
