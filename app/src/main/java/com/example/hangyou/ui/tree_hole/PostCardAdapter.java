@@ -49,6 +49,10 @@ public class PostCardAdapter extends BaseAdapter {
         tv_postTime.setText(Objects.requireNonNull(data.get(position).get("postTime")).toString());
         TextView tv_postUser = convertView.findViewById(R.id.postCardUserName);
         tv_postUser.setText(Objects.requireNonNull(data.get(position).get("postUser")).toString());
+        TextView tv_numOfLike = convertView.findViewById(R.id.num_of_like);
+        tv_numOfLike.setText(Objects.requireNonNull(data.get(position).get("numOfLike")).toString());
+        TextView tv_numOfComment = convertView.findViewById(R.id.num_of_comment);
+        tv_numOfComment.setText(Objects.requireNonNull(data.get(position).get("numOfComment")).toString());
 
         return convertView;
     }
