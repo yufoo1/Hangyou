@@ -28,7 +28,10 @@ public class TreeHoleActivity extends AppCompatActivity {
         initClickListener();
         DataBaseHelper helper = new DataBaseHelper(TreeHoleActivity.this);
         database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists post(id integer primary key autoincrement, postName text, postText text, createTime text, userId int ,FOREIGN KEY(userId) REFERENCES user(id) )");
+        database.execSQL("create table if not exists post(id integer primary key autoincrement, postName text," +
+                " postText text, createTime text, userId int , likeNum int not null default 0,commentNum int not null default 0," +
+                " reportNum int not null default 0, FOREIGN KEY(userId) REFERENCES user(id) )");
+        database.execSQL("create table if not exists post_comment(id integer primary key autoincrement, commentText text, commentTime text,userId int,postId int)");
         showPostCards();
     }
 
@@ -66,6 +69,8 @@ public class TreeHoleActivity extends AppCompatActivity {
             item = new HashMap<>();
             item.put("postName", cursor.getString(cursor.getColumnIndex("postName")));
             item.put("postTime", cursor.getString(cursor.getColumnIndex("createTime")));
+            item.put("numOfLike", cursor.getString(cursor.getColumnIndex("likeNum")));
+            item.put("numOfComment", cursor.getString(cursor.getColumnIndex("commentNum")));
             int userId = Integer.parseInt(cursor.getString(cursor.getColumnIndex("userId")));
             Cursor cursor2 = database.rawQuery("select * from user where id=?", new String[]{String.valueOf(userId)});
             cursor2.moveToFirst();

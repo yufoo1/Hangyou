@@ -50,7 +50,7 @@ public class TreeHolePostCreate extends AppCompatActivity {
         cursor.moveToFirst();
         String userId = cursor.getString(cursor.getColumnIndex("id"));
 
-        database.execSQL("insert into post(postName, postText, createTime, userId) values (?, ?, datetime('now','localtime'), ?)", new Object[]{postName, postText, userId});
+        database.execSQL("insert into post(postName, postText, createTime, userId,likeNum,commentNum,reportNum) values (?, ?, datetime('now','localtime'), ?, 0, 0, 0)", new Object[]{postName, postText, userId});
         System.out.println("帖子发布成功");
         Intent intent = new Intent();
         intent.setClass(TreeHolePostCreate.this, TreeHoleActivity.class);

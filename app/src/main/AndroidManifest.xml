@@ -64,6 +64,10 @@
             android:name=".ui.tree_hole.TreeHolePostView"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".ui.tree_hole.TreeHolePostCommentEdit"
+            android:exported="true">
+        </activity>
         <activity android:name=".ui.group.GroupCardDetailActivity"
             android:exported="true">
         </activity>
