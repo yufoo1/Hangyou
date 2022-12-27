@@ -25,54 +25,69 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="组局名称"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_13"
-                    android:textSize="18sp"
-                    android:gravity="bottom">
-                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="组局名称："
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_13"
+                        android:textSize="18sp"
+                        android:gravity="center">
+                    </TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/group_card_detail_groupName"
-                    android:padding="8dp"
-                    android:textColor="@color/gray_13"
-                    android:textSize="18sp"
-                    android:gravity="bottom"
-                    android:background="@drawable/border">
-                </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/group_card_detail_groupName"
+                        android:padding="8dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_13"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:background="@drawable/border">
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="组局发起者："
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_13"
+                        android:textSize="18sp"
+                        android:gravity="center">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/group_card_detail_groupInitiator"
+                        android:padding="8dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_13"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:background="@drawable/border">
+                    </TextView>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:text="组局发起者"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_13"
-                    android:textSize="18sp"
-                    android:gravity="bottom">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/group_card_detail_groupInitiator"
-                    android:padding="8dp"
-                    android:textColor="@color/gray_13"
-                    android:textSize="18sp"
-                    android:gravity="bottom"
-                    android:background="@drawable/border">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:text="组局成员"
+                    android:text="组局成员："
                     android:textStyle="bold"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
@@ -275,7 +290,7 @@
                 android:id="@+id/group_detail_page_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/group_detail_page_people"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -284,12 +299,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="组局类型"
+                    android:layout_marginEnd="10dp"
+                    android:text="组局类型："
                     android:textStyle="bold"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
                     android:id="@+id/group_card_detail_groupType"
-                    android:gravity="bottom">
+                    android:gravity="center">
                 </TextView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -317,7 +333,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="组局详细内容"
+                    android:text="组局详细内容："
                     android:textStyle="bold"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
@@ -326,8 +342,8 @@
 
                 <TextView
                     android:id="@+id/group_card_detail_groupDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:textColor="@color/gray_13"
                     android:textSize="16sp"
@@ -342,7 +358,7 @@
                 android:id="@+id/group_detail_page_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/group_detail_page_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -351,11 +367,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="组局时间"
+                    android:text="组局时间："
                     android:textStyle="bold"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
-                    android:gravity="bottom">
+                    android:gravity="center">
                 </TextView>
 
                 <TextView
@@ -365,13 +381,43 @@
                     android:padding="8dp"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
-                    android:gravity="bottom"
-                    android:background="@drawable/border">
+                    android:gravity="center">
                 </TextView>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/group_detail_page_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/group_detail_page_date"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="当前状态："
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_13"
+                    android:textSize="18sp"
+                    android:gravity="center">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="未加入"
+                    android:textColor="@color/gray_13"
+                    android:textSize="18sp"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/group_detail_page_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -383,7 +429,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="当前状态"
+                    android:text="评论："
                     android:textStyle="bold"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
@@ -391,16 +437,35 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/status"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="未加入"
+                    android:text="暂无评论"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
-                    android:gravity="bottom"
-                    android:background="@drawable/border">
+                    android:gravity="center">
                 </TextView>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/comment_list"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:layout_editor_absoluteX="0dp">
+                </ListView>
+
+                <!-- 以下为示例效果 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="10dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <include layout="@layout/comment_item" />
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <LinearLayout
@@ -425,6 +490,20 @@
                     android:textColor="@color/gray_1"
                     android:background="@drawable/button_red">
                 </Button>
+
+                <Button
+                    android:id="@+id/group_card_detail_page_comment"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:text="评论"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_1"
+                    android:background="@drawable/button_red">
+                </Button>
+
                 <Button
                     android:id="@+id/group_card_detail_return"
                     android:layout_weight="1"
