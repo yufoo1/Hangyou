@@ -592,6 +592,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:id="@+id/group_has_comment"
                     android:text="暂无评论"
                     android:textColor="@color/gray_13"
                     android:textSize="18sp"
@@ -605,20 +606,9 @@
                     android:id="@+id/comment_list"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintVertical_bias="1.0"
+                    android:background="@color/pink_1"
                     tools:layout_editor_absoluteX="0dp">
                 </ListView>
-
-                <!-- 以下为示例效果 -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardCornerRadius="10dp"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <include layout="@layout/comment_item" />
-                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <LinearLayout

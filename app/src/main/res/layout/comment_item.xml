@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:minHeight="60dp"
+    android:layout_height="match_parent"
+    android:background="@drawable/pink_border">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,16 +20,15 @@
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent">
             <com.example.hangyou.ui.home.CircleImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:src="@drawable/head_portrait">
             </com.example.hangyou.ui.home.CircleImageView>
             <TextView
-                android:id="@+id/comment_username"
+                android:id="@+id/group_comment_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="用户名"
                 android:textColor="#171A1A"
                 android:textSize="15sp"
                 android:gravity="center">
@@ -42,22 +43,20 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/comment_time"
+                android:id="@+id/group_comment_time"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="right"
                 android:padding="8dp"
-                android:text="2022-12-27 12:10"
                 android:textColor="@color/gray_13"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/comment_content"
+                android:id="@+id/group_comment_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="请问局主，小白可以参加么？请问局主，小白可以参加么？请问局主，小白可以参加么？请问局主，小白可以参加么？请问局主，小白可以参加么？请问局主，小白可以参加么？"
                 android:textColor="@color/gray_13"
                 android:textSize="18sp" />
         </LinearLayout>

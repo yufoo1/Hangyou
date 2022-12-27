@@ -34,11 +34,13 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         database = helper.getWritableDatabase();
         database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
         database.execSQL("create table if not exists user_group_relation(id integer primary key autoincrement, userId integer, groupId integer)");
+        database.execSQL("create table if not exists group_comment(id integer primary key autoincrement, groupId int, userId int, createdAt text, comment text)");
         Bundle receiver = getIntent().getExtras();
         groupId = receiver.getInt("id");
         initView();
         initClickListener();
         showGroupPeople();
+        showGroupComment();
     }
 
     private void initView() {
@@ -201,6 +203,40 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void showGroupComment() {
+        data = new ArrayList<>();
+        Cursor cursor = database.rawQuery("select group_comment.id as commentId, user.username as username, group_comment.comment as comment, group_comment.createdAt as createdAt from user, group_comment where user.id=group_comment.userId and group_comment.groupId=?", new String[]{String.valueOf(groupId)});
+        ArrayList<Integer> idLists = new ArrayList<>();
+        HashMap<String, Object> item;
+        int cnt = 0;
+        while(cursor.moveToNext()) {
+            cnt++;
+            item = new HashMap<>();
+            item.put("username", cursor.getString(cursor.getColumnIndex("username")));
+            item.put("createdAt", cursor.getString(cursor.getColumnIndex("createdAt")));
+            item.put("comment", cursor.getString(cursor.getColumnIndex("comment")));
+            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("commentId"))));
+            data.add(item);
+        }
+        if(cnt == 0) {
+            findViewById(R.id.group_has_comment).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.group_has_comment).setVisibility(View.GONE);
+        }
+        GroupCommentCardAdapter adapter = new GroupCommentCardAdapter(this, data);
+        ListView groupComment = findViewById(R.id.comment_list);
+        groupComment.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        groupComment.setOnItemClickListener((parent, view, position, id) -> {
+            Bundle bundle=new Bundle();
+            bundle.putInt("id", idLists.get(position));
+            Intent intent =new Intent(this, UpdateHomePageActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        });
+    }
+
     private void jumpToGroup() {
         Intent intent = new Intent();
         intent.setClass(this, GroupActivity.class);
@@ -241,7 +277,12 @@ public class GroupCardDetailActivity extends AppCompatActivity {
     }
 
     private void jumpToCommentEdit() {
-        GroupCommentDialog dialog = new GroupCommentDialog(this, androidx.appcompat.R.style.Base_Theme_AppCompat_Light);
+        SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
+        String account = sp.getString("account", "defaultValue");
+        Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
+        cursor.moveToFirst();
+        String userId = cursor.getString(cursor.getColumnIndex("id"));
+        GroupCommentDialog dialog = new GroupCommentDialog(this, androidx.appcompat.R.style.Base_Theme_AppCompat_Light, groupId, Integer.parseInt(userId));
         dialog.show();
     }
 

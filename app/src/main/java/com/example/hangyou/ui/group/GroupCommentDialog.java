@@ -2,6 +2,10 @@ package com.example.hangyou.ui.group;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,30 +15,33 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.hangyou.R;
+import com.example.hangyou.utils.DataBaseHelper;
 
 public class GroupCommentDialog extends Dialog {
-    /**
-     * 上下文对象 *
-     */
     Activity context;
+    SQLiteDatabase database;
+    int groupId;
+    int userId;
 
-
-    public GroupCommentDialog(Activity context) {
-        super(context);
-        this.context= context;
-    }
-
-    public GroupCommentDialog(Activity context, int theme) {
+    public GroupCommentDialog(Activity context, int theme, int groupId, int userId) {
         super(context, theme);
         this.context= context;
+        DataBaseHelper helper = new DataBaseHelper(context);
+        database = helper.getWritableDatabase();
+        database.execSQL("create table if not exists group_comment(id integer primary key autoincrement, groupId int, userId int, createdAt text, comment text)");
+        this.groupId = groupId;
+        this.userId = userId;
     }
 
     private void commit() {
         EditText et_comment = findViewById(R.id.group_comment_input);
         String comment = et_comment.getText().toString();
-
+        database.execSQL("insert into group_comment(groupId, userId, createdAt, comment) values(?, ?, datetime('now','localtime'), ?)", new String[]{String.valueOf(groupId), String.valueOf(userId), comment});
+        Toast.makeText(context, "评论成功", Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 
     private void clockDialog() {
