@@ -15,21 +15,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.group.GroupActivity;
+import com.example.hangyou.utils.MysqlConnector;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class LoginActivity extends AppCompatActivity{
-    SQLiteDatabase database;
+    ResultSet rs = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_login);
         initClickListener();
-        DataBaseHelper helper=new DataBaseHelper(LoginActivity.this);
-        database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists user(id integer primary key autoincrement, account text, password text, username text, description text, phone text, gender text)");
     }
 
-    public void login() {
+    public void login() throws SQLException {
         EditText et_account = findViewById(R.id.account);
         String account = et_account.getText().toString();
         EditText et_password = findViewById(R.id.password);
@@ -39,8 +43,22 @@ public class LoginActivity extends AppCompatActivity{
         } else if(password.equals("")) {
             Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
         } else {
-            Cursor cursor = database.rawQuery("select * from user where account=? and password=?", new String[]{account, password});
-            if (cursor.moveToFirst()) {
+            AtomicBoolean flag1 = new AtomicBoolean(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user where account=? and password=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, account);
+                    ps.setString(2, password);
+                    rs = ps.executeQuery();
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while(!flag1.get());
+            if (rs.next()) {
                 System.out.println("登录成功");
                 Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                 SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -51,14 +69,25 @@ public class LoginActivity extends AppCompatActivity{
                 intent.setClass(LoginActivity.this, GroupActivity.class);
                 startActivity(intent);
             } else {
-                cursor = database.rawQuery("select * from user where account=?", new String[]{account});
-                if(cursor.moveToFirst()) {
+                AtomicBoolean flag2 = new AtomicBoolean(false);
+                new Thread(() -> {
+                    try {
+                        Connection connection = MysqlConnector.getConnection();
+                        String sql = "select * from user where account=?";
+                        PreparedStatement ps = connection.prepareStatement(sql);
+                        ps.setString(1, account);
+                        rs = ps.executeQuery();
+                        flag2.set(true);
+                    } catch (InterruptedException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                if(!flag2.get()) {
                     Toast.makeText(this, "请重新输入密码", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "用户不存在", Toast.LENGTH_SHORT).show();
                 }
             }
-            cursor.close();
         }
     }
 
@@ -70,7 +99,13 @@ public class LoginActivity extends AppCompatActivity{
 
     public void initClickListener() {
         Button bt_login = findViewById(R.id.login);
-        bt_login.setOnClickListener(v -> login());
+        bt_login.setOnClickListener(v -> {
+            try {
+                login();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         Button bt_register = findViewById(R.id.register);
         bt_register.setOnClickListener(v -> register());
     }
