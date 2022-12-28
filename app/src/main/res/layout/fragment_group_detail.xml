@@ -589,7 +589,18 @@
                     tools:layout_editor_absoluteX="0dp">
                 </ListView>
 
-                <!-- 以下为示例效果 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gather_money_init"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="10dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <include layout="@layout/collect_money_init" />
+                </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

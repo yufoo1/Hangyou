@@ -10,8 +10,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hangyou.utils.Dao;
 import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
+
+import java.sql.SQLException;
 
 public class RegisterActivity extends AppCompatActivity {
     SQLiteDatabase database;
@@ -42,7 +45,14 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             gender = "女";
         }
-        String description = "这个人很懒，什么都留下了";
+        new Thread(() -> {
+            Dao dao = new Dao();
+            try {
+                dao.user_insert(account, username, password, phone, gender);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
         Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
         if(cursor.moveToFirst()) {
             Toast.makeText(this, "账号已被注册，请重新输入", Toast.LENGTH_SHORT).show();
@@ -55,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (phone.equals("")) {
                 Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
             } else {
+                String description = "这个人很懒，什么都没有留下";
                 database.execSQL("insert into user(account, password, username, description, phone, gender) values (?, ?, ?, ?, ?, ?)", new Object[]{account, password, username, description, phone, gender});
                 Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();

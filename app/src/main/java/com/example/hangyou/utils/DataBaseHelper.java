@@ -14,8 +14,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql="create table if not exists HANGYOU(id integer primary key autoincrement,schedule varchar(100),begintime varchar(100),ddl varchar(100),isIm integer,isUr integer)";
-        sqLiteDatabase.execSQL(sql);
     }
 
     @Override

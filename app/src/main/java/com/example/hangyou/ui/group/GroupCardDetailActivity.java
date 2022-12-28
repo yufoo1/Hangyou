@@ -187,13 +187,20 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             /* 局主 */
             cursor = database.rawQuery("select * from group_money where groupId=?", new String[]{String.valueOf(groupId)});
             if(cursor.moveToFirst()) {
+                MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
+                mcv_gather_money_init.setVisibility(View.VISIBLE);
                 findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.GONE);
             } else {
+                MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
+                mcv_gather_money_init.setVisibility(View.GONE);
                 findViewById(R.id.gather_money_other).setVisibility(View.GONE);
                 findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.VISIBLE);
             }
             findViewById(R.id.has_group_money_gather).setVisibility(View.GONE);
+            findViewById(R.id.gather_money_other).setVisibility(View.GONE);
         } else {
+            MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
+            mcv_gather_money_init.setVisibility(View.GONE);
             cursor = database.rawQuery("select * from group_money where groupId=?", new String[]{String.valueOf(groupId)});
             if(cursor.moveToFirst()) {
                 TextView tv_money = findViewById(R.id.gather_money_money);
