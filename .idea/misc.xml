@@ -12,13 +12,33 @@
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/drawable-v24/progressbar_bg.xml" value="0.1" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/big_card.xml" value="0.16" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/collect_money_init.xml" value="0.1" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_add_group_page.xml" value="0.232" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_feedback_create.xml" value="0.264" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_friend_list_item.xml" value="0.23802083333333332" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_group.xml" value="0.23802083333333332" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_group_detail.xml" value="0.2" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_group_detail_init.xml" value="0.2" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_group_list.xml" value="0.1157548125633232" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_guide.xml" value="0.1" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_help.xml" value="0.20677083333333332" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_home_page.xml" value="0.264" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_register.xml" value="0.1" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_search_user.xml" value="0.1" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole.xml" value="0.1157548125633232" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_comment_create.xml" value="0.1" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_create.xml" value="0.2" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_detail.xml" value="0.2" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_update_home_page.xml" value="0.18614130434782608" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/group_comment_edit.xml" value="0.18614130434782608" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/group_user.xml" value="0.1890625" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/history_group_card.xml" value="0.18614130434782608" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/post_card.xml" value="0.18614130434782608" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/post_comment_item.xml" value="0.18614130434782608" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/small_card_buy_layout.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/small_card_eat_layout.xml" value="0.18614130434782608" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/user_card.xml" value="0.1890625" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/big_card.xml" value="0.176" />
         <entry key="..\:/DXS3/Android/BUAA-2022-Android/app/src/main/res/layout/collect_money_init.xml" value="0.13179347826086957" />
