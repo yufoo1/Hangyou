@@ -122,7 +122,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="5dp"
                 android:gravity="center"
                 android:shape="rectangle"
                 android:bottomLeftRadius="30dp"
@@ -136,6 +136,44 @@
                 android:background="@drawable/button_red"
                 android:text="个人信息编辑">
             </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:shape="rectangle"
+                android:bottomLeftRadius="30dp"
+                android:bottomRightRadius="30dp"
+                android:topLeftRadius="30dp"
+                android:topRightRadius="30dp"
+                android:id="@+id/help"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_red"
+                android:text="帮助">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:shape="rectangle"
+                android:bottomLeftRadius="30dp"
+                android:bottomRightRadius="30dp"
+                android:topLeftRadius="30dp"
+                android:topRightRadius="30dp"
+                android:id="@+id/feedback"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_1"
+                android:background="@drawable/button_red"
+                android:text="反馈">
+            </TextView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
