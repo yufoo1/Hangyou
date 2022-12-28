@@ -2,8 +2,6 @@ package com.example.hangyou.ui.tree_hole;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.widget.EditText;
 
-import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.utils.MysqlConnector;
 
