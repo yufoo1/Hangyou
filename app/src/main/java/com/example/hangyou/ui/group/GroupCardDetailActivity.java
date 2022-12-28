@@ -633,7 +633,6 @@ public class GroupCardDetailActivity extends AppCompatActivity {
                 ps.setString(1, account);
                 resultSet.set(ps.executeQuery());
                 flag1.set(true);
-                System.out.println("haha");
             } catch (InterruptedException | SQLException e) {
                 e.printStackTrace();
             }
