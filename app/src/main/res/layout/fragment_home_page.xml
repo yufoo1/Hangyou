@@ -16,7 +16,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/head_portrait">
+                android:src="@drawable/head_portrait"
+                android:id="@+id/home_page_head_portrait">
             </com.example.hangyou.ui.home.CircleImageView>
             <TextView
                 android:layout_width="match_parent"
