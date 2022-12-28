@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AddGroupPageActivity extends AppCompatActivity {
+    int cnt = 0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_group_page);
@@ -257,19 +258,18 @@ public class AddGroupPageActivity extends AppCompatActivity {
                 }
             }).start();
             while (!flag1.get());
-            int cnt = 0;
+            cnt = 0;
             while(resultSet.get().next()) {
                 cnt++;
             }
             flag1.set(false);
-            int finalCnt = cnt;
             new Thread(() -> {
                 try {
                     Connection connection = MysqlConnector.getConnection();
                     String sql = "update user_group set maleNow=? where id=?";
                     PreparedStatement ps = connection.prepareStatement(sql);
-                    ps.setString(1, String.valueOf(finalCnt));
-                    ps.setString(2, String.valueOf(String.valueOf(groupId)));
+                    ps.setString(1, String.valueOf(cnt));
+                    ps.setString(2, String.valueOf(groupId));
                     ps.executeUpdate();
                     flag1.set(true);
                 } catch (InterruptedException | SQLException e) {
@@ -292,18 +292,17 @@ public class AddGroupPageActivity extends AppCompatActivity {
                 }
             }).start();
             while (!flag1.get());
-            int cnt = 0;
+            cnt = 0;
             while(resultSet.get().next()) {
                 cnt++;
             }
             flag1.set(false);
-            int finalCnt = cnt;
             new Thread(() -> {
                 try {
                     Connection connection = MysqlConnector.getConnection();
-                    String sql = "update user_group set groupFemaleNowNum=? where id=?";
+                    String sql = "update user_group set femaleNow=? where id=?";
                     PreparedStatement ps = connection.prepareStatement(sql);
-                    ps.setString(1, String.valueOf(finalCnt));
+                    ps.setString(1, String.valueOf(cnt));
                     ps.setString(2, String.valueOf(groupId));
                     ps.executeUpdate();
                     flag1.set(true);

@@ -141,7 +141,7 @@ public class GroupActivity extends AppCompatActivity{
         new Thread(() -> {
             try {
                 Connection connection = MysqlConnector.getConnection();
-                String sql = "select * from user_group";
+                String sql = "select * from user_group order by id desc";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 resultSet.set(ps.executeQuery());
                 flag1.set(true);
@@ -356,7 +356,7 @@ public class GroupActivity extends AppCompatActivity{
         new Thread(() -> {
             try {
                 Connection connection = MysqlConnector.getConnection();
-                String sql = "select * from user_group";
+                String sql = "select * from user_group order by id desc";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 resultSet.set(ps.executeQuery());
                 flag1.set(true);
