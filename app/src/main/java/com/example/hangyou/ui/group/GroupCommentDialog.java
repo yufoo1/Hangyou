@@ -19,19 +19,20 @@ import android.widget.Toast;
 
 import com.example.hangyou.R;
 import com.example.hangyou.utils.DataBaseHelper;
+import com.example.hangyou.utils.MysqlConnector;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class GroupCommentDialog extends Dialog {
     Activity context;
-    SQLiteDatabase database;
     int groupId;
     int userId;
 
     public GroupCommentDialog(Activity context, int theme, int groupId, int userId) {
         super(context, theme);
         this.context= context;
-        DataBaseHelper helper = new DataBaseHelper(context);
-        database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists group_comment(id integer primary key autoincrement, groupId int, userId int, createdAt text, comment text)");
         this.groupId = groupId;
         this.userId = userId;
     }
@@ -39,7 +40,19 @@ public class GroupCommentDialog extends Dialog {
     private void commit() {
         EditText et_comment = findViewById(R.id.group_comment_input);
         String comment = et_comment.getText().toString();
-        database.execSQL("insert into group_comment(groupId, userId, createdAt, comment) values(?, ?, datetime('now','localtime'), ?)", new String[]{String.valueOf(groupId), String.valueOf(userId), comment});
+        new Thread(() -> {
+            try {
+                Connection conn = MysqlConnector.getConnection();
+                String s = "insert into group_comment(groupId, userId, createdAt, comment) values(?, ?, datetime('now','localtime'), ?)";
+                PreparedStatement p = conn.prepareStatement(s);
+                p.setString(1, String.valueOf(groupId));
+                p.setString(2, String.valueOf(userId));
+                p.setString(3, comment);
+                p.executeUpdate();
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
         Toast.makeText(context, "评论成功", Toast.LENGTH_SHORT).show();
         onBackPressed();
     }

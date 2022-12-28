@@ -1,8 +1,6 @@
 package com.example.hangyou.ui.group;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,20 +11,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hangyou.databinding.FragmentGroupBinding;
 
-import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.home.HomePageActivity;
 import com.example.hangyou.ui.tree_hole.TreeHoleActivity;
+import com.example.hangyou.utils.MysqlConnector;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GroupActivity extends AppCompatActivity{
-    SQLiteDatabase database;
     FragmentGroupBinding binding;
     ArrayList<HashMap<String, Object>> data;
-
 
     /* TODO list declare */
     @Override
@@ -34,12 +36,17 @@ public class GroupActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_group);
         initClickListener();
-        DataBaseHelper helper = new DataBaseHelper(GroupActivity.this);
         binding =FragmentGroupBinding.inflate(getLayoutInflater());
-        database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
-        showTotalUser();
-        showGroupCards();
+        try {
+            showTotalUser();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            showGroupCards();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void retMyInBureau() {
@@ -79,7 +86,13 @@ public class GroupActivity extends AppCompatActivity{
         findViewById(R.id.button_my_created_bureau).setOnClickListener(v -> retMyCreatedBureau());
         findViewById(R.id.button_create_bureau).setOnClickListener(v -> jumpToCreateBureau());
         findViewById(R.id.imageButton_guide).setOnClickListener(v -> jumpToGuide());
-        findViewById(R.id.cardView_haveempty).setOnClickListener(v -> showHaveemptyGtoup());
+        findViewById(R.id.cardView_haveempty).setOnClickListener(v -> {
+            try {
+                showHaveemptyGtoup();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         findViewById(R.id.cardView_study).setOnClickListener(v -> showStudyGroup());
         findViewById(R.id.cardView_sport).setOnClickListener(v -> showSportGroup());
         findViewById(R.id.cardView_eat).setOnClickListener(v -> showEatGroup());
@@ -118,11 +131,24 @@ public class GroupActivity extends AppCompatActivity{
         });
     }
 
-    private void showHaveemptyGtoup() {
-        Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
+    private void showHaveemptyGtoup() throws SQLException {
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user_group";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag1.get());
         ArrayList<Integer> idLists = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+        while(resultSet.get().next()) {
+            idLists.add(Integer.parseInt(resultSet.get().getString("id")));
         }
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
         ListView groupCards = findViewById(R.id.group_cards);
@@ -296,46 +322,66 @@ public class GroupActivity extends AppCompatActivity{
         });
     }
 
-    private void showTotalUser() {
+    private void showTotalUser() throws SQLException {
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
         TextView textTotalPeople = findViewById(R.id.add_group_page_total_people);
-        Cursor cursor = database.rawQuery("select * from user", new String[]{});
-        cursor.moveToFirst();
-        int cnt = 0;
-        if (cursor.moveToFirst()) {
-            cnt++;
-            while(cursor.moveToNext()) {
-                cnt++;
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
             }
+        }).start();
+        while(!flag1.get());
+        int cnt = 0;
+        while(resultSet.get().next()) {
+            cnt++;
         }
-        cursor.close();
         textTotalPeople.setText(String.valueOf(cnt));
     }
 
-    private void showGroupCards() {
+    private void showGroupCards() throws SQLException {
         data = new ArrayList<>();
-        Cursor cursor = database.rawQuery("select * from user_group", new String[]{});
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user_group";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag1.get());
         ArrayList<Integer> idLists = new ArrayList<>();
         HashMap<String, Object> item;
-        while(cursor.moveToNext()) {
+        while(resultSet.get().next()) {
             item = new HashMap<>();
-            item.put("groupName", cursor.getString(cursor.getColumnIndex("groupName")));
-            item.put("groupType", cursor.getString(cursor.getColumnIndex("groupType")));
-            item.put("groupInitiator", cursor.getString(cursor.getColumnIndex("groupInitiator")));
-            String  groupYear = cursor.getString(cursor.getColumnIndex("groupYear"));
-            String groupMonth = cursor.getString(cursor.getColumnIndex("groupMonth"));
-            String groupDay = cursor.getString(cursor.getColumnIndex("groupDay"));
+            item.put("groupName", resultSet.get().getString("groupName"));
+            item.put("groupType", resultSet.get().getString("groupType"));
+            item.put("groupInitiator", resultSet.get().getString("groupInitiator"));
+            String  groupYear = resultSet.get().getString("year");
+            String groupMonth = resultSet.get().getString("month");
+            String groupDay = resultSet.get().getString("day");
             String groupDate = groupYear + "-" + groupMonth + "-" + groupDay;
             item.put("groupDate", groupDate);
-            item.put("groupMaleExpectedNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupMaleExpectedNum"))));
-            item.put("groupMaleNowNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupMaleNowNum"))));
-            item.put("groupFemaleExpectedNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleExpectedNum"))));
-            item.put("groupFemaleNowNum", Integer.parseInt(cursor.getString(cursor.getColumnIndex("groupFemaleNowNum"))));
-            item.put("groupDescription", cursor.getString(cursor.getColumnIndex("groupDescription")));
-            item.put("id", cursor.getString(cursor.getColumnIndex("id")));
-            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+            item.put("groupMaleExpectedNum", Integer.parseInt(resultSet.get().getString("maleExpect")));
+            item.put("groupMaleNowNum", Integer.parseInt(resultSet.get().getString("maleNow")));
+            item.put("groupFemaleExpectedNum", Integer.parseInt(resultSet.get().getString("femaleExpect")));
+            item.put("groupFemaleNowNum", Integer.parseInt(resultSet.get().getString("femaleNow")));
+            item.put("groupDescription", resultSet.get().getString("description"));
+            item.put("id", resultSet.get().getString("id"));
+            idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
         }
-        cursor.close();
         GroupCardAdapter adapter = new GroupCardAdapter(GroupActivity.this, data);
         ListView groupCards = findViewById(R.id.group_cards);
         groupCards.setAdapter(adapter);
