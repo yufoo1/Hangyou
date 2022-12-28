@@ -50,11 +50,15 @@ public class GroupActivity extends AppCompatActivity{
     }
 
     private void retMyInBureau() {
-        System.out.println("TODO retMyInBureau");
+        Intent intent = new Intent();
+        intent.setClass(this, HistoryGroupActivity.class);
+        startActivity(intent);
     }
 
     private void retMyCreatedBureau() {
-        System.out.println("TODO retMyCreatedBureau");
+        Intent intent = new Intent();
+        intent.setClass(this, MyOwnGroupActivity.class);
+        startActivity(intent);
     }
 
     private void jumpToCreateBureau() {

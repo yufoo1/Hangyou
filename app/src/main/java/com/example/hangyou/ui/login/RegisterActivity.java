@@ -68,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (phone.equals("")) {
             Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
         } else {
+            flag1.set(false);
             new Thread(() -> {
                 try {
                     Connection conn = MysqlConnector.getConnection();
@@ -81,6 +82,36 @@ public class RegisterActivity extends AppCompatActivity {
                     p.setString(5, gender);
                     p.setString(6, password);
                     p.executeUpdate();
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while(!flag1.get());
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user order by id desc";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    rs = ps.executeQuery();
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while(!flag1.get());
+            rs.next();
+            String id = rs.getString("id");
+            new Thread(() -> {
+                try {
+                    Connection conn = MysqlConnector.getConnection();
+                    String s = "INSERT INTO user_head_portrait(userId, headPortrait) VALUES(?, ?)";
+                    PreparedStatement p = conn.prepareStatement(s);
+                    p.setString(1, id);
+                    p.setString(2, "");
+                    p.executeUpdate();
+                    flag1.set(true);
                 } catch (InterruptedException | SQLException e) {
                     e.printStackTrace();
                 }

@@ -76,6 +76,12 @@
         <activity android:name=".ui.group.GroupCardDetailActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".ui.group.HistoryGroupActivity"
+            android:exported="true">
+        </activity>
+        <activity android:name=".ui.group.MyOwnGroupActivity"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".ui.home.SearchUserActivity"
             android:exported="true">

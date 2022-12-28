@@ -19,6 +19,8 @@ import com.example.hangyou.utils.HorizontalListView;
 import com.example.hangyou.utils.MysqlConnector;
 import com.google.android.material.card.MaterialCardView;
 
+import org.w3c.dom.Text;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,19 +34,21 @@ import java.util.concurrent.atomic.AtomicReference;
 public class GroupCardDetailActivity extends AppCompatActivity {
     private int groupId;
     ArrayList<HashMap<String, Object>> data;
+    ArrayList<HashMap<String, Object>> payData;
+    ArrayList<HashMap<String, Object>> noPayData;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_group_detail);
         Bundle receiver = getIntent().getExtras();
         groupId = receiver.getInt("id");
-        try {
-            initView();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         initClickListener();
         try {
             showGroupPeople();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            initView();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -271,9 +275,52 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             }).start();
             while (!flag1.get());
             if(resultSet.get().next()) {
+                findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.GONE);
+                String money = resultSet.get().getString("money");
+                String time = resultSet.get().getString("createdAt");
+                ((TextView)findViewById(R.id.collect_money_time)).setText(time);
+                ((TextView)findViewById(R.id.collect_money_time)).setText(time);
+                ((TextView)findViewById(R.id.collect_money_username)).setText(username);
+                flag1.set(false);
+                new Thread(() -> {
+                    try {
+                        Connection connection = MysqlConnector.getConnection();
+                        String sql = "select * from user_group_relation where groupId=?";
+                        PreparedStatement ps = connection.prepareStatement(sql);
+                        ps.setString(1, String.valueOf(groupId));
+                        resultSet.set(ps.executeQuery());
+                        flag1.set(true);
+                    } catch (InterruptedException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                while (!flag1.get());
+                int cnt = 0;
+                while(resultSet.get().next()) {
+                    cnt++;
+                }
                 MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
                 mcv_gather_money_init.setVisibility(View.VISIBLE);
-                findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.GONE);
+                ((TextView)findViewById(R.id.need_collect_money)).setText(String.valueOf(Integer.parseInt(money) * (cnt - 1)));
+                flag1.set(false);
+                new Thread(() -> {
+                    try {
+                        Connection connection = MysqlConnector.getConnection();
+                        String sql = "select * from group_money_pay_relation where groupId=?";
+                        PreparedStatement ps = connection.prepareStatement(sql);
+                        ps.setString(1, String.valueOf(groupId));
+                        resultSet.set(ps.executeQuery());
+                        flag1.set(true);
+                    } catch (InterruptedException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                while (!flag1.get());
+                cnt = 0;
+                while(resultSet.get().next()) {
+                    cnt++;
+                }
+                ((TextView)findViewById(R.id.need_pay_money)).setText(String.valueOf(Integer.parseInt(money) * cnt));
             } else {
                 MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
                 mcv_gather_money_init.setVisibility(View.GONE);
@@ -326,10 +373,10 @@ public class GroupCardDetailActivity extends AppCompatActivity {
                 new Thread(() -> {
                     try {
                         Connection connection = MysqlConnector.getConnection();
-                        String sql = "select * from group_money_pay_relation where groupId=? and userId=?";
+                        String sql = "select * from group_money_pay_relation, user where group_money_pay_relation.groupId=? and user.id=group_money_pay_relation.userId and user.account=?";
                         PreparedStatement ps = connection.prepareStatement(sql);
                         ps.setString(1, String.valueOf(groupId));
-                        ps.setString(2, userId);
+                        ps.setString(2, account);
                         resultSet.set(ps.executeQuery());
                         flag1.set(true);
                     } catch (InterruptedException | SQLException e) {
@@ -340,10 +387,10 @@ public class GroupCardDetailActivity extends AppCompatActivity {
                 if(resultSet.get().next()) {
                     /* 已支付 */
                     TextView tv_confirm = findViewById(R.id.gather_money_confirm);
-                    tv_confirm.setText("请支付");
+                    tv_confirm.setText("您已支付");
                 } else {
                     TextView tv_confirm = findViewById(R.id.gather_money_confirm);
-                    tv_confirm.setText("您已支付");
+                    tv_confirm.setText("请支付");
                 }
                 findViewById(R.id.has_group_money_gather).setVisibility(View.GONE);
             } else {
@@ -356,13 +403,15 @@ public class GroupCardDetailActivity extends AppCompatActivity {
 
     private void showGroupPeople() throws SQLException {
         data = new ArrayList<>();
+        payData = new ArrayList<>();
+        noPayData = new ArrayList<>();
         AtomicBoolean flag1 = new AtomicBoolean(false);
         AtomicReference<ResultSet> resultSet = new AtomicReference<>();
         flag1.set(false);
         new Thread(() -> {
             try {
                 Connection connection = MysqlConnector.getConnection();
-                String sql = "select user.id, user.username from user, user_group_relation, user_group where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=?";
+                String sql = "select user.id, user.username, user_head_portrait.headPortrait from user, user_group_relation, user_group, group_money_pay_relation, user_head_portrait where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=? and group_money_pay_relation.userId=user.id and user.id=user_head_portrait.userId";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, String.valueOf(groupId));
                 resultSet.set(ps.executeQuery());
@@ -378,8 +427,36 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             item = new HashMap<>();
             item.put("username", resultSet.get().getString("username"));
             item.put("id", resultSet.get().getString("id"));
+            item.put("head_portrait", resultSet.get().getString("head_portrait"));
             idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
+            payData.add(item);
+        }
+        data = new ArrayList<>();
+        payData = new ArrayList<>();
+        noPayData = new ArrayList<>();
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select user.id, user.username, user_head_portrait.headPortrait from user, user_group_relation, user_group, user_head_portrait where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=? and user.id=user_head_portrait.userId and not exists(select * from group_money_pay_relation, user where user.id=group_money_pay_relation.userId)";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(groupId));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
+        while(resultSet.get().next()) {
+            item = new HashMap<>();
+            item.put("username", resultSet.get().getString("username"));
+            item.put("id", resultSet.get().getString("id"));
+            item.put("head_portrait", resultSet.get().getString("head_portrait"));
+            idLists.add(Integer.parseInt(resultSet.get().getString("id")));
+            data.add(item);
+            noPayData.add(item);
         }
         GroupPeopleCardAdapter adapter = new GroupPeopleCardAdapter(GroupCardDetailActivity.this, data);
         HorizontalListView groupPeople = findViewById(R.id.group_people_list);
@@ -647,7 +724,7 @@ public class GroupCardDetailActivity extends AppCompatActivity {
     private void sendGatherMoneyRequest() {
         System.out.println("发起局收款");
         EditText et_money = findViewById(R.id.group_card_detail_gather_money_money);
-        String money = et_money.toString();
+        String money = et_money.getText().toString();
         if(money.equals("")) {
             Toast.makeText(this, "请输入每个人需要支付的金额", Toast.LENGTH_SHORT).show();
         } else {
@@ -678,6 +755,48 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void confirmPay() throws SQLException {
+        if(((TextView)findViewById(R.id.gather_money_confirm)).getText().toString().equals("您已支付")) {
+            Toast.makeText(this, "您已经支付过啦", Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
+            String account = sp.getString("account", "defaultValue");
+            AtomicBoolean flag1 = new AtomicBoolean(false);
+            AtomicReference<ResultSet>resultSet = new AtomicReference<>();
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user where account=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, account);
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
+            resultSet.get().next();
+            String id = resultSet.get().getString("id");
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "insert into group_money_pay_relation(groupId, userId) values (?, ?)";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(groupId));
+                    ps.setString(2, id);
+                    ps.executeUpdate();
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(this, GroupActivity.class);
+            startActivity(intent);
+        }
+    }
+
     private void initClickListener() {
         findViewById(R.id.group_card_detail_return).setOnClickListener(v -> jumpToGroup());
         findViewById(R.id.group_card_detail_page_add_or_exit).setOnClickListener(v -> {
@@ -695,5 +814,12 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             }
         });
         findViewById(R.id.group_card_detail_gather_money_request).setOnClickListener(v -> sendGatherMoneyRequest());
+        findViewById(R.id.gather_money_confirm).setOnClickListener(v -> {
+            try {
+                confirmPay();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

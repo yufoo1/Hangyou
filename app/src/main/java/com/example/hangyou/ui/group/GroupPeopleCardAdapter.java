@@ -1,10 +1,14 @@
 package com.example.hangyou.ui.group;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hangyou.R;
@@ -45,6 +49,13 @@ public class GroupPeopleCardAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(ctx).inflate(R.layout.group_user, parent, false);
         TextView tv_username = convertView.findViewById(R.id.group_user_card_username);
         tv_username.setText(Objects.requireNonNull(data.get(position).get("username")).toString());
+
+        String headPortrait = Objects.requireNonNull(data.get(position).get("head_portrait")).toString();
+        byte[] bytes= Base64.decode(headPortrait, Base64.DEFAULT);
+        Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        ImageView iv_head = convertView.findViewById(R.id.group_user_card_head_portrait);
+        iv_head.setImageBitmap(bitmap);
+
         return convertView;
     }
 }

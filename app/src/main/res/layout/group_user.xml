@@ -20,6 +20,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:id="@+id/group_user_card_head_portrait"
             android:src="@drawable/head_portrait">
         </com.example.hangyou.ui.home.CircleImageView>
         <TextView

@@ -28,11 +28,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HomePageActivity extends AppCompatActivity {
     SQLiteDatabase database;
+    boolean hasHeadPortrait = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home_page);
@@ -71,11 +73,12 @@ public class HomePageActivity extends AppCompatActivity {
         username.setText(resultSet.get().getString("username"));
         TextView description = findViewById(R.id.home_page_description);
         description.setText(resultSet.get().getString("description"));
-        if(resultSet.get().getString("headPortrait") != null) {
+        if(!Objects.equals(resultSet.get().getString("headPortrait"), "")) {
             String headPortrait = resultSet.get().getString("headPortrait");
             byte[] bytes= Base64.decode(headPortrait, Base64.DEFAULT);
             Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
             ((ImageView)findViewById(R.id.home_page_head_portrait)).setImageBitmap(bitmap);
+            hasHeadPortrait = true;
         }
         int cnt;
         TextView followers = findViewById(R.id.home_page_followers);
@@ -189,7 +192,12 @@ public class HomePageActivity extends AppCompatActivity {
                 new Thread(() -> {
                     try {
                         Connection connection = MysqlConnector.getConnection();
-                        String sql = "insert user_head_portrait(userId, headPortrait)values(?, ?)";
+                        String sql;
+                        if(hasHeadPortrait) {
+                            sql = "update user_head_portrait set headPortrait=? where userId=?";
+                        } else {
+                            sql = "insert user_head_portrait(headPortrait, userId)values(?, ?)";
+                        }
                         PreparedStatement ps = connection.prepareStatement(sql);
                         ps.setString(1, userId);
                         ps.setString(2, headPortrait);
