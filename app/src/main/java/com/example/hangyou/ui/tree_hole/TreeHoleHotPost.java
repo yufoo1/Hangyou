@@ -10,10 +10,8 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
-import com.example.hangyou.ui.group.GroupActivity;
-import com.example.hangyou.ui.home.HomePageActivity;
+import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.utils.MysqlConnector;
 
 import java.sql.Connection;
@@ -25,12 +23,12 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class TreeHoleActivity extends AppCompatActivity {
+public class TreeHoleHotPost extends AppCompatActivity {
     ArrayList<HashMap<String, Object>> data;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_tree_hole);
+        setContentView(R.layout.fragment_tree_hole_hotpost);
         initClickListener();
         try {
             showPostCards();
@@ -39,42 +37,13 @@ public class TreeHoleActivity extends AppCompatActivity {
         }
     }
 
-
     private void initClickListener() {
-        findViewById(R.id.click_begin_post).setOnClickListener(v -> jumpToCreate());
-        findViewById(R.id.tree_hole_group).setOnClickListener(v -> jumpToGroup());
-        findViewById(R.id.tree_hole_home_page).setOnClickListener(v -> jumpToHomePage());
-        findViewById(R.id.click_to_hotpost).setOnClickListener(v -> jumpToHotPost());
-        findViewById(R.id.click_to_check_rules).setOnClickListener(v -> jumpToPostRule());
+        findViewById(R.id.hotpost_back_tree_hole).setOnClickListener(v -> backToTreeHole());
     }
 
-    private void jumpToPostRule() {
+    private void backToTreeHole() {
         Intent intent = new Intent();
-        intent.setClass(TreeHoleActivity.this, TreeHolePostRule.class);
-        startActivity(intent);
-    }
-
-    private void jumpToHotPost() {
-        Intent intent = new Intent();
-        intent.setClass(TreeHoleActivity.this, TreeHoleHotPost.class);
-        startActivity(intent);
-    }
-
-    private void jumpToGroup() {
-        Intent intent = new Intent();
-        intent.setClass(TreeHoleActivity.this, GroupActivity.class);
-        startActivity(intent);
-    }
-
-    private void jumpToHomePage() {
-        Intent intent = new Intent();
-        intent.setClass(TreeHoleActivity.this, HomePageActivity.class);
-        startActivity(intent);
-    }
-
-    private void jumpToCreate() {
-        Intent intent = new Intent();
-        intent.setClass(TreeHoleActivity.this, TreeHolePostCreate.class);
+        intent.setClass(this, TreeHoleActivity.class);
         startActivity(intent);
     }
 
@@ -86,7 +55,7 @@ public class TreeHoleActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 Connection connection = MysqlConnector.getConnection();
-                String sql = "select * from post";
+                String sql = "select * from post order by likeNum DESC,commentNum DESC";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 resultSet.set(ps.executeQuery());
                 flag1.set(true);
@@ -95,10 +64,10 @@ public class TreeHoleActivity extends AppCompatActivity {
             }
         }).start();
         while(!flag1.get());
-        System.out.println(resultSet);
 
         ArrayList<Integer> idLists = new ArrayList<>();
         HashMap<String, Object> item;
+        int count = 0;
         while(resultSet.get().next()) {
             item = new HashMap<>();
             item.put("postName", resultSet.get().getString("postName"));
@@ -128,10 +97,12 @@ public class TreeHoleActivity extends AppCompatActivity {
             item.put("id", resultSet.get().getString("id"));
             idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
+            count++;
+            if(count==10) break;
         }
 
-        PostCardAdapter adapter = new PostCardAdapter(TreeHoleActivity.this, data);
-        ListView postCards = findViewById(R.id.post_cards);
+        PostCardAdapter adapter = new PostCardAdapter(TreeHoleHotPost.this, data);
+        ListView postCards = findViewById(R.id.hot_post_cards);
         postCards.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         postCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -139,12 +110,12 @@ public class TreeHoleActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle=new Bundle();
                 bundle.putInt("id", idLists.get(position));
-                Intent intent =new Intent(TreeHoleActivity.this, TreeHolePostView.class);
+                Intent intent =new Intent(TreeHoleHotPost.this, TreeHolePostView.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }
         });
-    }
 
+    }
 }

@@ -9,11 +9,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="5dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="309dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -28,24 +28,23 @@
                     android:orientation="vertical">
 
                     <com.example.hangyou.ui.home.CircleImageView
-                        android:layout_marginTop="0dp"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/head_portrait">
-                    </com.example.hangyou.ui.home.CircleImageView>
+                        android:layout_marginTop="0dp"
+                        android:src="@drawable/head_portrait"></com.example.hangyou.ui.home.CircleImageView>
 
                     <TextView
                         android:id="@+id/postCardUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="用户名"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
                         android:layout_marginTop="0dp"
-                        android:shadowColor="@color/gray_10" />
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:shadowColor="@color/gray_10"
+                        android:text="用户名"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -59,63 +58,64 @@
                     android:id="@+id/postCardPostTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_7"
-                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"
                     android:text="发布时间"
-                    android:layout_marginTop="5dp"/>
+                    android:textColor="@color/gray_7"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/postCardPostName"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:text="标题"
                     android:layout_marginTop="10dp"
-                    android:textSize="25sp"
-                    android:textColor="@color/gray_10" />
+                    android:text="标题"
+                    android:textColor="@color/gray_10"
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/postText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="normal"
+                    android:gravity="top"
                     android:textColor="@color/gray_10"
                     android:textSize="20sp"
-                    android:gravity="top"/>
+                    android:textStyle="normal" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="46dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="33dp"
-                    app:srcCompat="@drawable/group_icon" />
+        <LinearLayout
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/num_of_like"
-                    android:layout_width="match_parent"
-                    android:layout_height="29dp" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                app:srcCompat="@drawable/group_icon" />
 
-            <LinearLayout
-                android:layout_width="46dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <TextView
+                android:id="@+id/num_of_like"
+                android:layout_width="match_parent"
+                android:layout_height="29dp" />
+        </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="33dp"
-                    app:srcCompat="@drawable/tree_hole_icon" />
+        <LinearLayout
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/num_of_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="29dp" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                app:srcCompat="@drawable/tree_hole_icon" />
+
+            <TextView
+                android:id="@+id/num_of_comment"
+                android:layout_width="match_parent"
+                android:layout_height="29dp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -227,29 +227,6 @@
                 android:layout_height="214dp">
 
             </ListView>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="74dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/likePost"
-                    android:layout_width="112dp"
-                    android:layout_height="63dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                <ImageButton
-                    android:id="@+id/commentPost"
-                    android:layout_width="118dp"
-                    android:layout_height="64dp"
-                    app:srcCompat="@android:drawable/ic_dialog_email" />
-
-                <ImageButton
-                    android:id="@+id/reportPost"
-                    android:layout_width="113dp"
-                    android:layout_height="63dp"
-                    app:srcCompat="@android:drawable/ic_dialog_alert" />
-            </LinearLayout>
 
         </LinearLayout>
         <!-- 以下为示例效果 -->
@@ -263,6 +240,30 @@
 
             <include layout="@layout/comment_item" />
         </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/likePost"
+                android:layout_width="112dp"
+                android:layout_height="63dp"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <ImageButton
+                android:id="@+id/commentPost"
+                android:layout_width="118dp"
+                android:layout_height="64dp"
+                app:srcCompat="@android:drawable/ic_dialog_email" />
+
+            <ImageButton
+                android:id="@+id/reportPost"
+                android:layout_width="113dp"
+                android:layout_height="63dp"
+                app:srcCompat="@android:drawable/ic_dialog_alert" />
+        </LinearLayout>
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
