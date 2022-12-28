@@ -24,6 +24,7 @@ import com.example.hangyou.utils.MysqlConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class GroupCommentDialog extends Dialog {
     Activity context;
@@ -43,11 +44,19 @@ public class GroupCommentDialog extends Dialog {
         new Thread(() -> {
             try {
                 Connection conn = MysqlConnector.getConnection();
-                String s = "insert into group_comment(groupId, userId, createdAt, comment) values(?, ?, datetime('now','localtime'), ?)";
+                String s = "insert into group_comment(groupId, userId, createdAt, comment) values(?, ?, ?, ?)";
                 PreparedStatement p = conn.prepareStatement(s);
                 p.setString(1, String.valueOf(groupId));
                 p.setString(2, String.valueOf(userId));
-                p.setString(3, comment);
+                Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int date = c.get(Calendar.DATE);
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                int second = c.get(Calendar.SECOND);
+                p.setString(3, year + "/" + month + "/" + date + " " +hour + ":" +minute + ":" + second);
+                p.setString(4, comment);
                 p.executeUpdate();
             } catch (InterruptedException | SQLException e) {
                 e.printStackTrace();

@@ -3,9 +3,6 @@ package com.example.hangyou.ui.group;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,45 +13,70 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
 import com.example.hangyou.ui.home.UpdateHomePageActivity;
 import com.example.hangyou.utils.HorizontalListView;
+import com.example.hangyou.utils.MysqlConnector;
 import com.google.android.material.card.MaterialCardView;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GroupCardDetailActivity extends AppCompatActivity {
     private int groupId;
-    SQLiteDatabase database;
     ArrayList<HashMap<String, Object>> data;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_group_detail);
-        DataBaseHelper helper = new DataBaseHelper(GroupCardDetailActivity.this);
-        database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists user_group(id integer primary key autoincrement, groupName text, groupType text, groupInitiator text, groupDescription text, groupYear int, groupMonth int, groupDay int, groupMaleExpectedNum int, groupMaleNowNum int, groupFemaleExpectedNum int, groupFemaleNowNum int)");
-        database.execSQL("create table if not exists user_group_relation(id integer primary key autoincrement, userId integer, groupId integer)");
-        database.execSQL("create table if not exists group_comment(id integer primary key autoincrement, groupId int, userId int, createdAt text, comment text)");
-        database.execSQL("create table if not exists group_money(id integer primary key autoincrement, groupId int, money int, createdAt text)");
-        database.execSQL("create table if not exists group_money_pay_relation(id integer primary key autoincrement, groupId int, userId int)");
         Bundle receiver = getIntent().getExtras();
         groupId = receiver.getInt("id");
-        initView();
+        try {
+            initView();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initClickListener();
-        showGroupPeople();
-        showGroupComment();
+        try {
+            showGroupPeople();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            showGroupComment();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initView() {
-        Cursor cursor = database.rawQuery("select * from user_group where id=?", new String[]{String.valueOf(groupId)});
-        cursor.moveToFirst();
+    private void initView() throws SQLException {
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user_group where id=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(groupId));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
+        resultSet.get().next();
         System.out.println(groupId);
-        String name = cursor.getString(cursor.getColumnIndex("groupName"));
+        String name = resultSet.get().getString("groupName");
         TextView tv_groupName = findViewById(R.id.group_card_detail_groupName);
         tv_groupName.setText(name);
-        String type = cursor.getString(cursor.getColumnIndex("groupType"));
+        String type = resultSet.get().getString("groupType");
         TextView tv_groupType = findViewById(R.id.group_card_detail_groupType);
         MaterialCardView mcv_study = findViewById(R.id.group_detail_study);
         MaterialCardView mcv_sport = findViewById(R.id.group_detail_sport);
@@ -64,105 +86,113 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         MaterialCardView mcv_movie = findViewById(R.id.group_detail_movie);
         MaterialCardView mcv_game = findViewById(R.id.group_detail_game);
         MaterialCardView mcv_other = findViewById(R.id.group_detail_other);
-        System.out.println("start");
-        if(type.equals("学习")) {
-            mcv_study.setVisibility(View.VISIBLE);
-            mcv_sport.setVisibility(View.GONE);
-            mcv_eat.setVisibility(View.GONE);
-            mcv_travel.setVisibility(View.GONE);
-            mcv_buy.setVisibility(View.GONE);
-            mcv_movie.setVisibility(View.GONE);
-            mcv_game.setVisibility(View.GONE);
-            mcv_other.setVisibility(View.GONE);
-        } else if(type.equals("运动")) {
-            mcv_study.setVisibility(View.GONE);
-            mcv_sport.setVisibility(View.VISIBLE);
-            mcv_eat.setVisibility(View.GONE);
-            mcv_travel.setVisibility(View.GONE);
-            mcv_buy.setVisibility(View.GONE);
-            mcv_movie.setVisibility(View.GONE);
-            mcv_game.setVisibility(View.GONE);
-            mcv_other.setVisibility(View.GONE);
-        } else if(type.equals("聚餐")) {
-            mcv_study.setVisibility(View.GONE);
-            mcv_sport.setVisibility(View.GONE);
-            mcv_eat.setVisibility(View.VISIBLE);
-            mcv_travel.setVisibility(View.GONE);
-            mcv_buy.setVisibility(View.GONE);
-            mcv_movie.setVisibility(View.GONE);
-            mcv_game.setVisibility(View.GONE);
-            mcv_other.setVisibility(View.GONE);
-        } else if(type.equals("旅行")) {
-            mcv_study.setVisibility(View.GONE);
-            mcv_sport.setVisibility(View.GONE);
-            mcv_eat.setVisibility(View.GONE);
-            mcv_travel.setVisibility(View.VISIBLE);
-            mcv_buy.setVisibility(View.GONE);
-            mcv_movie.setVisibility(View.GONE);
-            mcv_game.setVisibility(View.GONE);
-            mcv_other.setVisibility(View.GONE);
-        } else if(type.equals("拼单")) {
-            mcv_study.setVisibility(View.GONE);
-            mcv_sport.setVisibility(View.GONE);
-            mcv_eat.setVisibility(View.GONE);
-            mcv_travel.setVisibility(View.GONE);
-            mcv_buy.setVisibility(View.VISIBLE);
-            mcv_movie.setVisibility(View.GONE);
-            mcv_game.setVisibility(View.GONE);
-            mcv_other.setVisibility(View.GONE);
-        } else if(type.equals("电影")) {
-            mcv_study.setVisibility(View.GONE);
-            mcv_sport.setVisibility(View.GONE);
-            mcv_eat.setVisibility(View.GONE);
-            mcv_travel.setVisibility(View.GONE);
-            mcv_buy.setVisibility(View.GONE);
-            mcv_movie.setVisibility(View.VISIBLE);
-            mcv_game.setVisibility(View.GONE);
-            mcv_other.setVisibility(View.GONE);
-        } else if(type.equals("游戏")) {
-            System.out.println("lala");
-            mcv_study.setVisibility(View.GONE);
-            mcv_sport.setVisibility(View.GONE);
-            mcv_eat.setVisibility(View.GONE);
-            mcv_travel.setVisibility(View.GONE);
-            mcv_buy.setVisibility(View.GONE);
-            mcv_movie.setVisibility(View.GONE);
-            mcv_game.setVisibility(View.VISIBLE);
-            mcv_other.setVisibility(View.GONE);
-        } else {
-            mcv_study.setVisibility(View.GONE);
-            mcv_sport.setVisibility(View.GONE);
-            mcv_eat.setVisibility(View.GONE);
-            mcv_travel.setVisibility(View.GONE);
-            mcv_buy.setVisibility(View.GONE);
-            mcv_movie.setVisibility(View.GONE);
-            mcv_game.setVisibility(View.GONE);
-            mcv_other.setVisibility(View.VISIBLE);
+        switch (type) {
+            case "学习":
+                mcv_study.setVisibility(View.VISIBLE);
+                mcv_sport.setVisibility(View.GONE);
+                mcv_eat.setVisibility(View.GONE);
+                mcv_travel.setVisibility(View.GONE);
+                mcv_buy.setVisibility(View.GONE);
+                mcv_movie.setVisibility(View.GONE);
+                mcv_game.setVisibility(View.GONE);
+                mcv_other.setVisibility(View.GONE);
+                break;
+            case "运动":
+                mcv_study.setVisibility(View.GONE);
+                mcv_sport.setVisibility(View.VISIBLE);
+                mcv_eat.setVisibility(View.GONE);
+                mcv_travel.setVisibility(View.GONE);
+                mcv_buy.setVisibility(View.GONE);
+                mcv_movie.setVisibility(View.GONE);
+                mcv_game.setVisibility(View.GONE);
+                mcv_other.setVisibility(View.GONE);
+                break;
+            case "聚餐":
+                mcv_study.setVisibility(View.GONE);
+                mcv_sport.setVisibility(View.GONE);
+                mcv_eat.setVisibility(View.VISIBLE);
+                mcv_travel.setVisibility(View.GONE);
+                mcv_buy.setVisibility(View.GONE);
+                mcv_movie.setVisibility(View.GONE);
+                mcv_game.setVisibility(View.GONE);
+                mcv_other.setVisibility(View.GONE);
+                break;
+            case "旅行":
+                mcv_study.setVisibility(View.GONE);
+                mcv_sport.setVisibility(View.GONE);
+                mcv_eat.setVisibility(View.GONE);
+                mcv_travel.setVisibility(View.VISIBLE);
+                mcv_buy.setVisibility(View.GONE);
+                mcv_movie.setVisibility(View.GONE);
+                mcv_game.setVisibility(View.GONE);
+                mcv_other.setVisibility(View.GONE);
+                break;
+            case "拼单":
+                mcv_study.setVisibility(View.GONE);
+                mcv_sport.setVisibility(View.GONE);
+                mcv_eat.setVisibility(View.GONE);
+                mcv_travel.setVisibility(View.GONE);
+                mcv_buy.setVisibility(View.VISIBLE);
+                mcv_movie.setVisibility(View.GONE);
+                mcv_game.setVisibility(View.GONE);
+                mcv_other.setVisibility(View.GONE);
+                break;
+            case "电影":
+                mcv_study.setVisibility(View.GONE);
+                mcv_sport.setVisibility(View.GONE);
+                mcv_eat.setVisibility(View.GONE);
+                mcv_travel.setVisibility(View.GONE);
+                mcv_buy.setVisibility(View.GONE);
+                mcv_movie.setVisibility(View.VISIBLE);
+                mcv_game.setVisibility(View.GONE);
+                mcv_other.setVisibility(View.GONE);
+                break;
+            case "游戏":
+                System.out.println("lala");
+                mcv_study.setVisibility(View.GONE);
+                mcv_sport.setVisibility(View.GONE);
+                mcv_eat.setVisibility(View.GONE);
+                mcv_travel.setVisibility(View.GONE);
+                mcv_buy.setVisibility(View.GONE);
+                mcv_movie.setVisibility(View.GONE);
+                mcv_game.setVisibility(View.VISIBLE);
+                mcv_other.setVisibility(View.GONE);
+                break;
+            default:
+                mcv_study.setVisibility(View.GONE);
+                mcv_sport.setVisibility(View.GONE);
+                mcv_eat.setVisibility(View.GONE);
+                mcv_travel.setVisibility(View.GONE);
+                mcv_buy.setVisibility(View.GONE);
+                mcv_movie.setVisibility(View.GONE);
+                mcv_game.setVisibility(View.GONE);
+                mcv_other.setVisibility(View.VISIBLE);
+                break;
         }
-        String description = cursor.getString(cursor.getColumnIndex("groupDescription"));
+        String description = resultSet.get().getString("description");
         TextView tv_groupDescription = findViewById(R.id.group_card_detail_groupDescription);
         tv_groupDescription.setText(description);
-        String initiator = cursor.getString(cursor.getColumnIndex("groupInitiator"));
+        String initiator = resultSet.get().getString("groupInitiator");
         TextView tv_groupInitiator = findViewById(R.id.group_card_detail_groupInitiator);
         tv_groupInitiator.setText(initiator);
-        String year = cursor.getString(cursor.getColumnIndex("groupYear"));
-        String month = cursor.getString(cursor.getColumnIndex("groupMonth"));
-        String day = cursor.getString(cursor.getColumnIndex("groupDay"));
+        String year = resultSet.get().getString("year");
+        String month = resultSet.get().getString("month");
+        String day = resultSet.get().getString("day");
         String date = year + "-" + month + "-" + day;
         TextView tv_date = findViewById(R.id.group_card_detail_groupDate);
         tv_date.setText(date);
-        String maleNowNum = cursor.getString(cursor.getColumnIndex("groupMaleNowNum"));
+        String maleNowNum = resultSet.get().getString("maleNow");
         TextView tv_male_now_num = findViewById(R.id.group_card_detail_groupMaleNowNum);
         tv_male_now_num.setText(maleNowNum);
-        String maleExpectedNum = cursor.getString(cursor.getColumnIndex("groupMaleExpectedNum"));
+        String maleExpectedNum = resultSet.get().getString("maleExpect");
         String maleRequiredNum = String.valueOf(Integer.parseInt(maleExpectedNum) - Integer.parseInt(maleNowNum));
         System.out.println("expect male " + maleExpectedNum + " and now male " + maleNowNum);
         TextView tv_male_required_num = findViewById(R.id.group_card_detail_groupMaleRequiredNum);
         tv_male_required_num.setText(maleRequiredNum);
-        String femaleNowNum = cursor.getString(cursor.getColumnIndex("groupFemaleNowNum"));
+        String femaleNowNum = resultSet.get().getString("femaleNow");
         TextView tv_female_now_num = findViewById(R.id.group_card_detail_groupFemaleNowNum);
         tv_female_now_num.setText(femaleNowNum);
-        String femaleExpectedNum = cursor.getString(cursor.getColumnIndex("groupFemaleExpectedNum"));
+        String femaleExpectedNum = resultSet.get().getString("femaleExpect");
         String femaleRequiredNum = String.valueOf(Integer.parseInt(femaleExpectedNum) - Integer.parseInt(femaleNowNum));
         TextView tv_female_required_num = findViewById(R.id.group_card_detail_groupFemaleRequiredNum);
         tv_female_required_num.setText(femaleRequiredNum);
@@ -170,8 +200,22 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         TextView tv_status = findViewById(R.id.group_detail_status);
         SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String account = sp.getString("account", "defaultValue");
-        cursor = database.rawQuery("select * from user_group_relation, user where user_group_relation.groupId=? and user.id=user_group_relation.userId and user.account=?", new String[]{String.valueOf(groupId), account});
-        if(cursor.moveToFirst()) {
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user_group_relation, user where user_group_relation.groupId=? and user.id=user_group_relation.userId and user.account=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(groupId));
+                ps.setString(2, account);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
+        if(resultSet.get().next()) {
             bt_add_or_exit.setText("退局");
             tv_status.setText("已加入");
         } else {
@@ -179,14 +223,54 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             tv_status.setText("未加入");
             findViewById(R.id.gather_money_other).setVisibility(View.GONE);
         }
-        cursor = database.rawQuery("select * from user where account=?", new String[]{account});
-        cursor.moveToFirst();
-        String username = cursor.getString(cursor.getColumnIndex("username"));
-        cursor = database.rawQuery("select * from user_group where id=? and groupInitiator=?", new String[]{String.valueOf(groupId), username});
-        if(cursor.moveToFirst()) {
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user where account=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, account);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
+        resultSet.get().next();
+        String username = resultSet.get().getString("username");
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user_group where id=? and groupInitiator=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(groupId));
+                ps.setString(2, username);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
+        if(resultSet.get().next()) {
             /* 局主 */
-            cursor = database.rawQuery("select * from group_money where groupId=?", new String[]{String.valueOf(groupId)});
-            if(cursor.moveToFirst()) {
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from group_money where groupId=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(groupId));
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
+            if(resultSet.get().next()) {
                 MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
                 mcv_gather_money_init.setVisibility(View.VISIBLE);
                 findViewById(R.id.group_card_detail_gather_money_parent).setVisibility(View.GONE);
@@ -201,19 +285,59 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         } else {
             MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
             mcv_gather_money_init.setVisibility(View.GONE);
-            cursor = database.rawQuery("select * from group_money where groupId=?", new String[]{String.valueOf(groupId)});
-            if(cursor.moveToFirst()) {
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from group_money where groupId=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(groupId));
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
+            if(resultSet.get().next()) {
                 TextView tv_money = findViewById(R.id.gather_money_money);
                 TextView tv_username = findViewById(R.id.gather_money_username);
                 TextView tv_createdAt = findViewById(R.id.gather_money_time);
-                cursor = database.rawQuery("select group_money.money as money, user.username as username, group_money.createdAt, user.id as userId from user, group_money, user_group where group_money.groupId=? and group_money.groupId=user_group.id and user_group.groupInitiator=user.username", new String[]{String.valueOf(groupId)});
-                cursor.moveToFirst();
-                tv_money.setText(cursor.getString(cursor.getColumnIndex("money")));
-                tv_username.setText(cursor.getString(cursor.getColumnIndex("username")));
-                tv_createdAt.setText(cursor.getString(cursor.getColumnIndex("createdAt")));
-                String userId = cursor.getString(cursor.getColumnIndex("userId"));
-                cursor = database.rawQuery("select * from group_money_pay_relation where groupId=? and userId=?", new String[]{String.valueOf(groupId), userId});
-                if(cursor.moveToFirst()) {
+                flag1.set(false);
+                new Thread(() -> {
+                    try {
+                        Connection connection = MysqlConnector.getConnection();
+                        String sql = "select group_money.money, user.username, group_money.createdAt, user.id from user, group_money, user_group where group_money.groupId=? and group_money.groupId=user_group.id and user_group.groupInitiator=user.username";
+                        PreparedStatement ps = connection.prepareStatement(sql);
+                        ps.setString(1, String.valueOf(groupId));
+                        resultSet.set(ps.executeQuery());
+                        flag1.set(true);
+                    } catch (InterruptedException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                while (!flag1.get());
+                resultSet.get().next();
+                tv_money.setText(resultSet.get().getString("money"));
+                tv_username.setText(resultSet.get().getString("username"));
+                tv_createdAt.setText(resultSet.get().getString("createdAt"));
+                String userId = resultSet.get().getString("id");
+                flag1.set(false);
+                new Thread(() -> {
+                    try {
+                        Connection connection = MysqlConnector.getConnection();
+                        String sql = "select * from group_money_pay_relation where groupId=? and userId=?";
+                        PreparedStatement ps = connection.prepareStatement(sql);
+                        ps.setString(1, String.valueOf(groupId));
+                        ps.setString(2, userId);
+                        resultSet.set(ps.executeQuery());
+                        flag1.set(true);
+                    } catch (InterruptedException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                while (!flag1.get());
+                if(resultSet.get().next()) {
                     /* 已支付 */
                     TextView tv_confirm = findViewById(R.id.gather_money_confirm);
                     tv_confirm.setText("请支付");
@@ -230,17 +354,31 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void showGroupPeople() {
+    private void showGroupPeople() throws SQLException {
         data = new ArrayList<>();
-        Cursor cursor = database.rawQuery("select user.id as userId, user.username as username from user, user_group_relation, user_group where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=?", new String[]{String.valueOf(groupId)});
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select user.id, user.username from user, user_group_relation, user_group where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(groupId));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
         ArrayList<Integer> idLists = new ArrayList<>();
         HashMap<String, Object> item;
-        while(cursor.moveToNext()) {
+        while(resultSet.get().next()) {
             item = new HashMap<>();
-            System.out.println(cursor.getString(cursor.getColumnIndex("username")));
-            item.put("username", cursor.getString(cursor.getColumnIndex("username")));
-            item.put("id", cursor.getString(cursor.getColumnIndex("userId")));
-            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("userId"))));
+            item.put("username", resultSet.get().getString("username"));
+            item.put("id", resultSet.get().getString("id"));
+            idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
         }
         GroupPeopleCardAdapter adapter = new GroupPeopleCardAdapter(GroupCardDetailActivity.this, data);
@@ -257,19 +395,34 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void showGroupComment() {
+    private void showGroupComment() throws SQLException {
         data = new ArrayList<>();
-        Cursor cursor = database.rawQuery("select group_comment.id as commentId, user.username as username, group_comment.comment as comment, group_comment.createdAt as createdAt from user, group_comment where user.id=group_comment.userId and group_comment.groupId=?", new String[]{String.valueOf(groupId)});
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select group_comment.id, user.username, group_comment.comment, group_comment.createdAt from user, group_comment where user.id=group_comment.userId and group_comment.groupId=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(groupId));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
         ArrayList<Integer> idLists = new ArrayList<>();
         HashMap<String, Object> item;
         int cnt = 0;
-        while(cursor.moveToNext()) {
+        while(resultSet.get().next()) {
             cnt++;
             item = new HashMap<>();
-            item.put("username", cursor.getString(cursor.getColumnIndex("username")));
-            item.put("createdAt", cursor.getString(cursor.getColumnIndex("createdAt")));
-            item.put("comment", cursor.getString(cursor.getColumnIndex("comment")));
-            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("commentId"))));
+            item.put("username", resultSet.get().getString("username"));
+            item.put("createdAt", resultSet.get().getString("createdAt"));
+            item.put("comment", resultSet.get().getString("comment"));
+            idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
         }
         if(cnt == 0) {
@@ -297,66 +450,228 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void addOrExitGroup() {
+    private void addOrExitGroup() throws SQLException {
         SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String account = sp.getString("account", "defaultValue");
-        Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
-        cursor.moveToFirst();
-        String userId = cursor.getString(cursor.getColumnIndex("id"));
-        String gender = cursor.getString(cursor.getColumnIndex("gender"));
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user where account=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, account);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
+        resultSet.get().next();
+        String userId = resultSet.get().getString("id");
+        String gender = resultSet.get().getString("gender");
         Button bt_add_or_exit = findViewById(R.id.group_card_detail_page_add_or_exit);
         if(bt_add_or_exit.getText().equals("入局")) {
-            database.execSQL("insert into user_group_relation(userId, groupId) values (?, ?)", new Object[]{userId, groupId});
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "insert into user_group_relation(userId, groupId) values (?, ?)";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, userId);
+                    ps.setString(2, String.valueOf(groupId));
+                    ps.executeUpdate();
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
         } else {
-            cursor = database.rawQuery("select * from user where account=?", new String[]{account});
-            cursor.moveToFirst();
-            String username = cursor.getString(cursor.getColumnIndex("username"));
-            cursor = database.rawQuery("select * from user_group where id=? and groupInitiator=?", new String[]{String.valueOf(groupId), username});
-            if(cursor.moveToFirst()) {
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user where account=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, account);
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
+            resultSet.get().next();
+            String username = resultSet.get().getString("username");
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user_group where id=? and groupInitiator=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(groupId));
+                    ps.setString(2, username);
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
+            if(resultSet.get().next()) {
                 /* 局主 */
                 Toast.makeText(this, "您作为局主不可以退出哦", Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                database.execSQL("delete from user_group_relation where userId=? and groupId=?", new Object[]{userId, groupId});
+                flag1.set(false);
+                new Thread(() -> {
+                    try {
+                        Connection connection = MysqlConnector.getConnection();
+                        String sql = "delete from user_group_relation where userId=? and groupId=?";
+                        PreparedStatement ps = connection.prepareStatement(sql);
+                        ps.setString(1, String.valueOf(userId));
+                        ps.setString(2, String.valueOf(groupId));
+                        resultSet.set(ps.executeQuery());
+                        flag1.set(true);
+                    } catch (InterruptedException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                while (!flag1.get());
             }
         }
         if(gender.equals("男")) {
-            cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='男' and user_group.id=?", new String[]{String.valueOf(groupId)});
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='男' and user_group.id=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(groupId));
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
             int cnt = 0;
-            while(cursor.moveToNext()) {
+            while(resultSet.get().next()) {
                 cnt++;
             }
-            database.execSQL("update user_group set groupMaleNowNum=? where id=?", new String[]{String.valueOf(cnt), String.valueOf(groupId)});
+            int finalCnt = cnt;
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "update user_group set maleNow=? where id=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(finalCnt));
+                    ps.setString(2, String.valueOf(groupId));
+                    ps.executeUpdate();
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
         } else {
-            cursor = database.rawQuery("select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='女' and user_group.id=?", new String[]{String.valueOf(groupId)});
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user_group, user, user_group_relation where user_group.id=user_group_relation.groupId and user.id=user_group_relation.userId and gender='女' and user_group.id=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(groupId));
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
             int cnt = 0;
-            while(cursor.moveToNext()) {
+            while(resultSet.get().next()) {
                 cnt++;
             }
-            database.execSQL("update user_group set groupFemaleNowNum=? where id=?", new String[]{String.valueOf(cnt), String.valueOf(groupId)});
+            int finalCnt = cnt;
+            flag1.set(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "update user_group set femaleNow=? where id=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(finalCnt));
+                    ps.setString(2, String.valueOf(groupId));
+                    ps.executeUpdate();
+                    flag1.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while (!flag1.get());
         }
         Intent intent = new Intent();
         intent.setClass(this, GroupActivity.class);
         startActivity(intent);
     }
 
-    private void jumpToCommentEdit() {
+    private void jumpToCommentEdit() throws SQLException {
         SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String account = sp.getString("account", "defaultValue");
-        Cursor cursor = database.rawQuery("select * from user where account=?", new String[]{account});
-        cursor.moveToFirst();
-        String userId = cursor.getString(cursor.getColumnIndex("id"));
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user where account=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, account);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+                System.out.println("haha");
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag1.get());
+        resultSet.get().next();
+        String userId = resultSet.get().getString("id");
         GroupCommentDialog dialog = new GroupCommentDialog(this, androidx.appcompat.R.style.Base_Theme_AppCompat_Light, groupId, Integer.parseInt(userId));
         dialog.show();
     }
 
     private void sendGatherMoneyRequest() {
+        System.out.println("发起局收款");
         EditText et_money = findViewById(R.id.group_card_detail_gather_money_money);
         String money = et_money.toString();
         if(money.equals("")) {
             Toast.makeText(this, "请输入每个人需要支付的金额", Toast.LENGTH_SHORT).show();
         } else {
-            database.execSQL("insert into group_money(groupId, money, createdAt) values(?, ?, datetime('now','localtime'))", new String[]{String.valueOf(groupId), money});
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "insert into group_money(groupId, money, createdAt) values(?, ?, ?)";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(groupId));
+                    ps.setString(2, money);
+                    Calendar c = Calendar.getInstance();
+                    int year = c.get(Calendar.YEAR);
+                    int month = c.get(Calendar.MONTH);
+                    int date = c.get(Calendar.DATE);
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minute = c.get(Calendar.MINUTE);
+                    int second = c.get(Calendar.SECOND);
+                    ps.setString(3, year + "/" + month + "/" + date + " " +hour + ":" +minute + ":" + second);
+                    ps.executeUpdate();
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
             Toast.makeText(this, "成功发起群收款", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(this, GroupActivity.class);
@@ -366,8 +681,20 @@ public class GroupCardDetailActivity extends AppCompatActivity {
 
     private void initClickListener() {
         findViewById(R.id.group_card_detail_return).setOnClickListener(v -> jumpToGroup());
-        findViewById(R.id.group_card_detail_page_add_or_exit).setOnClickListener(v -> addOrExitGroup());
-        findViewById(R.id.group_card_detail_page_comment).setOnClickListener(v -> jumpToCommentEdit());
+        findViewById(R.id.group_card_detail_page_add_or_exit).setOnClickListener(v -> {
+            try {
+                addOrExitGroup();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+        findViewById(R.id.group_card_detail_page_comment).setOnClickListener(v -> {
+            try {
+                jumpToCommentEdit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         findViewById(R.id.group_card_detail_gather_money_request).setOnClickListener(v -> sendGatherMoneyRequest());
     }
 }
