@@ -3,10 +3,14 @@ package com.example.hangyou.ui.group;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +32,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -302,6 +307,12 @@ public class GroupCardDetailActivity extends AppCompatActivity {
                 MaterialCardView mcv_gather_money_init = findViewById(R.id.gather_money_init);
                 mcv_gather_money_init.setVisibility(View.VISIBLE);
                 ((TextView)findViewById(R.id.need_collect_money)).setText(String.valueOf(Integer.parseInt(money) * (cnt - 1)));
+                String headPortrait = sp.getString("head_portrait", "");
+                if(!Objects.equals(headPortrait, "")) {
+                    byte[] bytes= Base64.decode(headPortrait, Base64.DEFAULT);
+                    Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                    ((ImageView)findViewById(R.id.collect_money_head)).setImageBitmap(bitmap);
+                }
                 flag1.set(false);
                 new Thread(() -> {
                     try {

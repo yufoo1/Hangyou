@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity{
             new Thread(() -> {
                 try {
                     Connection connection = MysqlConnector.getConnection();
-                    String sql = "select * from user where account=? and password=?";
+                    String sql = "select user_head_portrait.headPortrait from user, user_head_portrait where account=? and password=? and user_head_portrait.userId=user.id";
                     PreparedStatement ps = connection.prepareStatement(sql);
                     ps.setString(1, account);
                     ps.setString(2, password);
@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity{
                 SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putString("account", account);
+                editor.putString("head_portrait", rs.getString("headPortrait"));
                 editor.apply();
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, GroupActivity.class);

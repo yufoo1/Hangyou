@@ -23,6 +23,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
+                android:id="@+id/collect_money_head"
                 android:src="@drawable/head_portrait">
             </com.example.hangyou.ui.home.CircleImageView>
             <TextView

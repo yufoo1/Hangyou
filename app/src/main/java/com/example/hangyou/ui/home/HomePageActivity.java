@@ -52,13 +52,14 @@ public class HomePageActivity extends AppCompatActivity {
     private void initTextView() throws SQLException {
         SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String account = sp.getString("account", "defaultValue");
+        String headPortrait = sp.getString("head_portrait", "");
         AtomicBoolean flag1 = new AtomicBoolean(false);
         AtomicReference<ResultSet> resultSet = new AtomicReference<>();
         flag1.set(false);
         new Thread(() -> {
             try {
                 Connection connection = MysqlConnector.getConnection();
-                String sql = "select * from user, user_head_portrait where account=? and user.id=user_head_portrait.userId";
+                String sql = "select * from user where account=?";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, account);
                 resultSet.set(ps.executeQuery());
@@ -73,8 +74,7 @@ public class HomePageActivity extends AppCompatActivity {
         username.setText(resultSet.get().getString("username"));
         TextView description = findViewById(R.id.home_page_description);
         description.setText(resultSet.get().getString("description"));
-        if(!Objects.equals(resultSet.get().getString("headPortrait"), "")) {
-            String headPortrait = resultSet.get().getString("headPortrait");
+        if(!Objects.equals(headPortrait, "")) {
             byte[] bytes= Base64.decode(headPortrait, Base64.DEFAULT);
             Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
             ((ImageView)findViewById(R.id.home_page_head_portrait)).setImageBitmap(bitmap);

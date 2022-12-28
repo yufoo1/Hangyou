@@ -224,7 +224,7 @@ public class AddGroupPageActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }).start();
-        while (!flag1.get())
+        while (!flag1.get());
         resultSet.get().next();
         String groupId = resultSet.get().getString("id");
         flag1.set(false);
