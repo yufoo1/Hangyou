@@ -71,6 +71,14 @@
             android:name=".ui.tree_hole.TreeHolePostCommentEdit"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".ui.tree_hole.TreeHoleHotPost"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.tree_hole.TreeHolePostRule"
+            android:exported="true">
+        </activity>
         <activity android:name=".ui.group.GroupCardDetailActivity"
             android:exported="true">
         </activity>

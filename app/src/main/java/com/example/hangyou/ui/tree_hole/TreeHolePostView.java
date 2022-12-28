@@ -11,9 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hangyou.utils.DataBaseHelper;
 import com.example.hangyou.R;
+import com.example.hangyou.utils.MysqlConnector;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TreeHolePostView extends AppCompatActivity {
     private int id;
@@ -32,39 +39,100 @@ public class TreeHolePostView extends AppCompatActivity {
                 " reportNum int not null default 0, FOREIGN KEY(userId) REFERENCES user(id) )");
         Bundle receiver = getIntent().getExtras();
         id = receiver.getInt("id");
-        initView();
+        try {
+            initView();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initClickListener();
     }
 
-    private void initView() {
-        Cursor cursor = database.rawQuery("select * from post where id=?", new String[]{String.valueOf(id)});
-        cursor.moveToFirst();
-        String postName = cursor.getString(cursor.getColumnIndex("postName"));
+    private void initView() throws SQLException {
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from post where id=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(id));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag1.get());
+
+        resultSet.get().first();
+        String postName = resultSet.get().getString("postName");
         ((TextView) (findViewById(R.id.postName))).setText(postName);
-        String postText = cursor.getString(cursor.getColumnIndex("postText"));
+        String postText = resultSet.get().getString("postText");
         ((TextView) (findViewById(R.id.postText))).setText(postText);
-        String createTime = cursor.getString(cursor.getColumnIndex("createTime"));
+        String createTime = resultSet.get().getString("createTime");
         ((TextView) (findViewById(R.id.postTime))).setText(createTime);
-        int userId = Integer.parseInt(cursor.getString(cursor.getColumnIndex("userId")));
-        Cursor cursor2 = database.rawQuery("select * from user where id=?", new String[]{String.valueOf(userId)});
-        cursor2.moveToFirst();
-        String username = cursor2.getString(cursor2.getColumnIndex("username"));
+        int userId = Integer.parseInt(resultSet.get().getString("userId"));
+
+        AtomicReference<ResultSet> resultSet2 = new AtomicReference<>();
+        AtomicBoolean flag2 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from user where id=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(userId));
+                resultSet2.set(ps.executeQuery());
+                flag2.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag2.get());
+        resultSet2.get().first();
+
+        String username = resultSet2.get().getString("username");
         ((TextView) (findViewById(R.id.postUserName))).setText(username);
-        cursor2.close();
         showCommentCards();
     }
 
     private void initClickListener() {
         findViewById(R.id.post_view_back_tree_hode).setOnClickListener(v -> jumpToTreeHole());
-        findViewById(R.id.likePost).setOnClickListener(v -> likePost());
+        findViewById(R.id.likePost).setOnClickListener(v -> {
+            try {
+                likePost();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         findViewById(R.id.commentPost).setOnClickListener(v -> commentPost());
-        findViewById(R.id.reportPost).setOnClickListener(v -> reportPost());
+        findViewById(R.id.reportPost).setOnClickListener(v -> {
+            try {
+                reportPost();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    private void reportPost() {
-        Cursor cursor = database.rawQuery("select * from post where id=?", new String[]{String.valueOf(id)});
-        cursor.moveToFirst();
-        int reportNum = cursor.getInt(cursor.getColumnIndex("reportNum"));
+    private void reportPost() throws SQLException {
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from post where id=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(id));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag1.get());
+
+        resultSet.get().first();
+        int reportNum = resultSet.get().getInt("reportNum");
         if(!reportState){
             reportNum+=1;
             reportState = true;
@@ -72,7 +140,23 @@ public class TreeHolePostView extends AppCompatActivity {
             reportNum-=1;
             reportState = false;
         }
-        database.execSQL("UPDATE post SET reportNum = ? WHERE ID = ?",new String[]{String.valueOf(reportNum),String.valueOf(id)});
+        int finalReportNum = reportNum;
+
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "UPDATE post SET reportNum = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(finalReportNum));
+                ps.setString(2, String.valueOf(id));
+                ps.executeUpdate();
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
     }
 
     private void commentPost() {
@@ -85,10 +169,25 @@ public class TreeHolePostView extends AppCompatActivity {
         finish();
     }
 
-    private void likePost() {
-        Cursor cursor = database.rawQuery("select * from post where id=?", new String[]{String.valueOf(id)});
-        cursor.moveToFirst();
-        int likeNum = cursor.getInt(cursor.getColumnIndex("likeNum"));
+    private void likePost() throws SQLException {
+
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from post where id=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(id));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag1.get());
+        resultSet.get().first();
+        int likeNum = resultSet.get().getInt("likeNum");
         if(!likeState){
             likeNum+=1;
             likeState = true;
@@ -96,7 +195,23 @@ public class TreeHolePostView extends AppCompatActivity {
             likeNum-=1;
             likeState = false;
         }
-        database.execSQL("UPDATE post SET likeNum = ? WHERE ID = ?",new String[]{String.valueOf(likeNum),String.valueOf(id)});
+
+        int finalLikeNum = likeNum;
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "UPDATE post SET likeNum = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(finalLikeNum));
+                ps.setString(2, String.valueOf(id));
+                ps.executeUpdate();
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
 
     }
 
@@ -106,27 +221,55 @@ public class TreeHolePostView extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showCommentCards() {
+    private void showCommentCards() throws SQLException {
         data = new ArrayList<>();
-        Cursor cursor = database.rawQuery("select * from post_comment where postId=?", new String[]{String.valueOf(id)});
-        ArrayList<Integer> idLists = new ArrayList<>();
+
+        AtomicReference<ResultSet> resultSet = new AtomicReference<>();
+        AtomicBoolean flag1 = new AtomicBoolean(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from post_comment where postId=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1,String.valueOf(id));
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while(!flag1.get());
+
         HashMap<String, Object> item;
-        while(cursor.moveToNext()) {
+        while(resultSet.get().next()) {
             item = new HashMap<>();
-            item.put("commentText", cursor.getString(cursor.getColumnIndex("commentText")));
-            item.put("commentTime", cursor.getString(cursor.getColumnIndex("commentTime")));
-            int userId = Integer.parseInt(cursor.getString(cursor.getColumnIndex("userId")));
+            item.put("commentText", resultSet.get().getString("commentText"));
+            item.put("commentTime", resultSet.get().getString("commentTime"));
+            int userId = Integer.parseInt(resultSet.get().getString("userId"));
 
-            Cursor cursor2 = database.rawQuery("select * from user where id=?", new String[]{String.valueOf(userId)});
-            cursor2.moveToFirst();
-            item.put("commentUsername", cursor2.getString(cursor2.getColumnIndex("username")));
-            cursor2.close();
+            AtomicReference<ResultSet> resultSet2 = new AtomicReference<>();
+            AtomicBoolean flag2 = new AtomicBoolean(false);
+            new Thread(() -> {
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user where id=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1,String.valueOf(userId));
+                    resultSet2.set(ps.executeQuery());
+                    flag2.set(true);
+                } catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            while(!flag2.get());
+            resultSet2.get().first();
 
-            item.put("id", cursor.getString(cursor.getColumnIndex("id")));
-            idLists.add(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+            item.put("commentUsername", resultSet2.get().getString("username"));
+            item.put("id", resultSet.get().getString("id"));
+            //idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
         }
-        cursor.close();
+
         PostCommentAdapter adapter = new PostCommentAdapter(TreeHolePostView.this, data);
         ListView postCards = findViewById(R.id.post_comment_cards);
         postCards.setAdapter(adapter);
