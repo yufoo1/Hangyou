@@ -257,7 +257,7 @@
             app:cardCornerRadius="10dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <include layout="@layout/comment_item" />
+            <include layout="@layout/post_comment_item" />
         </com.google.android.material.card.MaterialCardView>-->
 
         <!--<LinearLayout
