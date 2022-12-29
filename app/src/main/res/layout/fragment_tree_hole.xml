@@ -74,7 +74,7 @@
                 <ListView
                     android:id="@+id/post_cards"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="550dp"
                     android:layout_marginTop="140dp"/>
                 <!-- 以下为示例效果 -->
                 <!--<com.google.android.material.card.MaterialCardView

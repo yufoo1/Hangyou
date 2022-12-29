@@ -12,8 +12,12 @@
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/drawable-v24/progressbar_bg.xml" value="0.1" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/big_card.xml" value="0.16" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/change_theme_page.xml" value="0.264" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/collect_money_init.xml" value="0.1" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/collect_money_other.xml" value="0.11448834853090173" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/comment_item.xml" value="0.11448834853090173" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_add_group_page.xml" value="0.232" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_feedback.xml" value="0.2" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_feedback_create.xml" value="0.264" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_friend_list_item.xml" value="0.23802083333333332" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_group.xml" value="0.23802083333333332" />
@@ -26,7 +30,7 @@
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_register.xml" value="0.1" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_search_user.xml" value="0.1" />
-        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole.xml" value="0.1157548125633232" />
+        <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole.xml" value="0.2" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_comment_create.xml" value="0.1" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_create.xml" value="0.2" />
         <entry key="..\:/AndroidTool/program/BUAA-2022-Android/app/src/main/res/layout/fragment_tree_hole_detail.xml" value="0.2" />
