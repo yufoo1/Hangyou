@@ -50,7 +50,7 @@
             <ListView
                 android:id="@+id/hot_post_cards"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="550dp" />
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
