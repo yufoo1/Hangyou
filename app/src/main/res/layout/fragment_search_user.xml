@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/fragment_search_user"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入关键字"
-            android:id="@+id/search_user_key_word">
-        </EditText>
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:id="@+id/search_user_user_list">
-        </ListView>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_user_return"
-            android:text="返回">
-        </Button>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="720dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入关键字"
+                    android:id="@+id/search_user_key_word">
+                </EditText>
+                <Button
+                    android:id="@+id/user_search_key_word_button"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_margin="10dp"
+                    android:text="查询"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_1"
+                    android:background="@drawable/button_red">
+                </Button>
+            </LinearLayout>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:id="@+id/search_user_user_list">
+            </ListView>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

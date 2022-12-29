@@ -1,10 +1,14 @@
 package com.example.hangyou.ui.home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hangyou.R;
@@ -46,7 +50,23 @@ public class UserCardAdapter extends BaseAdapter {
         TextView tv_username = convertView.findViewById(R.id.user_card_username);
         tv_username.setText(Objects.requireNonNull(data.get(position).get("username")).toString());
         TextView tv_description = convertView.findViewById(R.id.user_card_description);
-        tv_description.setText(Objects.requireNonNull(data.get(position).get("description")).toString());
+        String description = Objects.requireNonNull(data.get(position).get("description")).toString();
+        if(description.length() > 15) {
+            tv_description.setText(description.substring(0, 15) + "...");
+        } else {
+            tv_description.setText(description);
+        }
+        TextView tv_phone = convertView.findViewById(R.id.user_card_phone);
+        tv_phone.setText(Objects.requireNonNull(data.get(position).get("phone")).toString());
+        TextView tv_gender = convertView.findViewById(R.id.user_card_gender);
+        tv_gender.setText(Objects.requireNonNull(data.get(position).get("gender")).toString());
+        String headPortrait = Objects.requireNonNull(data.get(position).get("headPortrait")).toString();
+        if(!Objects.equals(headPortrait, "")) {
+            byte[] bytes= Base64.decode(headPortrait, Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+            ((ImageView) convertView.findViewById(R.id.user_card_head)).setImageBitmap(bitmap);
+
+        }
         return convertView;
     }
 }
