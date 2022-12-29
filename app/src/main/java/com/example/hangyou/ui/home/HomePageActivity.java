@@ -254,6 +254,13 @@ public class HomePageActivity extends AppCompatActivity {
         intent.setClass(this, HelpActivity.class);
         startActivity(intent);
     }
+
+    private void jumpToAchievement() {
+        Intent intent = new Intent();
+        intent.setClass(this, AchievementActivity.class);
+        startActivity(intent);
+    }
+
     private void initClickListener() {
         findViewById(R.id.home_page_update).setOnClickListener(v -> jumpToUpdateHomePage());
         findViewById(R.id.home_page_search_user).setOnClickListener(v -> jumpToSearchUser());
@@ -265,5 +272,6 @@ public class HomePageActivity extends AppCompatActivity {
         findViewById(R.id.home_page_feedback).setOnClickListener(v -> jumpToFeedback());
         findViewById(R.id.home_page_change_theme).setOnClickListener(v -> jumpToChangeTheme());
         findViewById(R.id.home_page_help).setOnClickListener(v -> jumpToHelp());
+        findViewById(R.id.home_page_achievement).setOnClickListener(v -> jumpToAchievement());
     }
 }

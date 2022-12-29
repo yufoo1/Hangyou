@@ -56,7 +56,12 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="547dp"
-                android:text="1.这里没有什么规则\n2.畅所欲言\n3.已经结束辣" />
+                android:textColor="@color/gray_13"
+                android:textSize="18sp"
+                android:text="1.请遵守相关法律法规\n2.严禁辱骂他人，严禁人身攻击
+                \n3.严禁在未经他人允许的情况下，暴漏他人隐私
+                \n4.在本平台发帖的帖主享有相应的著作权
+                \n5.本平台仅为发布平台，不承担由于帖主自身言行不当而造成的任何法律责任" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
