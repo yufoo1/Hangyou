@@ -270,16 +270,16 @@ public class AddGroupPageActivity extends AppCompatActivity {
                 }
             }).start();
             while (!flag1.get());
-            cnt = 0;
-            while(resultSet.get().next()) {
-                cnt++;
-            }
             flag1.set(false);
             new Thread(() -> {
                 try {
                     Connection connection = MysqlConnector.getConnection();
                     String sql = "update user_group set maleNow=? where id=?";
                     PreparedStatement ps = connection.prepareStatement(sql);
+                    cnt = 0;
+                    while(resultSet.get().next()) {
+                        cnt++;
+                    }
                     ps.setString(1, String.valueOf(cnt));
                     System.out.println(cnt);
                     ps.setString(2, String.valueOf(groupId));
@@ -305,16 +305,16 @@ public class AddGroupPageActivity extends AppCompatActivity {
                 }
             }).start();
             while (!flag1.get());
-            cnt = 0;
-            while(resultSet.get().next()) {
-                cnt++;
-            }
             flag1.set(false);
             new Thread(() -> {
                 try {
                     Connection connection = MysqlConnector.getConnection();
                     String sql = "update user_group set femaleNow=? where id=?";
                     PreparedStatement ps = connection.prepareStatement(sql);
+                    cnt = 0;
+                    while(resultSet.get().next()) {
+                        cnt++;
+                    }
                     ps.setString(1, String.valueOf(cnt));
                     ps.setString(2, String.valueOf(groupId));
                     ps.executeUpdate();

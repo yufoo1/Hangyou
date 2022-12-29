@@ -91,28 +91,41 @@ public class HomePageActivity extends AppCompatActivity {
         }
         int cnt;
         TextView followers = findViewById(R.id.home_page_followers);
-//        cursor = database.rawQuery("select * from follow where followerAccount=?", new String[]{account});
-//        cursor.moveToFirst();
-//        cnt = 0;
-//        if (cursor.moveToFirst()) {
-//            cnt++;
-//            while(cursor.moveToNext()) {
-//                cnt++;
+//        flag1.set(false);
+//        new Thread(() -> {
+//            try {
+//                Connection connection = MysqlConnector.getConnection();
+//                String sql = "select * from follow where followerAccount=?";
+//                PreparedStatement ps = connection.prepareStatement(sql);
+//                ps.setString(1, account);
+//                resultSet.set(ps.executeQuery());
+//                flag1.set(true);
+//            } catch (InterruptedException | SQLException e) {
+//                e.printStackTrace();
 //            }
-//        }
-//        cursor.close();
-        followers.setText(String.valueOf(0));
+//        }).start();
+//        while (!flag1.get());
+        cnt = 0;
+        while(resultSet.get().next()) cnt++;
+        followers.setText(String.valueOf(cnt));
         TextView following = findViewById(R.id.home_page_following);
-//        cursor = database.rawQuery("select * from follow where followingAccount=?", new String[]{account});
-//        cursor.moveToFirst();
-//        cnt = 0;
-//        if (cursor.moveToFirst()) {
-//            cnt++;
-//            while(cursor.moveToNext()) {
-//                cnt++;
+//        flag1.set(false);
+//        new Thread(() -> {
+//            try {
+//                Connection connection = MysqlConnector.getConnection();
+//                String sql = "select * from follow where followingAccount=?";
+//                PreparedStatement ps = connection.prepareStatement(sql);
+//                ps.setString(1, account);
+//                resultSet.set(ps.executeQuery());
+//                flag1.set(true);
+//            } catch (InterruptedException | SQLException e) {
+//                e.printStackTrace();
 //            }
-//        }
-        following.setText(String.valueOf(0));
+//        }).start();
+//        while (!flag1.get());
+        cnt = 0;
+        while(resultSet.get().next()) cnt++;
+        following.setText(String.valueOf(cnt));
     }
 
     private void jumpToUpdateHomePage() {
@@ -208,8 +221,8 @@ public class HomePageActivity extends AppCompatActivity {
                             sql = "insert user_head_portrait(headPortrait, userId)values(?, ?)";
                         }
                         PreparedStatement ps = connection.prepareStatement(sql);
-                        ps.setString(1, userId);
-                        ps.setString(2, headPortrait);
+                        ps.setString(1, headPortrait);
+                        ps.setString(2, userId);
                         ps.executeUpdate();
                     } catch (InterruptedException | SQLException e) {
                         e.printStackTrace();

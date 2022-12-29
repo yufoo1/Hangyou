@@ -462,9 +462,11 @@ public class GroupCardDetailActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 Connection connection = MysqlConnector.getConnection();
-                String sql = "select user.id, user.username, user_head_portrait.headPortrait from user, user_group_relation, user_group, user_head_portrait where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=? and user.id=user_head_portrait.userId and not exists(select * from group_money_pay_relation, user where user.id=group_money_pay_relation.userId)";
+                System.out.println("groupId = " + groupId);
+                String sql = "select user.id, user.username, user_head_portrait.headPortrait from user, user_group_relation, user_group, user_head_portrait where user.id=user_group_relation.userId and user_group_relation.groupId=user_group.id and user_group_relation.groupId=? and user.id=user_head_portrait.userId and not exists(select * from group_money_pay_relation, user where user.id=group_money_pay_relation.userId and group_money_pay_relation.groupId=?)";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, String.valueOf(groupId));
+                ps.setString(2, String.valueOf(groupId));
                 resultSet.set(ps.executeQuery());
                 flag1.set(true);
             } catch (InterruptedException | SQLException e) {
@@ -476,7 +478,7 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             item = new HashMap<>();
             item.put("username", resultSet.get().getString("username"));
             item.put("id", resultSet.get().getString("id"));
-            item.put("head_portrait", resultSet.get().getString("head_portrait"));
+            item.put("head_portrait", resultSet.get().getString("headPortrait"));
             idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
             noPayData.add(item);

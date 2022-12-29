@@ -51,10 +51,12 @@ public class GroupPeopleCardAdapter extends BaseAdapter {
         tv_username.setText(Objects.requireNonNull(data.get(position).get("username")).toString());
 
         String headPortrait = Objects.requireNonNull(data.get(position).get("head_portrait")).toString();
-        byte[] bytes= Base64.decode(headPortrait, Base64.DEFAULT);
-        Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-        ImageView iv_head = convertView.findViewById(R.id.group_user_card_head_portrait);
-        iv_head.setImageBitmap(bitmap);
+        if(!headPortrait.equals("")) {
+            byte[] bytes= Base64.decode(headPortrait, Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+            ImageView iv_head = convertView.findViewById(R.id.group_user_card_head_portrait);
+            iv_head.setImageBitmap(bitmap);
+        }
 
         return convertView;
     }

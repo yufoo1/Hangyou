@@ -37,7 +37,7 @@
             </LinearLayout>
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/search_user_user_list">
             </ListView>
         </LinearLayout>

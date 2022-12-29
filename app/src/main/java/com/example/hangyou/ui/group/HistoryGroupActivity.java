@@ -24,6 +24,7 @@ public class HistoryGroupActivity extends AppCompatActivity {
     ArrayList<HashMap<String, Object>> data;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_history_group);
         SharedPreferences sp = getSharedPreferences("theme", Context.MODE_PRIVATE);
         int theme = sp.getInt("theme", 0);
         switch (theme) {
@@ -36,7 +37,6 @@ public class HistoryGroupActivity extends AppCompatActivity {
             case 6: findViewById(R.id.fragment_history_group).setBackgroundResource(R.color.yellow_6); break;
             case 7: findViewById(R.id.fragment_history_group).setBackgroundResource(R.color.gray_2); break;
         }
-        setContentView(R.layout.fragment_history_group);
         try {
             showHistoryGroupCard();
         } catch (SQLException e) {
