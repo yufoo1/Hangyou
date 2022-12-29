@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_help"
     android:background="@color/purple_2">
     <ScrollView
         android:layout_width="match_parent"

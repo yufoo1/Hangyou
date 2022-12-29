@@ -25,6 +25,18 @@ public class SearchUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_search_user);
+        SharedPreferences sp = getSharedPreferences("theme", Context.MODE_PRIVATE);
+        int theme = sp.getInt("theme", 0);
+        switch (theme) {
+            case 0: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.purple_2); break;
+            case 1: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.blue_2); break;
+            case 2: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.red_2); break;
+            case 3: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.yellow_2); break;
+            case 4: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.blue_6); break;
+            case 5: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.red_4); break;
+            case 6: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.yellow_6); break;
+            case 7: findViewById(R.id.home_page_search_user).setBackgroundResource(R.color.gray_2); break;
+        }
         DataBaseHelper helper=new DataBaseHelper(SearchUserActivity.this);
         initClickListener();
         database = helper.getWritableDatabase();
@@ -33,7 +45,7 @@ public class SearchUserActivity extends AppCompatActivity {
         Bundle receiver = getIntent().getExtras();
         String type = receiver.getString("type");
         Cursor cursor;
-        SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String account = sp.getString("account", "defaultValue");
         if(type.equals("showAll")) {
             cursor = database.rawQuery("select * from user", new String[]{});

@@ -81,7 +81,13 @@
             android:name=".ui.tree_hole.TreeHolePostRule"
             android:exported="true">
         </activity>
+        <activity android:name=".ui.home.FeedbackActivity"
+            android:exported="true">
+        </activity>
         <activity android:name=".ui.group.GroupCardDetailActivity"
+            android:exported="true">
+        </activity>
+        <activity android:name=".ui.home.ChangeThemeActivity"
             android:exported="true">
         </activity>
         <activity android:name=".ui.group.HistoryGroupActivity"

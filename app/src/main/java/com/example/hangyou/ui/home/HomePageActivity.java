@@ -38,9 +38,18 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home_page);
-        DataBaseHelper helper = new DataBaseHelper(HomePageActivity.this);
-        database = helper.getWritableDatabase();
-        database.execSQL("create table if not exists follow(id integer primary key autoincrement, followerAccount text, followingAccount text)");
+        SharedPreferences sp = getSharedPreferences("theme", Context.MODE_PRIVATE);
+        int theme = sp.getInt("theme", 0);
+        switch (theme) {
+            case 0: findViewById(R.id.home_page).setBackgroundResource(R.color.purple_2); break;
+            case 1: findViewById(R.id.home_page).setBackgroundResource(R.color.blue_2); break;
+            case 2: findViewById(R.id.home_page).setBackgroundResource(R.color.red_2); break;
+            case 3: findViewById(R.id.home_page).setBackgroundResource(R.color.yellow_2); break;
+            case 4: findViewById(R.id.home_page).setBackgroundResource(R.color.blue_6); break;
+            case 5: findViewById(R.id.home_page).setBackgroundResource(R.color.red_4); break;
+            case 6: findViewById(R.id.home_page).setBackgroundResource(R.color.yellow_6); break;
+            case 7: findViewById(R.id.home_page).setBackgroundResource(R.color.gray_2); break;
+        }
         try {
             initTextView();
         } catch (SQLException e) {
@@ -215,6 +224,18 @@ public class HomePageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void jumpToFeedback() {
+        Intent intent = new Intent();
+        intent.setClass(this, FeedbackActivity.class);
+        startActivity(intent);
+    }
+
+    private void jumpToChangeTheme() {
+        Intent intent = new Intent();
+        intent.setClass(this, ChangeThemeActivity.class);
+        startActivity(intent);
+    }
+
     private void initClickListener() {
         findViewById(R.id.home_page_update).setOnClickListener(v -> jumpToUpdateHomePage());
         findViewById(R.id.home_page_search_user).setOnClickListener(v -> jumpToSearchUser());
@@ -223,5 +244,7 @@ public class HomePageActivity extends AppCompatActivity {
         findViewById(R.id.home_page_group).setOnClickListener(v -> jumpToGroup());
         findViewById(R.id.home_page_tree_hole).setOnClickListener(v -> jumpToTreeHole());
         findViewById(R.id.home_page_head_portrait).setOnClickListener(v -> changeHeadPortrait());
+        findViewById(R.id.home_page_feedback).setOnClickListener(v -> jumpToFeedback());
+        findViewById(R.id.home_page_change_theme).setOnClickListener(v -> jumpToChangeTheme());
     }
 }
