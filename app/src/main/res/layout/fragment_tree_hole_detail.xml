@@ -181,7 +181,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tree_hole_group"
                 android:orientation="vertical"
                 android:layout_weight="1">
                 <ImageView
@@ -190,7 +189,7 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:src="@drawable/praise_icon"
-                    android:id="@+id/good">
+                    android:id="@+id/likePost">
                 </ImageView>
                 <TextView
                     android:layout_width="wrap_content"
@@ -203,11 +202,10 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tree_hole_home_page"
                 android:orientation="vertical"
                 android:layout_weight="1">
                 <ImageView
-                    android:id="@+id/comment"
+                    android:id="@+id/commentPost"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
@@ -222,7 +220,27 @@
                     android:text="评论">
                 </TextView>
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/reportPost"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:src="@drawable/warning_icon">
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="评论">
+                </TextView>
+            </LinearLayout>
         </LinearLayout>
         <ListView
             android:id="@+id/post_comment_cards"
@@ -242,7 +260,7 @@
             <include layout="@layout/comment_item" />
         </com.google.android.material.card.MaterialCardView>-->
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="74dp"
             android:orientation="horizontal">
@@ -264,7 +282,7 @@
                 android:layout_width="113dp"
                 android:layout_height="63dp"
                 app:srcCompat="@android:drawable/ic_dialog_alert" />
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
