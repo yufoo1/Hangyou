@@ -222,16 +222,16 @@
                     android:text="评论">
                 </TextView>
             </LinearLayout>
-            <ListView
-                android:id="@+id/post_comment_cards"
-                android:layout_width="match_parent"
-                android:layout_height="214dp">
-
-            </ListView>
 
         </LinearLayout>
+        <ListView
+            android:id="@+id/post_comment_cards"
+            android:layout_width="match_parent"
+            android:layout_height="214dp">
+
+        </ListView>
         <!-- 以下为示例效果 -->
-        <com.google.android.material.card.MaterialCardView
+        <!--<com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -240,7 +240,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <include layout="@layout/comment_item" />
-        </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>-->
 
         <LinearLayout
             android:layout_width="match_parent"

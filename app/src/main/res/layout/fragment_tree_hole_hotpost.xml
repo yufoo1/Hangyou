@@ -4,51 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/fragment_tree_hole_hotpost"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/purple_2">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
     <LinearLayout
-        android:layout_width="407dp"
-        android:layout_height="683dp"
-        android:layout_marginTop="24dp"
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="4dp">
+        tools:layout_editor_absoluteX="16dp">
+
+        <ImageButton
+            android:id="@+id/hotpost_back_tree_hole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="?attr/actionModeCloseDrawable" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:text="十大热帖"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/purple_7"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:shadowColor="@color/gray_7"
+            android:shadowRadius="0.1"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/hotpost_back_tree_hole"
-                android:layout_width="82dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="?attr/actionModeCloseDrawable" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal"></LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="83dp"
-                android:text="十大热帖"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="569dp"
             android:orientation="vertical">
 
             <ListView
@@ -57,4 +53,5 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

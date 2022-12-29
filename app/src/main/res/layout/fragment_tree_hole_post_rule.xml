@@ -4,45 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/fragment_tree_hole_post_rule"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/purple_2">
+
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp">
 
-        <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="72dp"
-            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/rule_back_treehole"
-                android:layout_width="60dp"
-                android:layout_height="54dp"
-                app:srcCompat="?attr/actionModeCloseDrawable" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="129dp"
-            android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/rule_back_treehole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="?attr/actionModeCloseDrawable"  />
+
+
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="发帖规则"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-        </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_7"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:shadowColor="@color/gray_7"
+                android:shadowRadius="0.1"
+                android:shadowDx="5"
+                android:shadowDy="5"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border">
 
             <TextView
                 android:id="@+id/textView3"

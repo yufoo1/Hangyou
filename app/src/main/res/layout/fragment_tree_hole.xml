@@ -23,27 +23,59 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-                <Button
-                    android:id="@+id/click_begin_post"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="top|right"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_red"
-                    android:text="点击发帖"
-                    android:textColor="@color/gray_1"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/click_to_hotpost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="十大热帖"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/button_red"
+                            android:textColor="@color/gray_1"
+                            android:textStyle="bold"/>
+                        <Button
+                            android:id="@+id/click_to_check_rules"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="发帖规则"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/button_red"
+                            android:textColor="@color/gray_1"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/click_begin_post"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|right"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_red"
+                        android:text="点击发帖"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/gray_1"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
 
                 <ListView
                     android:id="@+id/post_cards"
-                    android:layout_width="409dp"
-                    android:layout_height="507dp"
-                    android:layout_marginTop="80dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="140dp"/>
                 <!-- 以下为示例效果 -->
                 <!--<com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
@@ -58,37 +90,7 @@
             </FrameLayout>
         </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="190dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/click_to_hotpost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="十大热帖" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/click_to_check_rules"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="发帖规则" />
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
