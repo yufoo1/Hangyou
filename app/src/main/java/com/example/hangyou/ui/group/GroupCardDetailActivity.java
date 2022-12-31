@@ -450,7 +450,7 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             item = new HashMap<>();
             item.put("username", resultSet.get().getString("username"));
             item.put("id", resultSet.get().getString("id"));
-            item.put("head_portrait", resultSet.get().getString("head_portrait"));
+            item.put("head_portrait", resultSet.get().getString("headPortrait"));
             idLists.add(Integer.parseInt(resultSet.get().getString("id")));
             data.add(item);
             payData.add(item);
@@ -483,6 +483,7 @@ public class GroupCardDetailActivity extends AppCompatActivity {
             data.add(item);
             noPayData.add(item);
         }
+        System.out.println("data has " + data.size());
         GroupPeopleCardAdapter adapter = new GroupPeopleCardAdapter(GroupCardDetailActivity.this, data);
         HorizontalListView groupPeople = findViewById(R.id.group_people_list);
         groupPeople.setAdapter(adapter);

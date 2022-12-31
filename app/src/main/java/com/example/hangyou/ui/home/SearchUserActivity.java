@@ -65,18 +65,22 @@ public class SearchUserActivity extends AppCompatActivity {
             }).start();
         } else if (type.equals("showFollowers")) {
             new Thread(() -> {
-                //                    Connection connection = MysqlConnector.getConnection();
-//                    String sql = "select * from user, user_head_portrait inner join follow on user.account=follow.followerAccount and user.account=? and user.id=user_head_portrait.userId";
-//                    PreparedStatement ps = connection.prepareStatement(sql);
-//                    ps.setString(1, account);
-//                    resultSet.set(ps.executeQuery());
-                flag1.set(true);
+                try {
+                    Connection connection = MysqlConnector.getConnection();
+                    String sql = "select * from user, user_head_portrait, follow where follow.followingAccount=user.account and user_head_portrait.userId=user.id and follow.followingAccount=?";
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setString(1, account);
+                    resultSet.set(ps.executeQuery());
+                    flag1.set(true);
+                }catch (InterruptedException | SQLException e) {
+                    e.printStackTrace();
+                }
             }).start();
         } else if (type.equals("showFollowing")) {
             new Thread(() -> {
                 try {
                     Connection connection = MysqlConnector.getConnection();
-                    String sql = "select * from user, user_head_portrait inner join follow on user.account=follow.followingAccount and user.account=? and user.id=user_head_portrait.userId";
+                    String sql = "select * from user, user_head_portrait, follow where follow.followerAccount=user.account and user_head_portrait.userId=user.id and follow.followerAccount=?";
                     PreparedStatement ps = connection.prepareStatement(sql);
                     ps.setString(1, account);
                     resultSet.set(ps.executeQuery());
@@ -154,10 +158,9 @@ public class SearchUserActivity extends AppCompatActivity {
                 new Thread(() -> {
                     try {
                         Connection connection = MysqlConnector.getConnection();
-                        String sql = "select * from user, follow where user.account=? and follow.followingId=?";
+                        String sql = "select * from user where id=?";
                         PreparedStatement ps = connection.prepareStatement(sql);
-                        ps.setString(1, account);
-                        ps.setString(2, followingId);
+                        ps.setString(1, followingId);
                         resultSet.set(ps.executeQuery());
                         flag1.set(true);
                     } catch (InterruptedException | SQLException e) {
@@ -166,50 +169,34 @@ public class SearchUserActivity extends AppCompatActivity {
                 }).start();
                 while(!flag1.get());
                 try {
-                    if(resultSet.get().next()) {
-                    } else {
-                    new Thread(() -> {
-                        try {
-                            Connection connection = MysqlConnector.getConnection();
-                            String sql = "select * from user where account=?";
-                            PreparedStatement ps = connection.prepareStatement(sql);
-                            ps.setString(1, account);
-                            resultSet.set(ps.executeQuery());
-                            flag1.set(true);
-                        } catch (InterruptedException | SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
-                    while(!flag1.get());
-                    try {
-                        resultSet.get().next();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    String followerId = null;
-                    try {
-                        followerId = resultSet.get().getString("id");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    String finalFollowerId = followerId;
-                    new Thread(() -> {
-                        try {
-                            Connection connection = MysqlConnector.getConnection();
-                            String sql = "insert into follow(followerId, followingId) values (?, ?)";
-                            PreparedStatement ps = connection.prepareStatement(sql);
-                            ps.setString(1, finalFollowerId);
-                            ps.setString(2, followingId);
-                            ps.executeUpdate();
-                            flag1.set(true);
-                        } catch (InterruptedException | SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
-                    }
+                    resultSet.get().next();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                String followingAccount = null;
+                try {
+                    followingAccount = resultSet.get().getString("account");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                String finalFollowingAccount = followingAccount;
+                new Thread(() -> {
+                    try {
+                        Connection connection = MysqlConnector.getConnection();
+                        String sql = "insert into follow(followerAccount, followingAccount) values (?, ?)";
+                        PreparedStatement ps = connection.prepareStatement(sql);
+                        ps.setString(1, followerAccount);
+                        ps.setString(2, finalFollowingAccount);
+                        ps.executeUpdate();
+                        flag1.set(true);
+                    } catch (InterruptedException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                while(!flag1.get());
+                Intent intent = new Intent();
+                intent.setClass(SearchUserActivity.this, HomePageActivity.class);
+                startActivity(intent);
             }
         });
     }

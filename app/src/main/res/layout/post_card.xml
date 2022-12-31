@@ -13,7 +13,7 @@
         android:padding="5dp">
 
         <LinearLayout
-            android:layout_width="309dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -93,7 +93,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="33dp"
-                app:srcCompat="@drawable/group_icon" />
+                app:srcCompat="@drawable/praise_icon" />
 
             <TextView
                 android:id="@+id/num_of_like"
@@ -110,7 +110,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="33dp"
-                app:srcCompat="@drawable/tree_hole_icon" />
+                app:srcCompat="@drawable/comment_icon" />
 
             <TextView
                 android:id="@+id/num_of_comment"

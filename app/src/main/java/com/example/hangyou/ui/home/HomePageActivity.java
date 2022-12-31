@@ -91,38 +91,38 @@ public class HomePageActivity extends AppCompatActivity {
         }
         int cnt;
         TextView followers = findViewById(R.id.home_page_followers);
-//        flag1.set(false);
-//        new Thread(() -> {
-//            try {
-//                Connection connection = MysqlConnector.getConnection();
-//                String sql = "select * from follow where followerAccount=?";
-//                PreparedStatement ps = connection.prepareStatement(sql);
-//                ps.setString(1, account);
-//                resultSet.set(ps.executeQuery());
-//                flag1.set(true);
-//            } catch (InterruptedException | SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
-//        while (!flag1.get());
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from follow where followingAccount=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, account);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
         cnt = 0;
         while(resultSet.get().next()) cnt++;
         followers.setText(String.valueOf(cnt));
         TextView following = findViewById(R.id.home_page_following);
-//        flag1.set(false);
-//        new Thread(() -> {
-//            try {
-//                Connection connection = MysqlConnector.getConnection();
-//                String sql = "select * from follow where followingAccount=?";
-//                PreparedStatement ps = connection.prepareStatement(sql);
-//                ps.setString(1, account);
-//                resultSet.set(ps.executeQuery());
-//                flag1.set(true);
-//            } catch (InterruptedException | SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
-//        while (!flag1.get());
+        flag1.set(false);
+        new Thread(() -> {
+            try {
+                Connection connection = MysqlConnector.getConnection();
+                String sql = "select * from follow where followerAccount=?";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, account);
+                resultSet.set(ps.executeQuery());
+                flag1.set(true);
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        while (!flag1.get());
         cnt = 0;
         while(resultSet.get().next()) cnt++;
         following.setText(String.valueOf(cnt));
@@ -243,6 +243,12 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void jumpToShield() {
+        Intent intent = new Intent();
+        intent.setClass(this, ShieldActivity.class);
+        startActivity(intent);
+    }
+
     private void jumpToChangeTheme() {
         Intent intent = new Intent();
         intent.setClass(this, ChangeThemeActivity.class);
@@ -270,6 +276,7 @@ public class HomePageActivity extends AppCompatActivity {
         findViewById(R.id.home_page_tree_hole).setOnClickListener(v -> jumpToTreeHole());
         findViewById(R.id.home_page_head_portrait).setOnClickListener(v -> changeHeadPortrait());
         findViewById(R.id.home_page_feedback).setOnClickListener(v -> jumpToFeedback());
+        findViewById(R.id.home_page_shield).setOnClickListener(v -> jumpToShield());
         findViewById(R.id.home_page_change_theme).setOnClickListener(v -> jumpToChangeTheme());
         findViewById(R.id.home_page_help).setOnClickListener(v -> jumpToHelp());
         findViewById(R.id.home_page_achievement).setOnClickListener(v -> jumpToAchievement());
